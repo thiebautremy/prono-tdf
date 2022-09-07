@@ -10,7 +10,7 @@ const CyclistCreator = () => {
   console.log(cyclists);
 
   useEffect(() => {
-    get(child(ref(db), "cyclists"))
+    get(child(ref(db), "/cyclists"))
       .then((snapshot) => {
         if (snapshot.exists()) setCyclists(snapshot.val());
         else console.log("No data available");
@@ -22,26 +22,27 @@ const CyclistCreator = () => {
       <button
         data-testid="test-push"
         onClick={() =>
-          set(ref(db, "cyclists"), {
-            name: "Nelson",
-            firstName: "Kradock",
-            team: "Education First",
-            nationality: "danish",
-            number: 15,
+          set(ref(db, "/cyclists/2"), {
+            name: "Jean",
+            firstName: "Claude",
+            team: "FDJ",
+            nationality: "french",
+            number: 1,
           })
         }
       >
         Push
       </button>
-      {cyclists && (
-        <>
-          <p>{cyclists.firstName}</p>
-          <p>{cyclists.name}</p>
-          <p>{cyclists.nationality}</p>
-          <p>{cyclists.team}</p>
-          <p>{cyclists.number}</p>
-        </>
-      )}
+      {cyclists.length > 0 &&
+        cyclists.map((cyclist) => (
+          <div key={cyclist.number}>
+            <p>{cyclist.firstName}</p>
+            <p>{cyclist.name}</p>
+            <p>{cyclist.nationality}</p>
+            <p>{cyclist.team}</p>
+            <p>{cyclist.number}</p>
+          </div>
+        ))}
     </div>
   );
 };

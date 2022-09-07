@@ -1,20 +1,17 @@
-import {
-  FirebaseDatabaseProvider,
-  FirebaseDatabaseMutation,
-} from "@react-firebase/database";
 // import { firebaseConfig } from "../../config/firebaseConfig";
-import firebase from "firebase/compat/app";
 import CyclistCreator from "../CyclistCreator/cyclistCreator";
+import Header from "../Header/header";
+import { useContext } from "react";
+import { NavBarContext } from "../../Context/navBarContext";
+import Modal from "../Modal/modal";
 const App = () => {
-  // console.log(firebaseConfig);
-  console.log(firebase);
-  console.log(firebase);
+  const { modalState } = useContext(NavBarContext);
   return (
     <div className="App">
-      {/* <FirebaseDatabaseProvider firebase={firebase} {...firebaseConfig}> */}
-      <p>bouh</p>
-      <CyclistCreator />
-      {/* </FirebaseDatabaseProvider> */}
+      <Header />
+      {modalState.signIn && <Modal title="Se connecter" />}
+      {modalState.signUp && <Modal title="Créer un compte" />}
+      {/* <CyclistCreator /> */}
     </div>
   );
 };

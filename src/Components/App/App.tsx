@@ -4,6 +4,7 @@ import Header from "../Header/header";
 import { useContext } from "react";
 import { NavBarContext } from "../../Context/navBarContext";
 import Modal from "../Modal/modal";
+import './App.scss'
 const App = () => {
   const { modalState } = useContext(NavBarContext);
   return (

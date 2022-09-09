@@ -1,5 +1,34 @@
-#submitForm {
-  background-color: rgb(255, 255, 255);
-  border: 1px solid black;
-  color: black;
+@use "src/Styles/_vars.scss" as var;
+
+.signForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+
+  &__input {
+    margin: 0.5rem auto;
+    font-family: var.$font-italic;
+    font-size: 1.2rem;
+    border-radius: 0.2rem;
+    border: none;
+    padding: 0.2rem 0.5rem;
+  }
+
+  &__btnSubmit {
+    margin: 1rem auto;
+    border: 0.1rem solid var.$yellow;
+    background-color: var.$yellow;
+    padding: 0.5rem 1rem;
+    border-radius: 0.2rem;
+    font-size: 1.2rem;
+    font-family: var.$font-bold;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      background-color: var.$black;
+      color: var.$yellow;
+      cursor: pointer;
+    }
+  }
 }

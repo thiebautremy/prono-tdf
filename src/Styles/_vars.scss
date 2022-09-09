@@ -1,1 +1,23 @@
-$yellow: yellow;
+$black: #322e2f;
+$blue: #12a4d9;
+$grey: rgb(204, 184, 184);
+$pink: #d9138a;
+$yellow: #e2d810;
+$white: #fff;
+
+@font-face {
+  font-family: "font-regular";
+  src: url(../assets/font/BarlowCondensed-Regular.ttf);
+}
+$font-regular: "font-regular";
+@font-face {
+  font-family: "font-bold";
+  src: url(../assets/font/BarlowCondensed-Bold.ttf);
+}
+
+$font-bold: "font-bold";
+@font-face {
+  font-family: "font-italic";
+  src: url(../assets/font/BarlowCondensed-Italic.ttf);
+}
+$font-italic: "font-italic";

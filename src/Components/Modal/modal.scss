@@ -1,0 +1,39 @@
+@use "src/Styles/_vars.scss" as var;
+.modal {
+  width: 40rem;
+  margin: 1rem auto;
+  border: 0.1rem solid var.$black;
+  background-color: var.$black;
+  color: var.$yellow;
+  position: relative;
+  border-radius: 0.8rem;
+
+  &__header {
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    text-align: center;
+    padding: 0.5rem;
+    border-bottom: 0.1rem solid var.$yellow;
+    width: 80%;
+    margin: auto;
+    font-family: var.$font-bold;
+    &__closeBtn {
+      position: absolute;
+      top: 0.2rem;
+      right: 0.2rem;
+      background-color: unset;
+      border: 0.1rem solid var.$yellow;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      padding: 0.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        background-color: var.$yellow;
+        border: 0.1rem solid var.$yellow;
+        color: var.$black;
+      }
+    }
+  }
+}

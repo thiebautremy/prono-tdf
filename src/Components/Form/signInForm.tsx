@@ -1,15 +1,9 @@
 import React, { useRef } from "react";
 import "./signForm.scss";
-const SignUpForm = () => {
-  const signUpFormRef = useRef();
+const SignInForm = () => {
+  const signInFormRef = useRef<HTMLFormElement> (null);
   return (
-    <form ref={signUpFormRef}>
-      <input
-        type="text"
-        name="username"
-        id="username"
-        placeholder="Nom d'utilisateur"
-      />
+    <form ref={signInFormRef}>
       <input type="email" name="email" id="email" placeholder="email" />
       <input
         type="password"
@@ -18,9 +12,9 @@ const SignUpForm = () => {
         placeholder="Mot de passe"
       />
       <button type="submit" id="submitForm">
-        Créer un compte
+        Se connecter
       </button>
     </form>
   );
 };
-export default SignUpForm;
+export default SignInForm;

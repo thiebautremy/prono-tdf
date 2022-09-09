@@ -1,20 +1,27 @@
 import React, { createContext, useState } from "react";
 
-export const NavBarContext = createContext();
-export const NavBarContextProvider = (props) => {
+interface IContextProps {
+  modalState: {
+    signIn: boolean,
+    signUp: boolean
+  },
+  toggleModal:Function
+}
+export const NavBarContext = createContext({} as IContextProps);
+export const NavBarContextProvider: React.FC = ({children}: any) => {
   const [modalState, setModalState] = useState({
     signIn: false,
     signUp: false,
   });
 
-  function toggleModal(modal) {
+  function toggleModal(modal: string) {
     if (modal === "signIn") setModalState({ signIn: true, signUp: false });
     if (modal === "signUp") setModalState({ signIn: false, signUp: true });
     if (modal === "close") setModalState({ signUp: false, signIn: false });
   }
   return (
     <NavBarContext.Provider value={{ modalState, toggleModal }}>
-      {props.children}
+      {children}
     </NavBarContext.Provider>
   );
 };

@@ -1,7 +1,11 @@
 import React from "react";
 import SignInForm from "../Form/signInForm";
 import SignUpForm from "../Form/signUpForm";
-const Modal = ({ title }) => {
+
+interface ModalInterface {
+  title: string
+}
+const Modal: React.FC<ModalInterface> = ({ title }) => {
   return (
     <div className="modal">
       <div className="modal__header">{title}</div>

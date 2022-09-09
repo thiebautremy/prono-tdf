@@ -1,5 +1,5 @@
 // import { firebaseConfig } from "../../config/firebaseConfig";
-import CyclistCreator from "../CyclistCreator/cyclistCreator";
+// import CyclistCreator from "../CyclistCreator/cyclistCreator";
 import Header from "../Header/header";
 import { useContext } from "react";
 import { NavBarContext } from "../../Context/navBarContext";

@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import './modal.scss'
-import {NavBarContext} from '../../Context/navBarContext'
+import {UserContext} from '../../Context/userContext'
 import { FaTimes } from 'react-icons/fa';
 import SignUpForm from "../Form/signUpForm";
 import SignInForm from "../Form/signInForm";
@@ -9,7 +9,7 @@ interface ModalInterface {
   title: string
 }
 const Modal: React.FC<ModalInterface> = ({ title }) => {
-  const { toggleModal } = useContext(NavBarContext);
+  const { toggleModal } = useContext(UserContext);
 
   return (
     <div className="modal">

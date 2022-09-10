@@ -2,11 +2,11 @@
 // import CyclistCreator from "../CyclistCreator/cyclistCreator";
 import Header from "../Header/header";
 import { useContext } from "react";
-import { NavBarContext } from "../../Context/navBarContext";
+import { UserContext } from "../../Context/userContext";
 import Modal from "../Modal/modal";
 import './App.scss'
 const App = () => {
-  const { modalState } = useContext(NavBarContext);
+  const { modalState } = useContext(UserContext);
   return (
     <div className="App">
       <Header />

@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import { NavBarContext } from "../../Context/navBarContext";
+import { UserContext } from "../../Context/userContext";
 import './navBar.scss'
 const NavBar = () => {
-  console.log(useContext(NavBarContext));
-  const { toggleModal } = useContext(NavBarContext);
+  console.log(useContext(UserContext));
+  const { toggleModal } = useContext(UserContext);
   return (
     <div className="navBar">
       <button className="navBar__button" onClick={() => toggleModal("signIn")}>Se connecter</button>

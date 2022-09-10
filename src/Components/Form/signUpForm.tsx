@@ -1,9 +1,29 @@
-import React, { useRef } from "react";
+import React, { useRef, useContext } from "react";
+import { ObjectType } from "typescript";
+import UserContext from "../../Context/userContext";
 import "./signForm.scss";
 const SignUpForm = () => {
   const signUpFormRef = useRef<HTMLFormElement>(null);
+  const {signUp} = useContext(UserContext)
+  const handleSubmit = (e: any) => {
+    e.preventDefault()
+    const userName = (signUpFormRef as any).current[0].value
+    const email = (signUpFormRef as any).current[1].value
+    const password = (signUpFormRef as any).current[2].value
+    console.log(e)
+    console.log({userName})
+    console.log({email})
+    console.log({password})
+    // try {
+    //   const credential = await signUp(
+
+    //   )
+    // } catch(err){
+
+    // }
+  }
   return (
-    <form ref={signUpFormRef} className="signForm signUpForm">
+    <form ref={signUpFormRef} className="signForm signUpForm" onSubmit={(e) => handleSubmit(e)}>
       <input
         type="text"
         name="username"

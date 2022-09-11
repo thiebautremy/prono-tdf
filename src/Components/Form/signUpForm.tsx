@@ -1,26 +1,38 @@
 import React, { useRef, useContext } from "react";
-import { ObjectType } from "typescript";
-import UserContext from "../../Context/userContext";
 import "./signForm.scss";
+import UserContext from "../../Context/userContext";
+import { getDatabase, ref, set, get, child } from "firebase/database";
 const SignUpForm = () => {
   const signUpFormRef = useRef<HTMLFormElement>(null);
   const {signUp} = useContext(UserContext)
-  const handleSubmit = (e: any) => {
+
+  function addUserName(userId: any, username: string, email: string) {
+    const db = getDatabase();
+    set(ref(db, 'users/' + userId), {
+      username,
+      email
+    });
+  }
+  const handleSubmit = async (e: any) => {
     e.preventDefault()
     const userName = (signUpFormRef as any).current[0].value
     const email = (signUpFormRef as any).current[1].value
     const password = (signUpFormRef as any).current[2].value
-    console.log(e)
-    console.log({userName})
-    console.log({email})
-    console.log({password})
-    // try {
-    //   const credential = await signUp(
-
-    //   )
-    // } catch(err){
-
-    // }
+    try {
+      const credential = await signUp(
+          email, password
+      )
+      console.log(credential);
+      if(credential){
+        addUserName(credential.user.uid, userName, email);
+        (signUpFormRef as any).current.reset()
+        //TODO afficher toast compte crée + ajouter username à l'utilisateur
+        //TODO afficher le formulaire de connexion
+      }
+    } catch(err){
+      //TODO afficher les erreurs de retour de firebase à l'utilisateurs
+      console.log(err)
+    }
   }
   return (
     <form ref={signUpFormRef} className="signForm signUpForm" onSubmit={(e) => handleSubmit(e)}>

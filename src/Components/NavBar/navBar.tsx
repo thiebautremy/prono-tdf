@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { UserContext } from "../../Context/userContext";
 import './navBar.scss'
 const NavBar = () => {
-  console.log(useContext(UserContext));
   const { toggleModal } = useContext(UserContext);
   return (
     <div className="navBar">

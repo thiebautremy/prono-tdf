@@ -1,13 +1,19 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../Context/userContext";
 import './navBar.scss'
+import NavBarConnected from './NavBarConnected/navBarConnected'
+import NavBarDisconnected from "./NavBarDisconnected/navBarDisconnected";
 const NavBar = () => {
-  const { toggleModal } = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
+  console.log(currentUser)
+  
   return (
     <div className="navBar">
-      <button className="navBar__button" onClick={() => toggleModal("signIn")}>Se connecter</button>
-      <button className="navBar__button" onClick={() => toggleModal("signUp")}>Créer un compte</button>
-      <button className="navBar__button" onClick={() => toggleModal("close")}>Se déconnecter</button>
+      {currentUser ? 
+        <NavBarConnected />
+      :
+        <NavBarDisconnected />
+      }
     </div>
   );
 };

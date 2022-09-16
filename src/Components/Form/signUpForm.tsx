@@ -1,7 +1,9 @@
 import React, { useRef, useContext } from "react";
 import "./signForm.scss";
 import UserContext from "../../Context/userContext";
-import { getDatabase, ref, set, get, child } from "firebase/database";
+import { updateProfile } from "firebase/auth";
+import { getDatabase, ref, set} from "firebase/database";
+import { auth } from "../../config/firebaseConfig";
 const SignUpForm = () => {
   const signUpFormRef = useRef<HTMLFormElement>(null);
   const {signUp} = useContext(UserContext)
@@ -24,10 +26,11 @@ const SignUpForm = () => {
       )
       console.log(credential);
       if(credential){
-        addUserName(credential.user.uid, userName, email);
-        (signUpFormRef as any).current.reset()
-        //TODO afficher toast compte crée + ajouter username à l'utilisateur
-        //TODO afficher le formulaire de connexion
+        updateProfile((auth.currentUser as any), {
+          displayName: userName
+        }).then(() => {
+          console.log('profil update')
+        })
       }
     } catch(err){
       //TODO afficher les erreurs de retour de firebase à l'utilisateurs

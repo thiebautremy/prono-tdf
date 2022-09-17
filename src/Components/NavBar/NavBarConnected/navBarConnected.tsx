@@ -21,7 +21,7 @@ const NavBarConnected = () => {
             Bonjour <span className="navBarConnected__userName--strong">{currentUser.displayName}</span>
         </h2>
         }
-      <button className="navBar__button" onClick={() => logOut()}>Se déconnecter <FiLogOut /></button>
+      <button className="navBar__button navBarConnected__logoutBtn" onClick={() => logOut()}>Se déconnecter <FiLogOut className='navBarConnected__logoutBtn__icon'/></button>
       </div>
     )
 }

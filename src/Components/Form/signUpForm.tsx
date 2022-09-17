@@ -6,7 +6,7 @@ import { getDatabase, ref, set} from "firebase/database";
 import { auth } from "../../config/firebaseConfig";
 const SignUpForm = () => {
   const signUpFormRef = useRef<HTMLFormElement>(null);
-  const {signUp} = useContext(UserContext)
+  const {signUp, toggleModal} = useContext(UserContext)
 
   function addUserName(userId: any, username: string, email: string) {
     const db = getDatabase();
@@ -15,6 +15,7 @@ const SignUpForm = () => {
       email
     });
   }
+  //TODO ajouter un loader à la soumission du formulaire de création de compte
   const handleSubmit = async (e: any) => {
     e.preventDefault()
     const userName = (signUpFormRef as any).current[0].value
@@ -24,13 +25,14 @@ const SignUpForm = () => {
       const credential = await signUp(
           email, password
       )
-      console.log(credential);
       if(credential){
         updateProfile((auth.currentUser as any), {
           displayName: userName
         }).then(() => {
           console.log('profil update')
         })
+        addUserName(credential.user.uid, userName, email)
+        toggleModal("close")
       }
     } catch(err){
       //TODO afficher les erreurs de retour de firebase à l'utilisateurs

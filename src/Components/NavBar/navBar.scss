@@ -16,10 +16,16 @@
 
     &--strong {
       font-weight: bold;
+    }
+  }
 
-      &::first-letter {
-        text-transform: uppercase;
-      }
+  &__logoutBtn {
+    display: flex;
+    align-items: center;
+
+    &__icon {
+      margin-left: 0.5rem;
+      font-size: 1.4rem;
     }
   }
 }

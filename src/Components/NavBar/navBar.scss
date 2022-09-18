@@ -3,7 +3,11 @@
 .navBar {
   background-color: var.$black;
   padding: 1rem;
-  text-align: center;
+  // text-align: center;
+}
+
+.navBarDisconnected {
+  text-align: right;
 }
 
 .navBarConnected {

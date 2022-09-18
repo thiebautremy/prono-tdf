@@ -1,12 +1,14 @@
-import React, { useRef, useContext } from "react";
+import { useRef, useContext, useState } from "react";
+import ErrorMessage from "./ErrorMessage/errorMessage";
 import "./signForm.scss";
 import UserContext from "../../Context/userContext";
+import { auth } from "../../config/firebaseConfig";
 import { updateProfile } from "firebase/auth";
 import { getDatabase, ref, set} from "firebase/database";
-import { auth } from "../../config/firebaseConfig";
+
 const SignUpForm = () => {
   const signUpFormRef = useRef<HTMLFormElement>(null);
-  const {signUp, toggleModal} = useContext(UserContext)
+  const {signUp, toggleModal, signErrorMessage, setSignErrorMessage} = useContext(UserContext)
 
   function addUserName(userId: any, username: string, email: string) {
     const db = getDatabase();
@@ -32,11 +34,14 @@ const SignUpForm = () => {
           console.log('profil update')
         })
         addUserName(credential.user.uid, userName, email)
+        setSignErrorMessage('')
         toggleModal("close")
       }
     } catch(err){
       //TODO afficher les erreurs de retour de firebase à l'utilisateurs
-      console.log(err)
+      console.dir(err)
+      if((err as any).code === 'auth/invalid-email') setSignErrorMessage("Format d'email invalide")
+      if((err as any).code === 'auth/weak-password') setSignErrorMessage("Le mot de passe doit être de 6 caractères minimum")
     }
   }
   return (
@@ -56,6 +61,7 @@ const SignUpForm = () => {
         placeholder="Mot de passe"
         className="signForm__input"
       />
+      {signErrorMessage !== '' && <ErrorMessage message={signErrorMessage}/>}
       <button type="submit" className="signForm__btnSubmit">
         Créer un compte
       </button>

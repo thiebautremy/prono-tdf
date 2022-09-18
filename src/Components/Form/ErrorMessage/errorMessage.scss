@@ -1,0 +1,17 @@
+@use "src/Styles/_vars.scss" as var;
+
+.errorMessage {
+  color: var.$red;
+  border: 0.1rem solid var.$red;
+  font-size: 1.2rem;
+  font-weight: bold;
+  letter-spacing: 0.05rem;
+  background-color: var.$black;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  text-align: center;
+
+  &::first-letter {
+    text-transform: uppercase;
+  }
+}

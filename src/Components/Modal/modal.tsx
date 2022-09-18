@@ -2,8 +2,8 @@ import React, {useContext} from "react";
 import './modal.scss'
 import {UserContext} from '../../Context/userContext'
 import { FaTimes } from 'react-icons/fa';
-import SignUpForm from "../Form/signUpForm";
-import SignInForm from "../Form/signInForm";
+import SignUpForm from "../Form/Sign/signUpForm";
+import SignInForm from "../Form/Sign/signInForm";
 
 interface ModalInterface {
   title: string

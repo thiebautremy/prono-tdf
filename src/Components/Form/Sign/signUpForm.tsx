@@ -1,8 +1,8 @@
-import { useRef, useContext, useState } from "react";
-import ErrorMessage from "./ErrorMessage/errorMessage";
+import { useRef, useContext } from "react";
+import ErrorMessage from "../ErrorMessage/errorMessage";
 import "./signForm.scss";
-import UserContext from "../../Context/userContext";
-import { auth } from "../../config/firebaseConfig";
+import UserContext from "../../../Context/userContext";
+import { auth } from "../../../config/firebaseConfig";
 import { updateProfile } from "firebase/auth";
 import { getDatabase, ref, set} from "firebase/database";
 

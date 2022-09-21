@@ -1,16 +1,39 @@
-import React from 'react'
-import bike from '../../../assets/pictures/bike.webp'
-import road from '../../../assets/pictures/road.webp'
+import React, {useContext} from 'react'
+import {UserContext} from '../../../Context/userContext'
+import Modal from '../../Modal/modal'
 import './homeDisconnected.scss'
 const HomeDisconnected = () => {
+    const {toggleModal, modalState} = useContext(UserContext);
+    console.log(useContext(UserContext))
     return(
         <main className='homeDisconnected'>
-            {/* <img src={road} alt="" /> */}
+            <section className="homeDisconnected__picture"></section>
             <section className="homeDisconnected__intro">
-            <h1>home déconnectée</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis atque ad veritatis sed tenetur. Quaerat necessitatibus fugit a placeat possimus quidem, nesciunt nam veniam eligendi sunt atque porro quos quasi?</p>
+                <div className='homeDisconnected__intro__forms'>
+                    {modalState.signIn && <Modal title="Se connecter" />}
+                    {modalState.signUp && <Modal title="Créer un compte" />}
+                    {!modalState.signIn && !modalState.signUp && <ModalIntro />}
+                </div>
+                <button 
+                    className="homeDisconnected__intro__button" 
+                    onClick={() => toggleModal("signIn")}>Se connecter
+                </button>
+                <button 
+                    className="homeDisconnected__intro__button" 
+                    onClick={() => toggleModal("signUp")}>Créer un compte
+                </button>
             </section>
         </main>
+    )
+}
+
+const ModalIntro = () => {
+    return (
+        <div className="modalIntro">
+            <p>Pronostiquer sur vos favoris pour chaque étape du tour de France</p>
+            <p>Sélectionner 5 coureurs par étape</p>
+            <p>Vos coureurs sélectionnés sont dans les 20 premiers du classement de l'étape ? <br/>Vous gagnez des points !!</p>
+        </div>
     )
 }
 

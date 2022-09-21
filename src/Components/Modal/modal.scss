@@ -1,9 +1,7 @@
 @use "src/Styles/_vars.scss" as var;
 .modal {
-  width: 40rem;
-  margin: 1rem auto;
-  border: 0.1rem solid var.$black;
-  background-color: var.$black;
+  width: 80%;
+  margin: auto;
   color: var.$yellow;
   position: relative;
   border-radius: 0.8rem;

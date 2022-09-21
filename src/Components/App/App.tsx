@@ -3,18 +3,27 @@
 import Header from "../Header/header";
 import { useContext } from "react";
 import { UserContext } from "../../Context/userContext";
-import Modal from "../Modal/modal";
-import HomeDisconnected from "../Home/HomeDisconnected/homeDisconnected";
 import './App.scss'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "../../Pages/Home/Home";
 const App = () => {
   const { modalState, currentUser } = useContext(UserContext);
   return (
     <div className="App">
-      <Header />
+      {/* <Header />
       {modalState.signIn && <Modal title="Se connecter" />}
       {modalState.signUp && <Modal title="Créer un compte" />}
       {/* <CyclistCreator /> */}
-      {!currentUser && <HomeDisconnected />}
+     <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />}>
+            {/* <Route index element={<Home />} />
+            <Route path="blogs" element={<Blogs />} />
+            <Route path="contact" element={<Contact />} /> */}
+            {/* <Route path="*" element={<h1>404</h1>} /> */}
+          </Route>
+        </Routes>
+     </BrowserRouter>
     </div>
   );
 };

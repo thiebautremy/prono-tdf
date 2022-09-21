@@ -1,29 +1,37 @@
 @use "src/Styles/_vars.scss" as var;
 
 .homeDisconnected {
-  min-height: 90vh;
-  position: relative;
-  &::before {
-    content: "";
-    position: absolute;
-    top: 20;
-    left: 0;
+  display: flex;
+  &__picture {
+    min-height: 100vh;
     background-image: url("../../../assets/pictures/road.webp");
-    background-position: center;
-    width: 100%;
+    background-position: left;
+    width: 50%;
     height: 100%;
-    filter: grayscale(85%);
+    filter: grayscale(100%);
   }
 
   &__intro {
-    position: absolute;
+    background-color: var.$black;
     width: 50%;
-    background-color: white;
-    opacity: 0.4;
-    height: 100%;
-    top: 0;
-    right: 0;
-    border-top-left-radius: 30%;
-    border-bottom-left-radius: 30%;
+    text-align: center;
+
+    &__forms {
+      min-height: 30rem;
+      margin: auto;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+.modalIntro {
+  margin: auto;
+
+  & p {
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding: 1rem 0.5rem;
+    color: var.$yellow;
   }
 }

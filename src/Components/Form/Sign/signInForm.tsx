@@ -1,4 +1,4 @@
-import { useRef, useContext} from "react";
+import React,{ useRef, useContext} from "react";
 import {UserContext} from '../../../Context/userContext'
 import ErrorMessage from '../ErrorMessage/errorMessage'
 import "./signForm.scss";
@@ -11,15 +11,17 @@ const SignInForm = () => {
     const email = (signInFormRef as any).current[0].value
     const password = (signInFormRef as any).current[1].value
     try {
-      const credential = await signIn(
-          email, password
+      const credential: unknown = signIn(
+        email, password
       )
       if(credential){
         setSignErrorMessage('')
         toggleModal("close")
       }
     } catch(err){
+      console.dir(err)
       if(err) setSignErrorMessage('Email ou mot de passe invalide')
+      console.log(signErrorMessage)
     }
   }
   return (

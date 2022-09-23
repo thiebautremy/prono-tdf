@@ -32,7 +32,7 @@ const ModalIntro = () => {
         <div className="modalIntro">
             <p>Pronostiquer sur vos favoris pour chaque étape du tour de France</p>
             <p>Sélectionner 5 coureurs par étape</p>
-            <p>Vos coureurs sélectionnés sont dans les 20 premiers du classement de l'étape ? <br/>Vous gagnez des points !!</p>
+            <p>Vos coureurs sélectionnés sont dans les 20 premiers du classement de l&apos; étape ? <br/>Vous gagnez des points !!</p>
         </div>
     )
 }

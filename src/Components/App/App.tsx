@@ -1,11 +1,13 @@
 // import { firebaseConfig } from "../../config/firebaseConfig";
 // import CyclistCreator from "../CyclistCreator/cyclistCreator";
-import Header from "../Header/header";
+import React from 'react'
+// import Header from "../Header/header";
 import { useContext } from "react";
 import { UserContext } from "../../Context/userContext";
 import './App.scss'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "../../Pages/Home/Home";
+import Admin from '../../Pages/Admin/Admin';
 const App = () => {
   const { modalState, currentUser } = useContext(UserContext);
   return (
@@ -17,6 +19,14 @@ const App = () => {
      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />}>
+          {/* <Route
+              path="/"
+            element={
+              <PrivateRoute currentUser={currentUser}>
+                <Admin />
+              </PrivateRoute>
+            }
+          /> */}
             {/* <Route index element={<Home />} />
             <Route path="blogs" element={<Blogs />} />
             <Route path="contact" element={<Contact />} /> */}
@@ -27,5 +37,13 @@ const App = () => {
     </div>
   );
 };
+
+// interface Props {
+//   currentUser: unknown,
+//   children: JSX.Element
+// }
+// const PrivateRoute: React.FC<Props> = ({currentUser, children}) => {
+//   return currentUser ? children : <Navigate to="/" />;
+// };
 
 export default App;

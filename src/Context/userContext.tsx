@@ -6,17 +6,20 @@ interface IContextProps {
     signIn: boolean,
     signUp: boolean
   },
-  toggleModal:Function,
-  signUp:Function,
-  signIn:Function,
-  setCurrentUser:Function,
-  setSignErrorMessage: Function
-  currentUser: any,
+  toggleModal: (modal: string) => void,
+  signUp: (email: string, password: string) => void,
+  signIn:(email: string, password: string) => void,
+  setCurrentUser:(param: unknown) => void,
+  setSignErrorMessage: (param: string) => void,
+  currentUser: unknown,
   signErrorMessage: string,
 }
 export const UserContext = createContext({} as IContextProps);
 
-export const UserContextProvider: React.FC = ({children}: any) => {
+interface Props {
+  children: JSX.Element|JSX.Element[]
+}
+export const UserContextProvider: React.FC<Props> = ({children}) => {
   //? ===== GESTION MODAL ===== \\
   const [modalState, setModalState] = useState({
     signIn: false,
@@ -28,11 +31,11 @@ export const UserContextProvider: React.FC = ({children}: any) => {
     if (modal === "signIn") {
       setModalState({ signIn: true, signUp: false }) 
       setSignErrorMessage('')
-    };
+    }
     if (modal === "signUp") {
       setModalState({ signIn: false, signUp: true })
       setSignErrorMessage('')
-    };
+    }
     if (modal === "close") {
       setModalState({ signUp: false, signIn: false })
       setSignErrorMessage('')

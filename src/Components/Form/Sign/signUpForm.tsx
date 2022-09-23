@@ -1,4 +1,4 @@
-import { useRef, useContext } from "react";
+import React,{ useRef, useContext } from "react";
 import ErrorMessage from "../ErrorMessage/errorMessage";
 import "./signForm.scss";
 import UserContext from "../../../Context/userContext";
@@ -24,7 +24,7 @@ const SignUpForm = () => {
     const email = (signUpFormRef as any).current[1].value
     const password = (signUpFormRef as any).current[2].value
     try {
-      const credential = await signUp(
+      const credential: any = signUp(
           email, password
       )
       if(credential){

@@ -33,7 +33,6 @@ const SignUpForm = () => {
         )
 
         credentialPromise.then(function(success: any){
-          console.log(success)
           updateProfile((auth.currentUser as any), {
                 displayName: userName
               }).then(() => {

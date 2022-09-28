@@ -4,7 +4,6 @@ import Modal from '../../Modal/modal'
 import './homeDisconnected.scss'
 const HomeDisconnected = () => {
     const {toggleModal, modalState} = useContext(UserContext);
-    console.log(useContext(UserContext))
     return(
         <main className='homeDisconnected'>
             <section className="homeDisconnected__picture"></section>

@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "../../Pages/Home/Home";
 import Admin from '../../Pages/Admin/Admin';
 const App = () => {
+  console.log(useContext(UserContext))
   const { modalState, currentUser } = useContext(UserContext);
   return (
     <div className="App">

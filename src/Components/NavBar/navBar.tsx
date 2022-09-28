@@ -14,14 +14,16 @@ const NavBar = () => {
           console.log(err)
         }
       }
-      //TODO créer un composant isolé pour afficher le {currentUser && ......}
+      console.log(currentUser)
     return(
         <div className="navBar">
-          {/* {currentUser && 
-            <h2 className="navBar__userName">
-                Bonjour <span className="navBar__userName--strong"></span>
-            </h2>
-            } */}
+          <>
+            {currentUser && 
+              <h2 className="navBar__userName">
+                  Bonjour {currentUser.displayName}<span className="navBar__userName--strong"></span>
+              </h2>
+              }
+          </>
           <button className="navBar__button navBar__logoutBtn" onClick={() => logOut()}>Se déconnecter <FiLogOut className='navBar__logoutBtn__icon'/></button>
       </div>
     )

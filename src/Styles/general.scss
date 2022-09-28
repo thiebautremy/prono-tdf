@@ -1,6 +1,7 @@
 @use "src/Styles/_vars.scss" as var;
 
-button.homeDisconnected__intro__button {
+button.homeDisconnected__intro__button,
+button.navBar__logoutBtn {
   background-color: var.$black;
   border: 1px solid var.$yellow;
   border-radius: 1rem 2rem;

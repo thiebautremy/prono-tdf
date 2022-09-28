@@ -11,7 +11,7 @@ interface IContextProps {
   signIn:(email: string, password: string) => void,
   setCurrentUser:(param: unknown) => void,
   setSignErrorMessage: (param: string) => void,
-  currentUser: unknown,
+  currentUser: {displayName: string},
   signErrorMessage: string,
 }
 export const UserContext = createContext({} as IContextProps);

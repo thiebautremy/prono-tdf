@@ -1,4 +1,4 @@
-import React,{ useRef, useContext} from "react";
+import React,{ useRef, useContext, FormEvent} from "react";
 import {UserContext} from '../../../Context/userContext'
 import ErrorMessage from '../ErrorMessage/errorMessage'
 import "./signForm.scss";
@@ -6,7 +6,7 @@ const SignInForm = () => {
   const signInFormRef = useRef<HTMLFormElement> (null);
   const {signIn, toggleModal, setSignErrorMessage, signErrorMessage}=useContext(UserContext)
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const email = (signInFormRef as any).current[0].value
     const password = (signInFormRef as any).current[1].value

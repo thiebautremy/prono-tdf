@@ -20,14 +20,22 @@ import {
 const Admin = () => {
   const db = getFirestore(app);
   const [users, setUsers] = useState([]);
-
+  const concatTwoArrays = (arrayId, arrayData) => {
+    let arrayFormated = [];
+    for (let i = 0; i < arrayId.length; i++) {
+      arrayFormated.push({ id: arrayId[i], ...arrayData[i] });
+    }
+    return arrayFormated;
+  };
   const fetchOnline = async () => {
+    let ids = [];
+    let datas = [];
     const querySnapshot = await getDocs(collection(db, "users"));
     const response = await querySnapshot;
     response.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, " => ", doc.data());
-      setUsers(...users, doc.data());
+      ids.push(doc.id);
+      datas.push(doc.data());
+      setUsers(concatTwoArrays(ids, datas));
     });
   };
   useEffect(() => {
@@ -36,6 +44,13 @@ const Admin = () => {
   return (
     <div className="admin">
       <h1>Admin</h1>
+      {users.length > 0 &&
+        users.map((user) => (
+          <div key={user.id}>
+            <p>Username : {user.username}</p>
+            <p>Email :{user.email}</p>
+          </div>
+        ))}
       {/* {users.length > 0 &&
         users.map((user: UserInterface) => (
           <div key={user.email}>

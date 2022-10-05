@@ -1,13 +1,12 @@
-import React from 'react'
-import NavBar from '../../NavBar/navBar'
+import React from "react";
+import NavBar from "../../NavBar/navBar";
 
-const HomeConnected = () => {
-    return (
-        <>
-            <NavBar />
-        <h1>Home connected</h1>
-        </>
-    )
-}
+const HomeConnected: React.FC = () => {
+  return (
+    <>
+      <NavBar />
+    </>
+  );
+};
 
-export default HomeConnected
+export default HomeConnected;

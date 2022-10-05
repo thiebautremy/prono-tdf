@@ -1,13 +1,11 @@
-import React, { useContext } from "react";
-import { UserContext } from "../../Context/userContext";
+import React from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../../config/firebaseConfig";
 import { FiLogOut } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import "./navBar.scss";
 
-const NavBar = () => {
-  const { currentUser } = useContext(UserContext);
+const NavBarAdmin = () => {
   const logOut = async () => {
     try {
       await signOut(auth);
@@ -15,19 +13,13 @@ const NavBar = () => {
       console.log(err);
     }
   };
-  console.log(currentUser);
   return (
     <div className="navBar">
       <>
-        {currentUser && (
-          <nav>
-            <h2 className="navBar__userName">
-              Bonjour {currentUser.displayName}
-              <span className="navBar__userName--strong"></span>
-            </h2>
-            <Link to="/admin">Administration</Link>
-          </nav>
-        )}
+        <nav>
+          <Link to="/">Retour</Link>
+          <Link to="/admin/users">Utilisateurs</Link>
+        </nav>
       </>
       <button
         className="navBar__button navBar__logoutBtn"
@@ -39,4 +31,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default NavBarAdmin;

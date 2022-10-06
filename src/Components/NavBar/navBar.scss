@@ -1,12 +1,25 @@
 @use "src/Styles/_vars.scss" as var;
 
-.navBar {
+.navBar,
+.navBarAdmin {
   background-color: var.$black;
   padding: 1rem;
   // text-align: center;
+  &__link {
+    color: var.$yellow;
+    font-size: 1.3rem;
+    margin: 0 1rem;
+    transition: all 0.5s ease-in-out;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
-.navBar {
+.navBar,
+.navBarAdmin {
   display: flex;
   justify-content: space-between;
   align-items: center;

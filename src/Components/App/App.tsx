@@ -1,13 +1,12 @@
 // import { firebaseConfig } from "../../config/firebaseConfig";
 // import CyclistCreator from "../CyclistCreator/cyclistCreator";
-import React from "react";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { UserContext } from "../../Context/userContext";
 import "./App.scss";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../../Pages/Home/Home";
 import Admin from "../../Pages/Admin/Admin";
-import Users from "../Admin/users";
+import Users from "../Admin/Users/users";
 const App = () => {
   console.log(useContext(UserContext));
   const { modalState, currentUser } = useContext(UserContext);

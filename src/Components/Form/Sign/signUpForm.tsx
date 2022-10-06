@@ -12,7 +12,7 @@ const SignUpForm = () => {
   const { signUp, toggleModal, signErrorMessage, setSignErrorMessage } =
     useContext(UserContext);
 
-  const addUserName = async (
+  const addUserNameAndRole = async (
     authId: number,
     username: string,
     email: string
@@ -23,6 +23,7 @@ const SignUpForm = () => {
       username,
       email,
       authId,
+      roles: ["USER_ROLE"],
     })
       .then((docRef) => {
         console.log("Document has been added successfully", docRef);
@@ -52,7 +53,7 @@ const SignUpForm = () => {
           .then(() => {
             console.log("profil update");
             if (typeof success === "object" && success !== null) {
-              addUserName(success.user.uid, userName, email);
+              addUserNameAndRole(success.user.uid, userName, email);
             }
             setSignErrorMessage("");
             toggleModal("close");

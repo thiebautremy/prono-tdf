@@ -25,7 +25,9 @@ const NavBar = () => {
               Bonjour {currentUser.displayName}
               <span className="navBar__userName--strong"></span>
             </h2>
-            <Link to="/admin">Administration</Link>
+            <Link to="/admin" className="navBar__link">
+              Administration
+            </Link>
           </nav>
         )}
       </>

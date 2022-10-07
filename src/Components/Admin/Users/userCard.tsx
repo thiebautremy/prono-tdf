@@ -1,17 +1,23 @@
 import React, { useState } from "react";
+import app from "../../../config/firebaseConfig";
+import { getFirestore, doc, updateDoc, getDoc } from "firebase/firestore";
 import { Checkbox } from "primereact/checkbox";
 
 const UserCard = ({ user }) => {
-  const [cities, setCities] = useState([]);
-  const [roles, setRoles] = useState(user.roles);
   console.log(user);
-  const onRoleChange = (e: Checkbox) => {
-    console.log(e);
-    let selectedRoles = [...roles];
-    if (e.checked) selectedRoles.push(e.value);
-    else selectedRoles.splice(selectedRoles.indexOf(e.value), 1);
-    setCities(selectedRoles);
+  const db = getFirestore(app);
+  const userRef = doc(db, "users", `${user.id}`);
+  const onRoleChange = async (e: Checkbox) => {
+    if (e.checked)
+      await updateDoc(userRef, {
+        roles: ["USER_ROLE", "ADMIN_ROLE"],
+      });
+    else
+      await updateDoc(userRef, {
+        roles: ["USER_ROLE"],
+      });
   };
+
   //TODO faire les appels à Firebase pour mettre à jour le tableau des roles au click sur la checkbox
   return (
     <div>

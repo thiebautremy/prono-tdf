@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import "./user.scss";
 import app from "../../../config/firebaseConfig";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
-import UserCard from "./userCard";
+import User from "./user";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
+  const [checkedAdmin, setCheckAdmin] = useState(true);
   const db = getFirestore(app);
   const concatTwoArrays = (
     arrayId: [string],
@@ -35,18 +37,17 @@ const Users = () => {
   };
   useEffect(() => {
     fetchOnline();
-  }, []);
+  }, [checkedAdmin]);
   return (
-    <>
-      <h1>Utilisateurs</h1>
+    <div className="users">
       {users.length > 0 ? (
         users.map((user: { id: string; username: string; email: string }) => (
-          <UserCard key={user.id} user={user} />
+          <User key={user.id} user={user} setCheckAdmin={setCheckAdmin} />
         ))
       ) : (
         <p>loading...</p>
       )}
-    </>
+    </div>
   );
 };
 

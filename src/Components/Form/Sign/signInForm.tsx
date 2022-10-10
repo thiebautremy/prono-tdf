@@ -18,9 +18,7 @@ const SignInForm = () => {
         toggleModal("close");
       }
     } catch (err) {
-      console.dir(err);
       if (err) setSignErrorMessage("Email ou mot de passe invalide");
-      console.log(signErrorMessage);
     }
   };
   return (

@@ -1,10 +1,9 @@
 import React from "react";
 import app from "../../../config/firebaseConfig";
-import { getFirestore, doc, updateDoc, onSnapshot } from "firebase/firestore";
+import { getFirestore, doc, updateDoc } from "firebase/firestore";
 import { Checkbox } from "primereact/checkbox";
 
 const User = ({ user, setCheckAdmin }) => {
-  console.log(user);
   const db = getFirestore(app);
   const userRef = doc(db, "users", `${user.id}`);
   const onRoleChange = async (e: Checkbox) => {

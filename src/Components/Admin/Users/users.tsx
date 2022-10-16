@@ -18,6 +18,7 @@ const Users = () => {
     }
     return arrayFormated;
   };
+
   const fetchOnline = async () => {
     const ids: [string | number] = [];
     const datas: [] = [];

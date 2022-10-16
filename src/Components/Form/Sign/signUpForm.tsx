@@ -5,7 +5,7 @@ import "./signForm.scss";
 import UserContext from "../../../Context/userContext";
 import app, { auth } from "../../../config/firebaseConfig";
 import { updateProfile } from "firebase/auth";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, setDoc, doc } from "firebase/firestore";
 
 const SignUpForm = () => {
   const signUpFormRef = useRef<HTMLFormElement>(null);
@@ -18,19 +18,12 @@ const SignUpForm = () => {
     email: string
   ) => {
     const db = getFirestore(app);
-    const dbRef = collection(db, "users");
-    await addDoc(dbRef, {
+    await setDoc(doc(db, "users", authId), {
       username,
       email,
       authId,
       roles: ["USER_ROLE"],
-    })
-      .then((docRef) => {
-        console.log("Document has been added successfully", docRef);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    });
   };
 
   //TODO ajouter un loader à la soumission du formulaire de création de compte
@@ -51,6 +44,7 @@ const SignUpForm = () => {
           displayName: userName,
         })
           .then(() => {
+            console.log(success);
             console.log("profil update");
             if (typeof success === "object" && success !== null) {
               addUserNameAndRole(success.user.uid, userName, email);

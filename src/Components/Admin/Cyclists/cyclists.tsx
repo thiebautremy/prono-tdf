@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react";
-import app from "../../config/firebaseConfig";
+import React, { useEffect, useState, useContext } from "react";
+import { CyclistsContext } from "../../../Context/cyclistsContext";
+import app from "../../../config/firebaseConfig";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
+import AddCyclistForm from "./addCyclistForm";
+import "./cyclists.scss";
 interface CyclistInterface {
   lastname: string;
   number: number;
@@ -10,8 +13,7 @@ interface CyclistInterface {
 }
 const Cyclists = () => {
   const db = getFirestore(app);
-  const [cyclists, setCyclists] = useState([]);
-  //TODO Faire un Context pour les cyclists
+  const { cyclists, setCyclists } = useContext(CyclistsContext);
   //TODO Faire un formulaire d'ajout sur le côté gauche
   //TODO Faire la liste des coureurs à droite avec une petite poubelle pour les supprimer facilement
   const fetchCyclists = async () => {
@@ -33,7 +35,8 @@ const Cyclists = () => {
     fetchCyclists();
   }, []);
   return (
-    <div>
+    <div className="cyclists">
+      <AddCyclistForm fetchCyclists={fetchCyclists} />
       {cyclists.length > 0 &&
         cyclists.map((cyclist: CyclistInterface) => (
           <div key={cyclist.number}>

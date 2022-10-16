@@ -1,0 +1,862 @@
+[
+  {
+    "id": "1",
+    "alpha": "AFG",
+    "nom_fr": "Afghanistan"
+  },
+  {
+    "id": "2",
+    "alpha": "ALB",
+    "nom_fr": "Albanie"
+  },
+  {
+    "id": "4",
+    "alpha": "DZA",
+    "nom_fr": "Algérie"
+  },
+  {
+    "id": "6",
+    "alpha": "AND",
+    "nom_fr": "Andorre"
+  },
+  {
+    "id": "7",
+    "alpha": "AGO",
+    "nom_fr": "Angola"
+  },
+  {
+    "id": "8",
+    "alpha": "ATG",
+    "nom_fr": "Antigua-et-Barbuda"
+  },
+  {
+    "id": "9",
+    "alpha": "AZE",
+    "nom_fr": "Azerbaïdjan"
+  },
+  {
+    "id": "10",
+    "alpha": "ARG",
+    "nom_fr": "Argentine"
+  },
+  {
+    "id": "11",
+    "alpha": "AUS",
+    "nom_fr": "Australie"
+  },
+  {
+    "id": "12",
+    "alpha": "AUT",
+    "nom_fr": "Autriche"
+  },
+  {
+    "id": "13",
+    "alpha": "BHS",
+    "nom_fr": "Bahamas"
+  },
+  {
+    "id": "14",
+    "alpha": "BHR",
+    "nom_fr": "Bahreïn"
+  },
+  {
+    "id": "15",
+    "alpha": "BGD",
+    "nom_fr": "Bangladesh"
+  },
+  {
+    "id": "16",
+    "alpha": "ARM",
+    "nom_fr": "Arménie"
+  },
+  {
+    "id": "17",
+    "alpha": "BRB",
+    "nom_fr": "Barbade"
+  },
+  {
+    "id": "18",
+    "alpha": "BEL",
+    "nom_fr": "Belgique"
+  },
+  {
+    "id": "19",
+    "alpha": "BMU",
+    "nom_fr": "Bermudes"
+  },
+  {
+    "id": "21",
+    "alpha": "BOL",
+    "nom_fr": "Bolivie"
+  },
+  {
+    "id": "22",
+    "alpha": "BIH",
+    "nom_fr": "Bosnie-Herzégovine"
+  },
+  {
+    "id": "23",
+    "alpha": "BWA",
+    "nom_fr": "Botswana"
+  },
+  {
+    "id": "25",
+    "alpha": "BRA",
+    "nom_fr": "Brésil"
+  },
+  {
+    "id": "26",
+    "alpha": "BLZ",
+    "nom_fr": "Belize"
+  },
+  {
+    "id": "30",
+    "alpha": "BRN",
+    "nom_fr": "Brunéi Darussalam"
+  },
+  {
+    "id": "31",
+    "alpha": "BGR",
+    "nom_fr": "Bulgarie"
+  },
+  {
+    "id": "32",
+    "alpha": "MMR",
+    "nom_fr": "Myanmar"
+  },
+  {
+    "id": "34",
+    "alpha": "BLR",
+    "nom_fr": "Bélarus"
+  },
+  {
+    "id": "35",
+    "alpha": "KHM",
+    "nom_fr": "Cambodge"
+  },
+  {
+    "id": "36",
+    "alpha": "CMR",
+    "nom_fr": "Cameroun"
+  },
+  {
+    "id": "37",
+    "alpha": "CAN",
+    "nom_fr": "Canada"
+  },
+  {
+    "id": "38",
+    "alpha": "CPV",
+    "nom_fr": "Cap-vert"
+  },
+  {
+    "id": "39",
+    "alpha": "CYM",
+    "nom_fr": "Iles Caïmans"
+  },
+  {
+    "id": "40",
+    "alpha": "CAF",
+    "nom_fr": "République Centrafricaine"
+  },
+  {
+    "id": "41",
+    "alpha": "LKA",
+    "nom_fr": "Sri Lanka"
+  },
+  {
+    "id": "42",
+    "alpha": "TCD",
+    "nom_fr": "Tchad"
+  },
+  {
+    "id": "43",
+    "alpha": "CHL",
+    "nom_fr": "Chili"
+  },
+  {
+    "id": "44",
+    "alpha": "CHN",
+    "nom_fr": "Chine"
+  },
+  {
+    "id": "45",
+    "alpha": "TWN",
+    "nom_fr": "Taïwan"
+  },
+  {
+    "id": "48",
+    "alpha": "COL",
+    "nom_fr": "Colombie"
+  },
+  {
+    "id": "49",
+    "alpha": "COM",
+    "nom_fr": "Comores"
+  },
+  {
+    "id": "51",
+    "alpha": "COG",
+    "nom_fr": "République du Congo"
+  },
+  {
+    "id": "54",
+    "alpha": "CRI",
+    "nom_fr": "Costa Rica"
+  },
+  {
+    "id": "55",
+    "alpha": "HRV",
+    "nom_fr": "Croatie"
+  },
+  {
+    "id": "56",
+    "alpha": "CUB",
+    "nom_fr": "Cuba"
+  },
+  {
+    "id": "57",
+    "alpha": "CYP",
+    "nom_fr": "Chypre"
+  },
+  {
+    "id": "58",
+    "alpha": "CZE",
+    "nom_fr": "République Tchèque"
+  },
+  {
+    "id": "59",
+    "alpha": "BEN",
+    "nom_fr": "Bénin"
+  },
+  {
+    "id": "60",
+    "alpha": "DNK",
+    "nom_fr": "Danemark"
+  },
+  {
+    "id": "61",
+    "alpha": "DMA",
+    "nom_fr": "Dominique"
+  },
+  {
+    "id": "62",
+    "alpha": "DOM",
+    "nom_fr": "République Dominicaine"
+  },
+  {
+    "id": "63",
+    "alpha": "ECU",
+    "nom_fr": "Equateur"
+  },
+  {
+    "id": "64",
+    "alpha": "SLV",
+    "nom_fr": "El Salvador"
+  },
+  {
+    "id": "65",
+    "alpha": "GNQ",
+    "nom_fr": "Guinée Equatoriale"
+  },
+  {
+    "id": "66",
+    "alpha": "ETH",
+    "nom_fr": "Ethiopie"
+  },
+  {
+    "id": "67",
+    "alpha": "ERI",
+    "nom_fr": "Erythrée"
+  },
+  {
+    "id": "68",
+    "alpha": "EST",
+    "nom_fr": "Estonie"
+  },
+  {
+    "id": "69",
+    "alpha": "FRO",
+    "nom_fr": "Iles Féroé"
+  },
+  {
+    "id": "73",
+    "alpha": "FIN",
+    "nom_fr": "Finlande"
+  },
+  {
+    "id": "75",
+    "alpha": "FRA",
+    "nom_fr": "France"
+  },
+  {
+    "id": "79",
+    "alpha": "DJI",
+    "nom_fr": "Djibouti"
+  },
+  {
+    "id": "80",
+    "alpha": "GAB",
+    "nom_fr": "Gabon"
+  },
+  {
+    "id": "81",
+    "alpha": "GEO",
+    "nom_fr": "Géorgie"
+  },
+  {
+    "id": "82",
+    "alpha": "GMB",
+    "nom_fr": "Gambie"
+  },
+  {
+    "id": "84",
+    "alpha": "DEU",
+    "nom_fr": "Allemagne"
+  },
+  {
+    "id": "85",
+    "alpha": "GHA",
+    "nom_fr": "Ghana"
+  },
+  {
+    "id": "86",
+    "alpha": "GIB",
+    "nom_fr": "Gibraltar"
+  },
+  {
+    "id": "88",
+    "alpha": "GRC",
+    "nom_fr": "Grèce"
+  },
+  {
+    "id": "90",
+    "alpha": "GRD",
+    "nom_fr": "Grenade"
+  },
+  {
+    "id": "93",
+    "alpha": "GTM",
+    "nom_fr": "Guatemala"
+  },
+  {
+    "id": "94",
+    "alpha": "GIN",
+    "nom_fr": "Guinée"
+  },
+  {
+    "id": "99",
+    "alpha": "HND",
+    "nom_fr": "Honduras"
+  },
+  {
+    "id": "100",
+    "alpha": "HKG",
+    "nom_fr": "Hong-Kong"
+  },
+  {
+    "id": "101",
+    "alpha": "HUN",
+    "nom_fr": "Hongrie"
+  },
+  {
+    "id": "102",
+    "alpha": "ISL",
+    "nom_fr": "Islande"
+  },
+  {
+    "id": "103",
+    "alpha": "IND",
+    "nom_fr": "Inde"
+  },
+  {
+    "id": "104",
+    "alpha": "IDN",
+    "nom_fr": "Indonésie"
+  },
+  {
+    "id": "105",
+    "alpha": "IRN",
+    "nom_fr": "Iran"
+  },
+  {
+    "id": "106",
+    "alpha": "IRQ",
+    "nom_fr": "Iraq"
+  },
+  {
+    "id": "107",
+    "alpha": "IRL",
+    "nom_fr": "Irlande"
+  },
+  {
+    "id": "108",
+    "alpha": "ISR",
+    "nom_fr": "Israël"
+  },
+  {
+    "id": "109",
+    "alpha": "ITA",
+    "nom_fr": "Italie"
+  },
+  {
+    "id": "110",
+    "alpha": "CIV",
+    "nom_fr": "Côte d'Ivoire"
+  },
+  {
+    "id": "111",
+    "alpha": "JAM",
+    "nom_fr": "Jamaïque"
+  },
+  {
+    "id": "112",
+    "alpha": "JPN",
+    "nom_fr": "Japon"
+  },
+  {
+    "id": "113",
+    "alpha": "KAZ",
+    "nom_fr": "Kazakhstan"
+  },
+  {
+    "id": "114",
+    "alpha": "JOR",
+    "nom_fr": "Jordanie"
+  },
+  {
+    "id": "115",
+    "alpha": "KEN",
+    "nom_fr": "Kenya"
+  },
+  {
+    "id": "117",
+    "alpha": "KOR",
+    "nom_fr": "Corée du sud"
+  },
+  {
+    "id": "118",
+    "alpha": "KWT",
+    "nom_fr": "Koweït"
+  },
+  {
+    "id": "119",
+    "alpha": "KGZ",
+    "nom_fr": "Kirghizistan"
+  },
+  {
+    "id": "121",
+    "alpha": "LBN",
+    "nom_fr": "Liban"
+  },
+  {
+    "id": "122",
+    "alpha": "LSO",
+    "nom_fr": "Lesotho"
+  },
+  {
+    "id": "123",
+    "alpha": "LVA",
+    "nom_fr": "Lettonie"
+  },
+  {
+    "id": "124",
+    "alpha": "LBR",
+    "nom_fr": "Libéria"
+  },
+  {
+    "id": "126",
+    "alpha": "LIE",
+    "nom_fr": "Liechtenstein"
+  },
+  {
+    "id": "127",
+    "alpha": "LTU",
+    "nom_fr": "Lituanie"
+  },
+  {
+    "id": "128",
+    "alpha": "LUX",
+    "nom_fr": "Luxembourg"
+  },
+  {
+    "id": "129",
+    "alpha": "MAC",
+    "nom_fr": "Macao"
+  },
+  {
+    "id": "130",
+    "alpha": "MDG",
+    "nom_fr": "Madagascar"
+  },
+  {
+    "id": "131",
+    "alpha": "MWI",
+    "nom_fr": "Malawi"
+  },
+  {
+    "id": "132",
+    "alpha": "MYS",
+    "nom_fr": "Malaisie"
+  },
+  {
+    "id": "133",
+    "alpha": "MDV",
+    "nom_fr": "Maldives"
+  },
+  {
+    "id": "134",
+    "alpha": "MLI",
+    "nom_fr": "Mali"
+  },
+  {
+    "id": "135",
+    "alpha": "MLT",
+    "nom_fr": "Malte"
+  },
+  {
+    "id": "137",
+    "alpha": "MRT",
+    "nom_fr": "Mauritanie"
+  },
+  {
+    "id": "138",
+    "alpha": "MUS",
+    "nom_fr": "Maurice"
+  },
+  {
+    "id": "139",
+    "alpha": "MEX",
+    "nom_fr": "Mexique"
+  },
+  {
+    "id": "140",
+    "alpha": "MCO",
+    "nom_fr": "Monaco"
+  },
+  {
+    "id": "141",
+    "alpha": "MNG",
+    "nom_fr": "Mongolie"
+  },
+  {
+    "id": "142",
+    "alpha": "MDA",
+    "nom_fr": "Moldavie"
+  },
+  {
+    "id": "144",
+    "alpha": "MAR",
+    "nom_fr": "Maroc"
+  },
+  {
+    "id": "145",
+    "alpha": "MOZ",
+    "nom_fr": "Mozambique"
+  },
+  {
+    "id": "146",
+    "alpha": "OMN",
+    "nom_fr": "Oman"
+  },
+  {
+    "id": "147",
+    "alpha": "NAM",
+    "nom_fr": "Namibie"
+  },
+  {
+    "id": "150",
+    "alpha": "NLD",
+    "nom_fr": "Pays-Bas"
+  },
+  {
+    "id": "155",
+    "alpha": "NZL",
+    "nom_fr": "Nouvelle-Zélande"
+  },
+  {
+    "id": "156",
+    "alpha": "NIC",
+    "nom_fr": "Nicaragua"
+  },
+  {
+    "id": "157",
+    "alpha": "NER",
+    "nom_fr": "Niger"
+  },
+  {
+    "id": "158",
+    "alpha": "NGA",
+    "nom_fr": "Nigéria"
+  },
+  {
+    "id": "161",
+    "alpha": "NOR",
+    "nom_fr": "Norvège"
+  },
+  {
+    "id": "167",
+    "alpha": "PAK",
+    "nom_fr": "Pakistan"
+  },
+  {
+    "id": "168",
+    "alpha": "PAN",
+    "nom_fr": "Panama"
+  },
+  {
+    "id": "170",
+    "alpha": "PRY",
+    "nom_fr": "Paraguay"
+  },
+  {
+    "id": "171",
+    "alpha": "PER",
+    "nom_fr": "Pérou"
+  },
+  {
+    "id": "172",
+    "alpha": "PHL",
+    "nom_fr": "Philippines"
+  },
+  {
+    "id": "174",
+    "alpha": "POL",
+    "nom_fr": "Pologne"
+  },
+  {
+    "id": "175",
+    "alpha": "PRT",
+    "nom_fr": "Portugal"
+  },
+  {
+    "id": "176",
+    "alpha": "GNB",
+    "nom_fr": "Guinée-Bissau"
+  },
+  {
+    "id": "178",
+    "alpha": "PRI",
+    "nom_fr": "Porto Rico"
+  },
+  {
+    "id": "179",
+    "alpha": "QAT",
+    "nom_fr": "Qatar"
+  },
+  {
+    "id": "181",
+    "alpha": "ROU",
+    "nom_fr": "Roumanie"
+  },
+  {
+    "id": "182",
+    "alpha": "RUS",
+    "nom_fr": "Russie"
+  },
+  {
+    "id": "183",
+    "alpha": "RWA",
+    "nom_fr": "Rwanda"
+  },
+  {
+    "id": "192",
+    "alpha": "SAU",
+    "nom_fr": "Arabie Saoudite"
+  },
+  {
+    "id": "193",
+    "alpha": "SEN",
+    "nom_fr": "Sénégal"
+  },
+  {
+    "id": "196",
+    "alpha": "SGP",
+    "nom_fr": "Singapour"
+  },
+  {
+    "id": "197",
+    "alpha": "SVK",
+    "nom_fr": "Slovaquie"
+  },
+  {
+    "id": "198",
+    "alpha": "VNM",
+    "nom_fr": "Viet Nam"
+  },
+  {
+    "id": "199",
+    "alpha": "SVN",
+    "nom_fr": "Slovénie"
+  },
+  {
+    "id": "200",
+    "alpha": "SOM",
+    "nom_fr": "Somalie"
+  },
+  {
+    "id": "201",
+    "alpha": "ZAF",
+    "nom_fr": "Afrique du Sud"
+  },
+  {
+    "id": "202",
+    "alpha": "ZWE",
+    "nom_fr": "Zimbabwe"
+  },
+  {
+    "id": "203",
+    "alpha": "ESP",
+    "nom_fr": "Espagne"
+  },
+  {
+    "id": "204",
+    "alpha": "ESH",
+    "nom_fr": "Sahara Occidental"
+  },
+  {
+    "id": "205",
+    "alpha": "SDN",
+    "nom_fr": "Soudan"
+  },
+  {
+    "id": "206",
+    "alpha": "SUR",
+    "nom_fr": "Suriname"
+  },
+  {
+    "id": "209",
+    "alpha": "SWE",
+    "nom_fr": "Suède"
+  },
+  {
+    "id": "210",
+    "alpha": "CHE",
+    "nom_fr": "Suisse"
+  },
+  {
+    "id": "211",
+    "alpha": "SYR",
+    "nom_fr": "Syrie"
+  },
+  {
+    "id": "212",
+    "alpha": "TJK",
+    "nom_fr": "Tadjikistan"
+  },
+  {
+    "id": "213",
+    "alpha": "THA",
+    "nom_fr": "Thaïlande"
+  },
+  {
+    "id": "214",
+    "alpha": "TGO",
+    "nom_fr": "Togo"
+  },
+  {
+    "id": "216",
+    "alpha": "TON",
+    "nom_fr": "Tonga"
+  },
+  {
+    "id": "217",
+    "alpha": "TTO",
+    "nom_fr": "Trinité-et-Tobago"
+  },
+  {
+    "id": "218",
+    "alpha": "ARE",
+    "nom_fr": "Emirats Arabes Unis"
+  },
+  {
+    "id": "219",
+    "alpha": "TUN",
+    "nom_fr": "Tunisie"
+  },
+  {
+    "id": "220",
+    "alpha": "TUR",
+    "nom_fr": "Turquie"
+  },
+  {
+    "id": "221",
+    "alpha": "TKM",
+    "nom_fr": "Turkménistan"
+  },
+  {
+    "id": "224",
+    "alpha": "UGA",
+    "nom_fr": "Ouganda"
+  },
+  {
+    "id": "225",
+    "alpha": "UKR",
+    "nom_fr": "Ukraine"
+  },
+  {
+    "id": "226",
+    "alpha": "MKD",
+    "nom_fr": "Macédoine"
+  },
+  {
+    "id": "227",
+    "alpha": "EGY",
+    "nom_fr": "Egypte"
+  },
+  {
+    "id": "228",
+    "alpha": "GBR",
+    "nom_fr": "Royaume-Uni"
+  },
+  {
+    "id": "230",
+    "alpha": "TZA",
+    "nom_fr": "Tanzanie"
+  },
+  {
+    "id": "231",
+    "alpha": "USA",
+    "nom_fr": "Etats-Unis"
+  },
+  {
+    "id": "233",
+    "alpha": "BFA",
+    "nom_fr": "Burkina Faso"
+  },
+  {
+    "id": "234",
+    "alpha": "URY",
+    "nom_fr": "Uruguay"
+  },
+  {
+    "id": "235",
+    "alpha": "UZB",
+    "nom_fr": "Ouzbékistan"
+  },
+  {
+    "id": "236",
+    "alpha": "VEN",
+    "nom_fr": "Venezuela"
+  },
+  {
+    "id": "238",
+    "alpha": "WSM",
+    "nom_fr": "Samoa"
+  },
+  {
+    "id": "239",
+    "alpha": "YEM",
+    "nom_fr": "Yémen"
+  },
+  {
+    "id": "240",
+    "alpha": "SCG",
+    "nom_fr": "Serbie-et-Monténégro"
+  },
+  {
+    "id": "241",
+    "alpha": "ZMB",
+    "nom_fr": "Zambie"
+  }
+]

@@ -1,0 +1,18 @@
+@use "src/Styles/_vars.scss" as var;
+
+.cyclists {
+  display: flex;
+}
+
+.addCyclistForm {
+  min-width: 20%;
+  padding: 1rem;
+
+  &__form {
+    &__input,
+    &__label {
+      display: block;
+      margin: 0.5rem 0;
+    }
+  }
+}

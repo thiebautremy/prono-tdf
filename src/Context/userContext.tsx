@@ -22,8 +22,9 @@ interface IContextProps {
     roles: [string];
     authId: string;
   };
-  setUserInfo: (param: unknown) => void;
+  setUserConnectedInfo: (param: unknown) => void;
   users: [string];
+  userConnectedInfo: [string];
   setUsers: (param: unknown) => void;
   signErrorMessage: string;
 }
@@ -56,7 +57,7 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
   }
   //? ===== GESTION INSCRIPTION ===== \\
   const [currentUser, setCurrentUser] = useState({} as any);
-  const [userInfo, setUserInfo] = useState({} as any);
+  const [userConnectedInfo, setUserConnectedInfo] = useState([]);
   const [users, setUsers] = useState({} as any);
   const [loadingData, setLoadingData] = useState(true);
   const signUp = (email: string, password: string) =>
@@ -84,8 +85,8 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
         signIn,
         signErrorMessage,
         setSignErrorMessage,
-        userInfo,
-        setUserInfo,
+        userConnectedInfo,
+        setUserConnectedInfo,
         users,
         setUsers,
       }}

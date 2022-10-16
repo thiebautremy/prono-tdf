@@ -5,7 +5,7 @@ import { Checkbox } from "primereact/checkbox";
 
 const User = ({ user, setCheckAdmin }) => {
   const db = getFirestore(app);
-  const userRef = doc(db, "users", `${user.id}`);
+  const userRef = doc(db, "users", `${user.authId}`);
   const onRoleChange = async (e: Checkbox) => {
     if (e.checked) {
       await updateDoc(userRef, {
@@ -21,10 +21,16 @@ const User = ({ user, setCheckAdmin }) => {
   };
   return (
     <div className="user">
-      <p className="user__name">Username : {user.username}</p>
-      <p className="user__email">Email :{user.email}</p>
+      <p className="user__name">
+        <strong>Username :</strong> {user.username}
+      </p>
+      <p className="user__email">
+        <strong>Email :</strong> {user.email}
+      </p>
       <div className="user__checkbox">
-        <label htmlFor="city2">Administrateur</label>
+        <label htmlFor="city2">
+          <strong>Administrateur</strong>
+        </label>
         <Checkbox
           inputId="admin"
           name="role"

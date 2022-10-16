@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
+import { UserContext } from "../../../Context/userContext";
+import app from "../../../config/firebaseConfig";
 import NavBar from "../../NavBar/navBar";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 
 const HomeConnected: React.FC = () => {
-  //TODO Fetch les users, les enregistrer dans un adminContext à créer filtrer ensuite le tableau des users pour savoir si le userInfo === currentUser avec le authId présent dans la table users
-  return (
-    <>
-      <NavBar />
-    </>
-  );
+  const { currentUser, setUserConnectedInfo, userConnectedInfo } =
+    useContext(UserContext);
+  const db = getFirestore(app);
+  useEffect(() => {
+    saveUserConnectedInfo();
+  }, []);
+  const saveUserConnectedInfo = async () => {
+    const userDocumentDbRef = await getDoc(doc(db, "users", currentUser.uid));
+    setUserConnectedInfo(userDocumentDbRef.data());
+  };
+  return <>{<NavBar />}</>;
 };
 
 export default HomeConnected;

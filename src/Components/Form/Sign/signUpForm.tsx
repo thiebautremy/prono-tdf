@@ -19,9 +19,9 @@ const SignUpForm = () => {
   ) => {
     const db = getFirestore(app);
     await setDoc(doc(db, "users", authId), {
+      authId,
       username,
       email,
-      authId,
       roles: ["USER_ROLE"],
     });
   };

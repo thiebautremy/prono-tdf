@@ -7,8 +7,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../../Pages/Home/Home";
 import Admin from "../../Pages/Admin/Admin";
 import Users from "../Admin/Users/users";
+import Cyclists from "../Cyclists/cyclists";
 const App = () => {
-  console.log(useContext(UserContext));
   const { modalState, currentUser } = useContext(UserContext);
   return (
     <div className="App">
@@ -22,6 +22,14 @@ const App = () => {
             element={
               <Admin>
                 <Users />
+              </Admin>
+            }
+          />
+          <Route
+            path="/admin/cyclists"
+            element={
+              <Admin>
+                <Cyclists />
               </Admin>
             }
           />

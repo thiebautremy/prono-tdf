@@ -1,14 +1,13 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { UserContext } from "../../Context/userContext";
 import { signOut } from "firebase/auth";
-import app, { auth } from "../../config/firebaseConfig";
+import { auth } from "../../config/firebaseConfig";
 import { FiLogOut } from "react-icons/fi";
-import { doc, setDoc, getFirestore } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import "./navBar.scss";
 
 const NavBar = () => {
-  const { currentUser } = useContext(UserContext);
+  const { currentUser, userConnectedInfo } = useContext(UserContext);
   const logOut = async () => {
     try {
       await signOut(auth);
@@ -16,26 +15,19 @@ const NavBar = () => {
       console.log(err);
     }
   };
+  console.log(currentUser);
+  console.log(userConnectedInfo);
 
-  useEffect(() => {
-    // checkRoles();
-  }, []);
-  const checkRoles = () => {
-    const db = getFirestore(app);
-    setDoc(doc(db, "users", currentUser.uid), {
-      name: "Los Angeles",
-      state: "CA",
-      country: "USA",
-    });
-  };
   return (
     <div className="navBar">
       <>
         {currentUser && (
           <nav>
             <h2 className="navBar__userName">
-              Bonjour {currentUser.displayName}
-              <span className="navBar__userName--strong"></span>
+              Bonjour
+              <span className="navBar__userName--strong">
+                {currentUser.displayName}
+              </span>
             </h2>
             <Link to="/admin" className="navBar__link">
               Administration

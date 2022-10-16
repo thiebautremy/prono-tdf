@@ -8,13 +8,31 @@
 
 .user {
   font-size: 1.2rem;
+  padding: 0.5rem;
   display: flex;
   align-items: center;
   margin: 1rem 0;
   text-align: center;
+  backdrop-filter: blur(0px);
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 1rem 2rem;
+  border: 0 solid var.$black;
+  box-shadow: 10px 10px 20px 0px rgba(50, 46, 47, 0.5),
+    inset -0px -0px 5px 0px rgba(50, 46, 47, 0.6),
+    inset 0px 11px 28px 0px rgb(255, 255, 255);
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    box-shadow: 12px 12px 24px 0px rgba(50, 46, 47, 0.5),
+      inset -0px -0px 5px 0px rgba(50, 46, 47, 0.6),
+      inset 0px 11px 28px 0px rgb(255, 255, 255);
+  }
   &__email,
   &__name,
   &__checkbox {
     width: 33%;
+
+    & strong {
+      font-weight: bold;
+    }
   }
 }

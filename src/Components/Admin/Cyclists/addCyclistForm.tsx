@@ -4,9 +4,16 @@ import { getFirestore, setDoc, doc } from "firebase/firestore";
 import app from "../../../config/firebaseConfig";
 
 const AddCyclistForm = ({ fetchCyclists }) => {
-  const [cyclistToAdd, setCyclistToAdd] = useState({});
+  const [cyclistToAdd, setCyclistToAdd] = useState({
+    lastname: "",
+    firstname: "",
+    nationality: "",
+    number: "",
+    team: "",
+  });
   //TODO Check si aucune info est vide avant d'envoyer
   //TODO Conditionner le retour de l'API pour afficher une pop up de confirmation
+  //TODO Revoir champ controlé pour les select
   const handleAddCyclistSubmit = async (e) => {
     e.preventDefault();
     const db = getFirestore(app);
@@ -16,6 +23,13 @@ const AddCyclistForm = ({ fetchCyclists }) => {
       nationality: cyclistToAdd.nationality,
       number: cyclistToAdd.number,
       team: cyclistToAdd.team,
+    });
+    setCyclistToAdd({
+      lastname: "",
+      firstname: "",
+      nationality: "",
+      number: "",
+      team: "",
     });
     fetchCyclists();
   };
@@ -35,6 +49,7 @@ const AddCyclistForm = ({ fetchCyclists }) => {
           type="text"
           name="lastname"
           id="lastname"
+          value={cyclistToAdd.lastname}
           placeholder="Nom de famille"
           className="addCyclistForm__form__input"
           onChange={(e) =>
@@ -51,6 +66,7 @@ const AddCyclistForm = ({ fetchCyclists }) => {
           type="text"
           name="firstname"
           id="firstname"
+          value={cyclistToAdd.firstname}
           placeholder="Prénom"
           className="addCyclistForm__form__input"
           onChange={(e) =>
@@ -67,6 +83,7 @@ const AddCyclistForm = ({ fetchCyclists }) => {
           name="team"
           id="team"
           className="addCyclistForm__form__input"
+          value={cyclistToAdd.team}
           onChange={(e) =>
             setCyclistToAdd({
               ...cyclistToAdd,
@@ -89,6 +106,7 @@ const AddCyclistForm = ({ fetchCyclists }) => {
           name="nationality"
           id="nationality"
           className="addCyclistForm__form__input"
+          value={cyclistToAdd.nationality}
           onChange={(e) =>
             setCyclistToAdd({
               ...cyclistToAdd,
@@ -115,6 +133,7 @@ const AddCyclistForm = ({ fetchCyclists }) => {
           type="number"
           name="number"
           id="number"
+          value={cyclistToAdd.number}
           placeholder="Numéro de dossard"
           className="addCyclistForm__form__input"
           onChange={(e) =>

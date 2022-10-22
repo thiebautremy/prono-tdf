@@ -2,17 +2,18 @@
 
 .cyclists {
   display: flex;
-}
 
-.addCyclistForm {
-  min-width: 20%;
-  padding: 1rem;
+  &__container {
+    display: flex;
+    flex-direction: column;
 
-  &__form {
-    &__input,
-    &__label {
-      display: block;
-      margin: 0.5rem 0;
+    &__title {
+      color: var.$black;
+      font-size: 1.5rem;
+      margin: 2rem 0;
+      text-transform: uppercase;
+      font-weight: bold;
+      text-align: center;
     }
   }
 }

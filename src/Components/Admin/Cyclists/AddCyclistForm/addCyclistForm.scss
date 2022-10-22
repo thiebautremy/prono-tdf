@@ -1,0 +1,52 @@
+@use "src/Styles/_vars.scss" as var;
+
+.addCyclistForm {
+  margin-top: 1rem;
+  min-width: 20%;
+  padding: 1rem;
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    &__input,
+    &__label {
+      display: block;
+      margin: 0.5rem 0;
+    }
+
+    &__label {
+      font-size: 1.2rem;
+    }
+
+    &__input {
+      margin: 0.5rem auto;
+      font-family: var.$font-italic;
+      font-size: 1.2rem;
+      border-radius: 0.2rem;
+      border: 0.1rem solid var.$black;
+      padding: 0.2rem 0.5rem;
+
+      &--select {
+        background-color: var.$white;
+      }
+    }
+
+    &__btnSubmit {
+      margin: 1rem auto;
+      border: 0.1rem solid var.$yellow;
+      background-color: var.$yellow;
+      padding: 0.5rem 1rem;
+      border-radius: 0.2rem;
+      font-size: 1.2rem;
+      font-family: var.$font-bold;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        background-color: var.$black;
+        color: var.$yellow;
+        cursor: pointer;
+      }
+    }
+  }
+}

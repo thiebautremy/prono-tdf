@@ -1,12 +1,20 @@
 import React, { useState } from "react";
-import nationalitiesData from "../../../assets/data/countries.json";
+import "./addCyclistForm.scss";
+import nationalitiesData from "../../../../assets/data/countries.json";
 import { getFirestore, setDoc, doc } from "firebase/firestore";
-import app from "../../../config/firebaseConfig";
+import app from "../../../../config/firebaseConfig";
 
 const AddCyclistForm = ({ fetchCyclists }) => {
-  const [cyclistToAdd, setCyclistToAdd] = useState({});
+  const [cyclistToAdd, setCyclistToAdd] = useState({
+    lastname: "",
+    firstname: "",
+    team: "DEFAULT_TEAM",
+    number: "",
+    nationality: "DEFAULT_NATIONALITY",
+  });
   //TODO Check si aucune info est vide avant d'envoyer
   //TODO Conditionner le retour de l'API pour afficher une pop up de confirmation
+  //TODO Remettre à zéro les valeurs après soumission
   const handleAddCyclistSubmit = async (e) => {
     e.preventDefault();
     const db = getFirestore(app);
@@ -16,6 +24,13 @@ const AddCyclistForm = ({ fetchCyclists }) => {
       nationality: cyclistToAdd.nationality,
       number: cyclistToAdd.number,
       team: cyclistToAdd.team,
+    });
+    setCyclistToAdd({
+      lastname: "",
+      firstname: "",
+      team: "DEFAULT_TEAM",
+      number: "",
+      nationality: "DEFAULT_NATIONALITY",
     });
     fetchCyclists();
   };
@@ -37,6 +52,7 @@ const AddCyclistForm = ({ fetchCyclists }) => {
           id="lastname"
           placeholder="Nom de famille"
           className="addCyclistForm__form__input"
+          value={cyclistToAdd.lastname}
           onChange={(e) =>
             setCyclistToAdd({
               ...cyclistToAdd,
@@ -52,6 +68,7 @@ const AddCyclistForm = ({ fetchCyclists }) => {
           name="firstname"
           id="firstname"
           placeholder="Prénom"
+          value={cyclistToAdd.firstname}
           className="addCyclistForm__form__input"
           onChange={(e) =>
             setCyclistToAdd({
@@ -66,7 +83,8 @@ const AddCyclistForm = ({ fetchCyclists }) => {
         <select
           name="team"
           id="team"
-          className="addCyclistForm__form__input"
+          className="addCyclistForm__form__input addCyclistForm__form__input--select"
+          value={cyclistToAdd.team}
           onChange={(e) =>
             setCyclistToAdd({
               ...cyclistToAdd,
@@ -88,7 +106,8 @@ const AddCyclistForm = ({ fetchCyclists }) => {
         <select
           name="nationality"
           id="nationality"
-          className="addCyclistForm__form__input"
+          className="addCyclistForm__form__input addCyclistForm__form__input--select"
+          value={cyclistToAdd.nationality}
           onChange={(e) =>
             setCyclistToAdd({
               ...cyclistToAdd,
@@ -117,6 +136,7 @@ const AddCyclistForm = ({ fetchCyclists }) => {
           id="number"
           placeholder="Numéro de dossard"
           className="addCyclistForm__form__input"
+          value={cyclistToAdd.number}
           onChange={(e) =>
             setCyclistToAdd({
               ...cyclistToAdd,
@@ -124,7 +144,9 @@ const AddCyclistForm = ({ fetchCyclists }) => {
             })
           }
         />
-        <button type="submit">Ajouter</button>
+        <button type="submit" className="addCyclistForm__form__btnSubmit">
+          Ajouter
+        </button>
       </form>
     </div>
   );

@@ -50,9 +50,9 @@ const AddCyclistForm = ({ fetchCyclists }) => {
           type="text"
           name="lastname"
           id="lastname"
+          value={cyclistToAdd.lastname}
           placeholder="Nom de famille"
           className="addCyclistForm__form__input"
-          value={cyclistToAdd.lastname}
           onChange={(e) =>
             setCyclistToAdd({
               ...cyclistToAdd,
@@ -67,8 +67,8 @@ const AddCyclistForm = ({ fetchCyclists }) => {
           type="text"
           name="firstname"
           id="firstname"
-          placeholder="Prénom"
           value={cyclistToAdd.firstname}
+          placeholder="Prénom"
           className="addCyclistForm__form__input"
           onChange={(e) =>
             setCyclistToAdd({
@@ -134,9 +134,9 @@ const AddCyclistForm = ({ fetchCyclists }) => {
           type="number"
           name="number"
           id="number"
+          value={cyclistToAdd.number}
           placeholder="Numéro de dossard"
           className="addCyclistForm__form__input"
-          value={cyclistToAdd.number}
           onChange={(e) =>
             setCyclistToAdd({
               ...cyclistToAdd,

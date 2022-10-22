@@ -14,8 +14,9 @@ const AddCyclistForm = ({ fetchCyclists }) => {
   });
   //TODO Check si aucune info est vide avant d'envoyer
   //TODO Conditionner le retour de l'API pour afficher une pop up de confirmation
-  //TODO Remettre à zéro les valeurs après soumission
-  const handleAddCyclistSubmit = async (e) => {
+  const handleAddCyclistSubmit = async (
+    e: React.FormEvent<HTMLInputElement>
+  ) => {
     e.preventDefault();
     const db = getFirestore(app);
     await setDoc(doc(db, "cyclists", cyclistToAdd.number), {

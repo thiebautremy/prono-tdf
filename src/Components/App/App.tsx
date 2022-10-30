@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../../Pages/Home/Home";
 import Admin from "../../Pages/Admin/Admin";
 import Users from "../Admin/Users/users";
+import Stages from "../Admin/Stages/Stages";
 import Cyclists from "../Admin/Cyclists/cyclists";
 const App = () => {
   return (
@@ -25,6 +26,14 @@ const App = () => {
             element={
               <Admin>
                 <Cyclists />
+              </Admin>
+            }
+          />
+          <Route
+            path="/admin/stages"
+            element={
+              <Admin>
+                <Stages />
               </Admin>
             }
           />

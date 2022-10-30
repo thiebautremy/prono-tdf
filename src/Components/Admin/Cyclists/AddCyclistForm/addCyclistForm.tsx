@@ -4,7 +4,10 @@ import nationalitiesData from "../../../../assets/data/countries.json";
 import { getFirestore, setDoc, doc } from "firebase/firestore";
 import app from "../../../../config/firebaseConfig";
 
-const AddCyclistForm = ({ fetchCyclists }) => {
+type Props = {
+  fetchCyclists: () => [];
+};
+const AddCyclistForm = ({ fetchCyclists }: Props) => {
   const [cyclistToAdd, setCyclistToAdd] = useState({
     lastname: "",
     firstname: "",
@@ -15,7 +18,7 @@ const AddCyclistForm = ({ fetchCyclists }) => {
   //TODO Check si aucune info est vide avant d'envoyer
   //TODO Conditionner le retour de l'API pour afficher une pop up de confirmation
   const handleAddCyclistSubmit = async (
-    e: React.FormEvent<HTMLInputElement>
+    e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
     const db = getFirestore(app);
@@ -41,7 +44,9 @@ const AddCyclistForm = ({ fetchCyclists }) => {
   return (
     <div className="addCyclistForm">
       <form
-        onSubmit={(e) => handleAddCyclistSubmit(e)}
+        onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
+          handleAddCyclistSubmit(e)
+        }
         className="addCyclistForm__form"
       >
         <label htmlFor="lastname" className="addCyclistForm__form__label">

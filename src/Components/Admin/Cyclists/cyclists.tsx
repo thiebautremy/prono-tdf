@@ -9,7 +9,7 @@ import "./cyclists.scss";
 const Cyclists = () => {
   const db = getFirestore(app);
   const { cyclists, setCyclists } = useContext(CyclistsContext);
-  //TODO Faire la liste des coureurs à droite avec une petite poubelle pour les supprimer facilement
+  //TODO Faire la liste des coureurs avec à droite avec une petite poubelle pour les supprimer facilement
   const fetchCyclists = async () => {
     const datas: [] = [];
     try {

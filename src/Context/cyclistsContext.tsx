@@ -1,7 +1,7 @@
 import React, { createContext, useState } from "react";
 interface IContextProps {
-  setCyclists: (param: unknown) => void;
-  cyclists: [string];
+  setCyclists: (param: []) => void;
+  cyclists: [];
 }
 export const CyclistsContext = createContext({} as IContextProps);
 

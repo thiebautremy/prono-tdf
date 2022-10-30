@@ -15,7 +15,7 @@ interface IContextProps {
   signIn: (email: string, password: string) => void;
   setCurrentUser: (param: unknown) => void;
   setSignErrorMessage: (param: string) => void;
-  currentUser: { displayName: string };
+  currentUser: { displayName: string; uid: string };
   userInfo: {
     email: string;
     username: string;
@@ -24,7 +24,12 @@ interface IContextProps {
   };
   setUserConnectedInfo: (param: unknown) => void;
   users: [string];
-  userConnectedInfo: [string];
+  userConnectedInfo: {
+    authId: string;
+    email: string;
+    roles: string[];
+    username: string;
+  };
   setUsers: (param: unknown) => void;
   signErrorMessage: string;
 }
@@ -56,9 +61,9 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
     }
   }
   //? ===== GESTION INSCRIPTION ===== \\
-  const [currentUser, setCurrentUser] = useState({} as any);
-  const [userConnectedInfo, setUserConnectedInfo] = useState([]);
-  const [users, setUsers] = useState({} as any);
+  const [currentUser, setCurrentUser] = useState({});
+  const [userConnectedInfo, setUserConnectedInfo] = useState({});
+  const [users, setUsers] = useState({});
   const [loadingData, setLoadingData] = useState(true);
   const signUp = (email: string, password: string) =>
     createUserWithEmailAndPassword(auth, email, password);

@@ -6,6 +6,9 @@ import Admin from "../../Pages/Admin/Admin";
 import Users from "../Admin/Users/users";
 import Stages from "../Admin/Stages/Stages";
 import Cyclists from "../Admin/Cyclists/cyclists";
+import Pronos from "../Pronos/Pronos";
+import Resultats from "../Resultats/Resultats";
+import HomeConnected from "../Home/HomeConnected/homeConnected";
 const App = () => {
   return (
     <div className="App">
@@ -13,6 +16,22 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/admin" element={<Admin />} />
+          <Route
+            path="/prono"
+            element={
+              <HomeConnected>
+                <Pronos />
+              </HomeConnected>
+            }
+          />
+          <Route
+            path="/results"
+            element={
+              <HomeConnected>
+                <Resultats />
+              </HomeConnected>
+            }
+          />
           <Route
             path="/admin/users"
             element={

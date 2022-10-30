@@ -27,9 +27,11 @@
     display: inline-block;
     color: var.$yellow;
     font-size: 1.5rem;
+    margin-right: 3rem;
 
     &--strong {
       font-weight: bold;
+      margin-left: 0.5rem;
     }
   }
 

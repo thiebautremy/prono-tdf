@@ -1,14 +1,15 @@
 import React, { createContext, useState } from "react";
+interface IStage {
+  stageId: number;
+  startCity: string;
+  endCity: string;
+  date: { seconds: string; nanoseconds: string };
+  lengthStage: number;
+  type: string;
+}
 interface IContextProps {
-  setStages: (param: []) => void;
-  stages: {
-    stageId: number;
-    startCity: string;
-    endCity: string;
-    date: string;
-    lengthStage: number;
-    type: string;
-  }[];
+  setStages: IStage[];
+  stages: IStage[];
 }
 export const StagesContext = createContext({} as IContextProps);
 

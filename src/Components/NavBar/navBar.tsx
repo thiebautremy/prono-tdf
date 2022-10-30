@@ -15,9 +15,6 @@ const NavBar = () => {
       console.log(err);
     }
   };
-  console.log(currentUser);
-  console.log(userConnectedInfo);
-
   return (
     <div className="navBar">
       <>
@@ -29,9 +26,21 @@ const NavBar = () => {
                 {currentUser.displayName}
               </span>
             </h2>
-            <Link to="/admin" className="navBar__link">
-              Administration
+
+            <Link to="/prono" className="navBar__link">
+              Pronostiquer
             </Link>
+            <Link to="/results" className="navBar__link">
+              Résultats
+            </Link>
+            {userConnectedInfo.hasOwnProperty("roles") &&
+              userConnectedInfo?.roles.some(
+                (role) => role === "ADMIN_ROLE"
+              ) && (
+                <Link to="/admin" className="navBar__link">
+                  Administration
+                </Link>
+              )}
           </nav>
         )}
       </>

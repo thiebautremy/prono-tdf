@@ -15,4 +15,11 @@
     text-align: center;
     padding: 2rem;
   }
+
+  &__main {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-evenly;
+  }
 }

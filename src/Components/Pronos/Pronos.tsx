@@ -81,20 +81,22 @@ const Pronos = () => {
           />
         )}
       </div>
-      {selectedStage !== null && (
-        <div className="pronos__stage">
-          <Stage stage={selectedStage} />{" "}
-          <button
-            onClick={setIsOpenCyclistList}
-            className="pronos__setPronoBtn"
-          >
-            Pronostiquer sur cette étape
-          </button>
-        </div>
-      )}
-      {isOpenCyclistList && cyclists.length > 0 && (
-        <Prono cyclists={cyclists} />
-      )}
+      <div className="pronos__main">
+        {selectedStage !== null && (
+          <div className="pronos__stage">
+            <Stage stage={selectedStage} />{" "}
+            <button
+              onClick={setIsOpenCyclistList}
+              className="pronos__setPronoBtn"
+            >
+              Pronostiquer sur cette étape
+            </button>
+          </div>
+        )}
+        {isOpenCyclistList && cyclists.length > 0 && (
+          <Prono cyclists={cyclists} />
+        )}
+      </div>
     </div>
   );
 };

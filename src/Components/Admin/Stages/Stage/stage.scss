@@ -2,9 +2,8 @@
 
 .stage {
   padding: 1rem 2rem;
-  margin-bottom: 2rem;
   width: fit-content;
-  margin: auto;
+  margin: 0 auto 2rem;
   backdrop-filter: blur(0px);
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 1rem 2rem;
@@ -31,8 +30,10 @@
     font-weight: bold;
 
     &__date {
+      font-size: 1.2rem;
       background-color: var.$grey;
       padding: 0.2rem 1rem;
+      font-weight: normal;
       border-radius: 1rem 2rem;
       margin-left: 2rem;
     }
@@ -47,6 +48,8 @@
   &__cities {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
+    font-size: 1.4rem;
+    font-weight: bold;
   }
 }

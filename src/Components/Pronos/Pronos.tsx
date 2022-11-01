@@ -6,6 +6,7 @@ import app from "../../config/firebaseConfig";
 import Stage from "../Admin/Stages/Stage/Stage";
 import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
 import Prono from "./Prono/prono";
+import "./pronos.scss";
 
 const Pronos = () => {
   const [isOpenCyclistList, setIsOpenCyclistList] = useState(false);
@@ -20,7 +21,6 @@ const Pronos = () => {
       if (response) {
         response.forEach((doc) => {
           datas.push(doc.data());
-          console.log(datas);
           setStages(datas);
         });
       }
@@ -67,20 +67,27 @@ const Pronos = () => {
 
   return (
     <div className="pronos">
-      <h1>Prono</h1>
-      {stages.length > 0 && (
-        <Dropdown
-          value={selectedStage}
-          options={formatedArrayStagesForDropDown(stages)}
-          onChange={onStageChange}
-          optionLabel="stage"
-          placeholder="Sélectionne une étape"
-        />
-      )}
+      <div className="pronos__header">
+        <h1 className="pronos__header__title">
+          Sélectionner une étape pour pronostiquer
+        </h1>
+        {stages.length > 0 && (
+          <Dropdown
+            value={selectedStage}
+            options={formatedArrayStagesForDropDown(stages)}
+            onChange={onStageChange}
+            optionLabel="stage"
+            placeholder="Sélectionne une étape"
+          />
+        )}
+      </div>
       {selectedStage !== null && (
-        <div>
+        <div className="pronos__stage">
           <Stage stage={selectedStage} />{" "}
-          <button onClick={setIsOpenCyclistList}>
+          <button
+            onClick={setIsOpenCyclistList}
+            className="pronos__setPronoBtn"
+          >
             Pronostiquer sur cette étape
           </button>
         </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import "./stage.scss";
 import { getDateFormated } from "../../../../Services/functions";
+import { FaArrowRight } from "react-icons/fa";
 interface Props {
   stage: {
     stageId: number;
@@ -15,13 +16,23 @@ const Stages: React.FC<Props> = ({ stage }) => {
   const { date, hour } = getDateFormated(stage.date);
   return (
     <div className="stage">
-      <h1>Etape n° {stage.stageId}</h1>
-      <h1>
-        {date} à {hour}
+      <h1 className="stage__title">
+        Etape n° {stage.stageId}{" "}
+        <span className="stage__title__date">
+          {date} à {hour}
+        </span>
       </h1>
-      <h1>{`${stage.startCity} => ${stage.endCity}`}</h1>
-      <h2>Type: {stage.type}</h2>
-      <h2>{stage.lengthStage} km</h2>
+      <p className="stage__cities">
+        {stage.startCity} <FaArrowRight /> {stage.endCity}
+      </p>
+      <p className="stage__type">
+        <strong className="stage__type__strong">Type: </strong>
+        {stage.type}
+      </p>
+      <p className="stage__length">
+        <strong className="stage__length__strong">Longueur: </strong>
+        {stage.lengthStage} km
+      </p>
     </div>
   );
 };

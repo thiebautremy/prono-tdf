@@ -1,0 +1,52 @@
+@use "src/Styles/_vars.scss" as var;
+
+.stage {
+  padding: 1rem 2rem;
+  margin-bottom: 2rem;
+  width: fit-content;
+  margin: auto;
+  backdrop-filter: blur(0px);
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 1rem 2rem;
+  border: 0 solid var.$black;
+  box-shadow: 10px 10px 20px 0px rgba(50, 46, 47, 0.5),
+    inset -0px -0px 5px 0px rgba(50, 46, 47, 0.6),
+    inset 0px 11px 28px 0px rgb(255, 255, 255);
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    box-shadow: 12px 12px 24px 0px rgba(50, 46, 47, 0.5),
+      inset -0px -0px 5px 0px rgba(50, 46, 47, 0.6),
+      inset 0px 11px 28px 0px rgb(255, 255, 255);
+  }
+
+  &__title,
+  &__cities,
+  &__type,
+  &__length {
+    padding: 0.5rem 0;
+    font-size: 1.3rem;
+  }
+  &__title {
+    font-size: 1.5rem;
+    font-weight: bold;
+
+    &__date {
+      background-color: var.$grey;
+      padding: 0.2rem 1rem;
+      border-radius: 1rem 2rem;
+      margin-left: 2rem;
+    }
+  }
+  &__type,
+  &__length {
+    &__strong {
+      font-weight: bold;
+    }
+  }
+
+  &__cities {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

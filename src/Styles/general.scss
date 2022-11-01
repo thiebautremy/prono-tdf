@@ -1,7 +1,8 @@
 @use "src/Styles/_vars.scss" as var;
 
 button.homeDisconnected__intro__button,
-button.navBar__logoutBtn {
+button.navBar__logoutBtn,
+button.pronos__setPronoBtn {
   background-color: var.$black;
   border: 1px solid var.$yellow;
   border-radius: 1rem 2rem;
@@ -20,4 +21,10 @@ button.navBar__logoutBtn {
     border: 1px solid var.$yellow;
     cursor: pointer;
   }
+}
+
+//? Dropdown
+.p-dropdown:not(.p-disabled).p-focus {
+  border-color: var.$yellow !important;
+  box-shadow: 0 0 0 0.2rem var.$yellow;
 }

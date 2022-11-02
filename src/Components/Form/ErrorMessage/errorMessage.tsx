@@ -1,9 +1,7 @@
-import React from 'react'
-import './errorMessage.scss'
-const ErrorMessage = ({message}: any) => {
-    return(
-        <h5 className='errorMessage'>{message}</h5>
-    )
-}
+import React from "react";
+import "./errorMessage.scss";
+const ErrorMessage = ({ message }) => {
+  return <h5 className="errorMessage">{message}</h5>;
+};
 
-export default ErrorMessage
+export default ErrorMessage;

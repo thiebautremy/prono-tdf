@@ -3,17 +3,16 @@ import app from "../../../config/firebaseConfig";
 import { getFirestore, doc, updateDoc } from "firebase/firestore";
 import { MultiSelect, MultiSelectChangeParams } from "primereact/multiselect";
 import UserContext from "../../../Context/userContext";
+import "./prono.scss";
+import ErrorMessage from "../../Form/ErrorMessage/errorMessage";
 
 const Prono = ({ cyclists }) => {
-  //TODO, classer par ordre de nombre les cyclistes sélectionnés dans le multiselect
-  //TODO Ajouter message quand < 5 cyclistes sélectionnés
-  //TODO Ajouter messae quand 5 cyclistes sélectionnés
-  //TODO Afficher messae de succès de la réponse de l'API de firebase
+  //TODO Afficher message de succès de la réponse de l'API de firebase
   const db = getFirestore(app);
   const { currentUser } = useContext(UserContext);
   const userRef = doc(db, "users", `${currentUser.uid}`);
-  console.log(useContext(UserContext));
   const [selectedCyclists, setSelectedCyclists] = useState([]);
+  const [isError, setIsError] = useState(false);
 
   const cyclistsTemplate = (option) => {
     return (
@@ -23,28 +22,6 @@ const Prono = ({ cyclists }) => {
     );
   };
 
-  const selectedCyclistsTemplate = (option) => {
-    if (option) {
-      return (
-        <div className="country-item country-item-value">
-          <div>{option.name}</div>
-        </div>
-      );
-    }
-
-    return "Sélectionné vos cyclistes";
-  };
-
-  const panelFooterTemplate = () => {
-    const selectedItems = selectedCyclists;
-    const length = selectedItems ? selectedItems.length : 0;
-    return (
-      <div className="py-2 px-3">
-        <b>{length}</b> cycliste{length > 1 && "s"} sélectionné
-        {length > 1 && "s"}.
-      </div>
-    );
-  };
   const formatedCyclistsStagesForDropDown = (arrayToChanged) => {
     const arrayFormated: string[] = [];
     for (let i = 0; i < arrayToChanged.length; i++) {
@@ -57,27 +34,69 @@ const Prono = ({ cyclists }) => {
   };
 
   const handleSetProno = async () => {
-    //TODO envoyer le tableau des number des cyclistes sélectionnés
-    await updateDoc(userRef, {
-      pronos: { 1: [1, 23, 44, 33, 55], 2: [2, 45, 42, 43, 23] },
-    });
+    //TODO envoyer le tableau des number des cyclistes sélectionnés si 5 cyclistes ont été sélectionnés sinon afficher message d'erreur
+    selectedCyclists.length < 5
+      ? setIsError((prec) => !prec)
+      : await updateDoc(userRef, {
+          pronos: { 1: [1, 23, 44, 33, 55], 2: [2, 45, 42, 43, 23] },
+        });
   };
   return (
     <div className="prono">
-      <MultiSelect
-        value={selectedCyclists}
-        options={formatedCyclistsStagesForDropDown(cyclists)}
-        onChange={(e: MultiSelectChangeParams) => setSelectedCyclists(e.value)}
-        optionLabel="name"
-        placeholder="Sélectionné vos cyclistes"
-        filter
-        className="multiselect-custom"
-        itemTemplate={cyclistsTemplate}
-        selectedItemTemplate={selectedCyclistsTemplate}
-        panelFooterTemplate={panelFooterTemplate}
-      />
-      <button onClick={handleSetProno} className="pronos__setPronoBtn">
-        Valider vos pronostiques
+      <div className="prono__inputAndSelection">
+        <MultiSelect
+          value={selectedCyclists}
+          options={formatedCyclistsStagesForDropDown(cyclists)}
+          onChange={(e: MultiSelectChangeParams) =>
+            setSelectedCyclists(e.value)
+          }
+          optionLabel="name"
+          placeholder="Sélectionne 5 cyclistes"
+          filter
+          showSelectAll={false}
+          className="multiselect-custom"
+          itemTemplate={cyclistsTemplate}
+          selectionLimit={5}
+          fixedPlaceholder={true}
+        />
+        <div className="prono__inputAndSelection__selection">
+          {selectedCyclists.length > 0 ? (
+            <>
+              <p
+                className="prono__inputAndSelection__selection__header"
+                style={{
+                  color:
+                    selectedCyclists.length < 5
+                      ? "rgb(228, 13, 13)"
+                      : "rgb(64, 172, 60)",
+                }}
+              >
+                <strong>{selectedCyclists.length}</strong> cycliste
+                {selectedCyclists.length > 1 && "s"} sélectionné
+                {selectedCyclists.length > 1 && "s"}{" "}
+              </p>
+              {selectedCyclists
+                .sort((a, b) => a.code - b.code)
+                .map((cyclist) => (
+                  <p className="prono__inputAndSelection__selection__cyclist">
+                    {cyclist.name}
+                  </p>
+                ))}
+            </>
+          ) : (
+            <p className="prono__inputAndSelection__selection__header">
+              Aucun cyclistes sélectionnés
+            </p>
+          )}
+        </div>
+      </div>
+      {isError && (
+        <div className="prono__errorMessage">
+          <ErrorMessage message={"Tu dois sélectionner 5 cyclistes"} />
+        </div>
+      )}
+      <button onClick={handleSetProno} className="prono__validatePronoBtn">
+        Valider tes pronostiques
       </button>
     </div>
   );

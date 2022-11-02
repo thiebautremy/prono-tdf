@@ -2,7 +2,8 @@
 
 button.homeDisconnected__intro__button,
 button.navBar__logoutBtn,
-button.pronos__setPronoBtn {
+button.pronos__setPronoBtn,
+button.prono__validatePronoBtn {
   background-color: var.$black;
   border: 1px solid var.$yellow;
   border-radius: 1rem 2rem;
@@ -23,12 +24,22 @@ button.pronos__setPronoBtn {
   }
 }
 
-//? Dropdown
+//? Dropdown Prime React
 .p-dropdown:not(.p-disabled).p-focus {
   border-color: var.$yellow !important;
   box-shadow: 0 0 0 0.2rem var.$yellow;
 }
 
+//? Multiselect Prime React
 .p-multiselect {
   height: fit-content;
+}
+
+.p-multiselect-header {
+  border-bottom: none !important;
+  background: none !important;
+  color: var.$black !important;
+}
+.p-multiselect-panel {
+  border: 0.1rem solid var.$grey !important;
 }

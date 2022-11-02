@@ -1,0 +1,41 @@
+@use "src/Styles/_vars.scss" as var;
+
+.prono {
+  display: flex;
+  flex-direction: column;
+  min-width: 60%;
+  &__inputAndSelection {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-bottom: 2rem;
+
+    &__selection {
+      min-height: 20rem;
+      border: 0.1rem solid var.$grey;
+      padding: 1rem 2rem;
+      min-width: 20rem;
+      border-radius: 1rem 2rem;
+      &__header {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+
+        & strong {
+          font-weight: bold;
+        }
+      }
+      &__cyclist {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+
+  &__validatePronoBtn {
+    margin: 1rem auto !important;
+  }
+
+  &__errorMessage {
+    align-self: center;
+  }
+}

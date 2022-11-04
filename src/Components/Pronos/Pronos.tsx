@@ -94,7 +94,7 @@ const Pronos = () => {
           </div>
         )}
         {isOpenCyclistList && cyclists.length > 0 && (
-          <Prono cyclists={cyclists} />
+          <Prono cyclists={cyclists} stageId={selectedStage.stageId} />
         )}
       </div>
     </div>

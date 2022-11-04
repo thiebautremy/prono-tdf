@@ -6,14 +6,13 @@ import UserContext from "../../../Context/userContext";
 import "./prono.scss";
 import ErrorMessage from "../../Form/ErrorMessage/errorMessage";
 
-const Prono = ({ cyclists }) => {
+const Prono = ({ cyclists, stageId }) => {
   //TODO Afficher message de succès de la réponse de l'API de firebase
   const db = getFirestore(app);
-  const { currentUser } = useContext(UserContext);
+  const { currentUser, userConnectedInfo } = useContext(UserContext);
   const userRef = doc(db, "users", `${currentUser.uid}`);
   const [selectedCyclists, setSelectedCyclists] = useState([]);
   const [isError, setIsError] = useState(false);
-
   const cyclistsTemplate = (option) => {
     return (
       <div className="country-item">
@@ -34,12 +33,16 @@ const Prono = ({ cyclists }) => {
   };
 
   const handleSetProno = async () => {
-    //TODO envoyer le tableau des number des cyclistes sélectionnés si 5 cyclistes ont été sélectionnés sinon afficher message d'erreur
+    console.log(selectedCyclists.map((cyclist) => cyclist.code));
+    const numeroCyclists = selectedCyclists.map((cyclist) => cyclist.code);
+    const pronoObj = { ...userConnectedInfo?.prono };
+    pronoObj[stageId] = numeroCyclists;
     selectedCyclists.length < 5
       ? setIsError((prec) => !prec)
       : await updateDoc(userRef, {
-          pronos: { 1: [1, 23, 44, 33, 55], 2: [2, 45, 42, 43, 23] },
+          pronos: pronoObj,
         });
+    //TODO faire un get du user pour récupérer les pronos et afficher un message de MAJ des prono après avoir updateDoc
   };
   return (
     <div className="prono">
@@ -78,7 +81,10 @@ const Prono = ({ cyclists }) => {
               {selectedCyclists
                 .sort((a, b) => a.code - b.code)
                 .map((cyclist) => (
-                  <p className="prono__inputAndSelection__selection__cyclist">
+                  <p
+                    key={cyclist.code}
+                    className="prono__inputAndSelection__selection__cyclist"
+                  >
                     {cyclist.name}
                   </p>
                 ))}

@@ -21,6 +21,7 @@ interface IContextProps {
     username: string;
     roles: [string];
     authId: string;
+    prono: number[];
   };
   setUserConnectedInfo: (param: unknown) => void;
   users: [string];
@@ -29,6 +30,7 @@ interface IContextProps {
     email: string;
     roles: string[];
     username: string;
+    prono: number[];
   };
   setUsers: (param: unknown) => void;
   signErrorMessage: string;

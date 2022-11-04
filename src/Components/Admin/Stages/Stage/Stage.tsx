@@ -15,25 +15,27 @@ interface Props {
 const Stages: React.FC<Props> = ({ stage }) => {
   const { date, hour } = getDateFormated(stage.date);
   return (
-    <div className="stage">
-      <h1 className="stage__title">
-        Etape n° {stage.stageId}{" "}
-        <span className="stage__title__date">
-          {date} à {hour}
-        </span>
-      </h1>
-      <p className="stage__cities">
-        {stage.startCity} <FaArrowRight /> {stage.endCity}
-      </p>
-      <p className="stage__type">
-        <strong className="stage__type__strong">Type: </strong>
-        {stage.type}
-      </p>
-      <p className="stage__length">
-        <strong className="stage__length__strong">Longueur: </strong>
-        {stage.lengthStage} km
-      </p>
-    </div>
+    stage && (
+      <div className="stage">
+        <h1 className="stage__title">
+          Etape n° {stage.stageId}{" "}
+          <span className="stage__title__date">
+            {date} à {hour}
+          </span>
+        </h1>
+        <p className="stage__cities">
+          {stage.startCity} <FaArrowRight /> {stage.endCity}
+        </p>
+        <p className="stage__type">
+          <strong className="stage__type__strong">Type: </strong>
+          {stage.type}
+        </p>
+        <p className="stage__length">
+          <strong className="stage__length__strong">Longueur: </strong>
+          {stage.lengthStage} km
+        </p>
+      </div>
+    )
   );
 };
 

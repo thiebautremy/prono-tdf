@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import app from "../../../config/firebaseConfig";
-import { getFirestore, doc, updateDoc } from "firebase/firestore";
+import { getFirestore, doc, updateDoc, getDoc } from "firebase/firestore";
 import { MultiSelect, MultiSelectChangeParams } from "primereact/multiselect";
 import UserContext from "../../../Context/userContext";
 import "./prono.scss";
@@ -9,7 +9,8 @@ import ErrorMessage from "../../Form/ErrorMessage/errorMessage";
 const Prono = ({ cyclists, stageId }) => {
   //TODO Afficher message de succès de la réponse de l'API de firebase
   const db = getFirestore(app);
-  const { currentUser, userConnectedInfo } = useContext(UserContext);
+  const { currentUser, userConnectedInfo, setUserConnectedInfo } =
+    useContext(UserContext);
   const userRef = doc(db, "users", `${currentUser.uid}`);
   const [selectedCyclists, setSelectedCyclists] = useState([]);
   const [isError, setIsError] = useState(false);
@@ -32,17 +33,25 @@ const Prono = ({ cyclists, stageId }) => {
     return arrayFormated.sort((a, b) => a.code - b.code);
   };
 
-  const handleSetProno = async () => {
-    console.log(selectedCyclists.map((cyclist) => cyclist.code));
-    const numeroCyclists = selectedCyclists.map((cyclist) => cyclist.code);
-    const pronoObj = { ...userConnectedInfo?.prono };
-    pronoObj[stageId] = numeroCyclists;
+  const handleSetProno = () => {
     selectedCyclists.length < 5
       ? setIsError((prec) => !prec)
-      : await updateDoc(userRef, {
-          pronos: pronoObj,
-        });
+      : updateAndFetchData();
     //TODO faire un get du user pour récupérer les pronos et afficher un message de MAJ des prono après avoir updateDoc
+  };
+
+  const updateAndFetchData = async () => {
+    const numeroCyclists = selectedCyclists.map((cyclist) => cyclist.code);
+    console.log(userConnectedInfo);
+    const pronoObj = { ...userConnectedInfo?.pronos };
+    console.log(pronoObj);
+    pronoObj[stageId] = numeroCyclists;
+    console.log(pronoObj);
+    await updateDoc(userRef, {
+      pronos: pronoObj,
+    });
+    const userDocumentDbRef = await getDoc(doc(db, "users", currentUser.uid));
+    setUserConnectedInfo(userDocumentDbRef.data());
   };
   return (
     <div className="prono">

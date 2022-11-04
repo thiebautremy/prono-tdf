@@ -37,7 +37,6 @@ const Prono = ({ cyclists, stageId }) => {
     selectedCyclists.length < 5
       ? setIsError((prec) => !prec)
       : updateAndFetchData();
-    //TODO faire un get du user pour récupérer les pronos et afficher un message de MAJ des prono après avoir updateDoc
   };
 
   const updateAndFetchData = async () => {
@@ -52,6 +51,7 @@ const Prono = ({ cyclists, stageId }) => {
     });
     const userDocumentDbRef = await getDoc(doc(db, "users", currentUser.uid));
     setUserConnectedInfo(userDocumentDbRef.data());
+    //TODO Récupérer réponse de l'appel API puis faire message pour user de confirmation d'enregistrement et vider la liste des cyclistes sélectionnés
   };
   return (
     <div className="prono">

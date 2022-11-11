@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import app from "../../../config/firebaseConfig";
 import { getFirestore, doc, updateDoc, getDoc } from "firebase/firestore";
 import { MultiSelect, MultiSelectChangeParams } from "primereact/multiselect";
@@ -8,12 +8,24 @@ import ErrorMessage from "../../Form/ErrorMessage/errorMessage";
 
 const Prono = ({ cyclists, stageId }) => {
   //TODO Afficher message de succès de la réponse de l'API de firebase
+  //TODO Récupérer les cyclistes déjà renseignés
   const db = getFirestore(app);
   const { currentUser, userConnectedInfo, setUserConnectedInfo } =
     useContext(UserContext);
+  console.log(userConnectedInfo.pronos[stageId]);
+
   const userRef = doc(db, "users", `${currentUser.uid}`);
   const [selectedCyclists, setSelectedCyclists] = useState([]);
   const [isError, setIsError] = useState(false);
+  //? On set les cyclistes si le prono de l'étape est déjà renseigné
+  const setDefaultPronoValue = () => {
+    userConnectedInfo.pronos.hasOwnProperty(stageId) &&
+      setSelectedCyclists(userConnectedInfo.pronos[stageId]);
+  };
+
+  useEffect(() => {
+    setDefaultPronoValue();
+  }, [stageId]);
   const cyclistsTemplate = (option) => {
     return (
       <div className="country-item">
@@ -44,12 +56,13 @@ const Prono = ({ cyclists, stageId }) => {
     console.log(userConnectedInfo);
     const pronoObj = { ...userConnectedInfo?.pronos };
     console.log(pronoObj);
-    pronoObj[stageId] = numeroCyclists;
+    pronoObj[stageId] = selectedCyclists;
     console.log(pronoObj);
     await updateDoc(userRef, {
       pronos: pronoObj,
     });
     const userDocumentDbRef = await getDoc(doc(db, "users", currentUser.uid));
+    console.log(userDocumentDbRef);
     setUserConnectedInfo(userDocumentDbRef.data());
     //TODO Récupérer réponse de l'appel API puis faire message pour user de confirmation d'enregistrement et vider la liste des cyclistes sélectionnés
   };

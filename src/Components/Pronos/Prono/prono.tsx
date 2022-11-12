@@ -5,14 +5,18 @@ import { MultiSelect, MultiSelectChangeParams } from "primereact/multiselect";
 import UserContext from "../../../Context/userContext";
 import "./prono.scss";
 import ErrorMessage from "../../Form/ErrorMessage/errorMessage";
+import { stringify } from "querystring";
 
+interface Cyclist {
+  number: string;
+  lastname: string;
+  firstname: string;
+}
 const Prono = ({ cyclists, stageId }) => {
   //TODO Afficher message de succès de la réponse de l'API de firebase
-  //TODO Récupérer les cyclistes déjà renseignés
   const db = getFirestore(app);
   const { currentUser, userConnectedInfo, setUserConnectedInfo } =
     useContext(UserContext);
-  console.log(userConnectedInfo.pronos[stageId]);
 
   const userRef = doc(db, "users", `${currentUser.uid}`);
   const [selectedCyclists, setSelectedCyclists] = useState([]);
@@ -34,12 +38,14 @@ const Prono = ({ cyclists, stageId }) => {
     );
   };
 
-  const formatedCyclistsStagesForDropDown = (arrayToChanged) => {
-    const arrayFormated: string[] = [];
-    for (let i = 0; i < arrayToChanged.length; i++) {
-      const cyclistObj: { name: string; code: string } = {};
-      cyclistObj.name = `${arrayToChanged[i].number} - ${arrayToChanged[i].lastname} ${arrayToChanged[i].firstname}`;
-      cyclistObj.code = arrayToChanged[i].number;
+  const formatedCyclistsStagesForDropDown = (
+    arrayToChanged: { number: string; lastname: string; firstname: string }[]
+  ) => {
+    const arrayFormated = [];
+    for (const cyclist of arrayToChanged) {
+      const cyclistObj: { name: string; code: string } = { name: "", code: "" };
+      cyclistObj.name = `${cyclist.number} - ${cyclist.lastname} ${cyclist.firstname}`;
+      cyclistObj.code = cyclist.number;
       arrayFormated.push(cyclistObj);
     }
     return arrayFormated.sort((a, b) => a.code - b.code);
@@ -52,9 +58,8 @@ const Prono = ({ cyclists, stageId }) => {
   };
 
   const updateAndFetchData = async () => {
-    const numeroCyclists = selectedCyclists.map((cyclist) => cyclist.code);
-    console.log(userConnectedInfo);
-    const pronoObj = { ...userConnectedInfo?.pronos };
+    let pronoObj: { number: string; name: string } = {};
+    pronoObj = { ...userConnectedInfo?.pronos };
     console.log(pronoObj);
     pronoObj[stageId] = selectedCyclists;
     console.log(pronoObj);

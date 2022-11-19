@@ -13,7 +13,6 @@ interface Cyclist {
   firstname: string;
 }
 const Prono = ({ cyclists, stageId }) => {
-  //TODO Afficher message de succès de la réponse de l'API de firebase
   const db = getFirestore(app);
   const { currentUser, userConnectedInfo, setUserConnectedInfo } =
     useContext(UserContext);
@@ -76,7 +75,7 @@ const Prono = ({ cyclists, stageId }) => {
       <Dialogue
         isVisible={visibleModal}
         setIsVisible={setVisibleModal}
-        message={"Mise à jour des coureurs réussie"}
+        message={"Votre pronostique a été mis à jour."}
       />
       <div className="prono__inputAndSelection">
         <MultiSelect

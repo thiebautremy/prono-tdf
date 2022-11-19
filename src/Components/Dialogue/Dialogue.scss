@@ -2,9 +2,28 @@
 
 .dialogue {
   position: fixed;
-  top: 10%;
+  font-size: 1.2rem;
+  top: 15%;
   right: 10%;
   background-color: rgba(64, 172, 60, 0.9);
   padding: 2rem;
   border-radius: 1rem 2rem;
+  animation: fadeIn 1s;
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

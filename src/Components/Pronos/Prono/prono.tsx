@@ -5,7 +5,7 @@ import { MultiSelect, MultiSelectChangeParams } from "primereact/multiselect";
 import UserContext from "../../../Context/userContext";
 import "./prono.scss";
 import ErrorMessage from "../../Form/ErrorMessage/errorMessage";
-import { stringify } from "querystring";
+import Dialogue from "../../Dialogue/Dialogue";
 
 interface Cyclist {
   number: string;
@@ -56,7 +56,7 @@ const Prono = ({ cyclists, stageId }) => {
       ? setIsError((prec) => !prec)
       : updateAndFetchData();
   };
-
+  const [visibleModal, setVisibleModal] = useState(false);
   const updateAndFetchData = async () => {
     let pronoObj: { number: string; name: string } = {};
     pronoObj = { ...userConnectedInfo?.pronos };
@@ -69,10 +69,15 @@ const Prono = ({ cyclists, stageId }) => {
     const userDocumentDbRef = await getDoc(doc(db, "users", currentUser.uid));
     console.log(userDocumentDbRef);
     setUserConnectedInfo(userDocumentDbRef.data());
-    //TODO Récupérer réponse de l'appel API puis faire message pour user de confirmation d'enregistrement et vider la liste des cyclistes sélectionnés
+    setVisibleModal(true);
   };
   return (
     <div className="prono">
+      <Dialogue
+        isVisible={visibleModal}
+        setIsVisible={setVisibleModal}
+        message={"Mise à jour des coureurs réussie"}
+      />
       <div className="prono__inputAndSelection">
         <MultiSelect
           value={selectedCyclists}

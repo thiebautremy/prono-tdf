@@ -8,6 +8,7 @@ import Stages from "../Admin/Stages/Stages";
 import Cyclists from "../Admin/Cyclists/cyclists";
 import Pronos from "../Pronos/Pronos";
 import Resultats from "../Resultats/Resultats";
+import InformResults from "../Admin/InformResults/InformResults";
 import HomeConnected from "../Home/HomeConnected/homeConnected";
 const App = () => {
   return (
@@ -53,6 +54,14 @@ const App = () => {
             element={
               <Admin>
                 <Stages />
+              </Admin>
+            }
+          />
+          <Route
+            path="/admin/inform-results"
+            element={
+              <Admin>
+                <InformResults />
               </Admin>
             }
           />

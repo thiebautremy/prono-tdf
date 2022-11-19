@@ -21,6 +21,9 @@ const NavBarAdmin = () => {
           <Link to="/admin/stages" className="navBar__link">
             Etapes
           </Link>
+          <Link to="/admin/inform-results" className="navBar__link">
+            Renseigner les résultats
+          </Link>
         </nav>
       </>
     </div>

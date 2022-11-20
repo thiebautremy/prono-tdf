@@ -13,9 +13,11 @@ export const getDateFormated = (timestampFirestore: {
     dateAndHour.getMinutes() < 10
       ? `0${dateAndHour.getMinutes()}`
       : `${dateAndHour.getMinutes()}`;
-  const date = `${dateAndHour.getDate()}/${
-    dateAndHour.getMonth() + 1
-  }/${dateAndHour.getUTCFullYear()}`;
+  const month =
+    dateAndHour.getMonth() + 1 < 10
+      ? `0${dateAndHour.getMonth() + 1}`
+      : `${dateAndHour.getMonth() + 1}`;
+  const date = `${dateAndHour.getDate()}/${month}/${dateAndHour.getUTCFullYear()}`;
   const hour = `${dateAndHour.getHours()}:${minutes}`;
   return { date, hour };
 };

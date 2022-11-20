@@ -17,7 +17,7 @@ interface Props {
   children: JSX.Element | JSX.Element[];
 }
 export const StagesContextProvider: React.FC<Props> = ({ children }) => {
-  const [stages, setStages] = useState([]);
+  const [stages, setStages] = useState<IStage[]>([]);
   return (
     <StagesContext.Provider
       value={{

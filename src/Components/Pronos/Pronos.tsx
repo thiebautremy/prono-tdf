@@ -54,7 +54,7 @@ const Pronos = () => {
   };
 
   const formatedArrayStagesForDropDown = (arrayToChanged) => {
-    //TODO ajouter si l'étape est finie ou en cours dans les options du select
+    //TODO ajouter si l'étape est finie ou en cours dans les options du select en fonction de la date et de l'heure ! (déjà fait dans informResults.tsx)
     const arrayFormated = [];
     for (let i = 0; i < arrayToChanged.length; i++) {
       const object = {};

@@ -12,6 +12,7 @@ import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
 import { getDateFormated } from "../../../Services/functions";
 import Stage from "../Stages/Stage/Stage";
 import InformResult from "./InformResult/InformResult";
+import "./InformResults.scss";
 
 const InformResults = () => {
   const [isOpenCyclistList, setIsOpenCyclistList] = useState(false);
@@ -81,33 +82,39 @@ const InformResults = () => {
   };
   return (
     <div className="informResults">
-      <h1>Renseigner les résultats</h1>
-      {stages.length > 0 && (
-        <Dropdown
-          value={selectedStage}
-          options={formatedArrayStagesForDropDown(stages)}
-          onChange={onStageChange}
-          optionDisabled={(option) =>
-            new Date(Date.now()).toUTCString() > option.date
-          }
-          optionLabel="stage"
-          placeholder="Sélectionne une étape"
-        />
-      )}
-      {selectedStage !== null && (
-        <div className="pronos__stage">
-          <Stage stage={selectedStage} />{" "}
-          <button
-            onClick={setIsOpenCyclistList}
-            className="pronos__setPronoBtn"
-          >
-            Ajouter les résultats de l'étape
-          </button>
-        </div>
-      )}
-      {isOpenCyclistList && cyclists.length > 0 && (
-        <InformResult cyclists={cyclists} stageId={selectedStage.stageId} />
-      )}
+      <div className="informResults__header">
+        <h1 className="informResults__header__title">
+          Renseigner les résultats
+        </h1>
+        {stages.length > 0 && (
+          <Dropdown
+            value={selectedStage}
+            options={formatedArrayStagesForDropDown(stages)}
+            onChange={onStageChange}
+            optionDisabled={(option) =>
+              new Date(Date.now()).toUTCString() > option.date
+            }
+            optionLabel="stage"
+            placeholder="Sélectionne une étape"
+          />
+        )}
+      </div>
+      <div className="informResults__main">
+        {selectedStage !== null && (
+          <div className="informResults__stage">
+            <Stage stage={selectedStage} />{" "}
+            <button
+              onClick={setIsOpenCyclistList}
+              className="informResults__setResultsBtn"
+            >
+              Ajouter les résultats de l'étape
+            </button>
+          </div>
+        )}
+        {isOpenCyclistList && cyclists.length > 0 && (
+          <InformResult cyclists={cyclists} stageId={selectedStage.stageId} />
+        )}
+      </div>
     </div>
   );
 };

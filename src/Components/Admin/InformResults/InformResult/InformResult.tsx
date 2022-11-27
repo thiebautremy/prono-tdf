@@ -5,6 +5,8 @@ import { MultiSelect, MultiSelectChangeParams } from "primereact/multiselect";
 import "../../../Pronos/Prono/prono.scss";
 import ErrorMessage from "../../../Form/ErrorMessage/errorMessage";
 import Dialogue from "../../../Dialogue/Dialogue";
+import "./InformResult.scss";
+import Cyclist from "../../Cyclists/Cyclist/cyclist";
 
 interface Cyclist {
   number: string;
@@ -14,7 +16,7 @@ interface Cyclist {
 const InformResult = ({ cyclists, stageId }) => {
   const db = getFirestore(app);
 
-  const [selectedCyclists, setSelectedCyclists] = useState([]);
+  const [selectedCyclists, setSelectedCyclists] = useState({});
   const [isError, setIsError] = useState(false);
   //? On set les cyclistes si les résultats de l'étape ont déjà étaient renseignés
   const setDefaultPronoValue = () => {
@@ -65,15 +67,60 @@ const InformResult = ({ cyclists, stageId }) => {
     // setUserConnectedInfo(userDocumentDbRef.data());
     setVisibleModal(true);
   };
+  const handleDragEnd = (e) => {
+    e.preventDefault();
+    console.log(e);
+  };
+
+  const handleDragStart = (e, cyclist) => {
+    console.log(e);
+    e.dataTransfer.setData("id", cyclist.number);
+    console.log(cyclist);
+  };
+
+  const handleOnDrop = (e, key) => {
+    console.log("complete", e);
+    const id = e.dataTransfer.getData("id");
+    const cyclistDrag = cyclists.find((cyclist) => cyclist.number == id);
+    const selectedCyclistsObj = { ...selectedCyclists };
+    selectedCyclistsObj[key] = cyclistDrag;
+    console.log(id);
+    console.log(cyclistDrag);
+    console.log(selectedCyclistsObj);
+    setSelectedCyclists({ ...selectedCyclistsObj });
+  };
+
+  const selectionsArray = () => {
+    const row = [];
+    for (let i = 1; i <= 20; i++) {
+      row.push(
+        <div
+          className="informResult__DragableAndselection__selection"
+          onDragOver={(e) => handleDragEnd(e)}
+          onDrop={(e) => handleOnDrop(e, i)}
+          key={i}
+        >
+          {`Place n°: ${i}`}{" "}
+          {selectedCyclists[i] !== undefined && (
+            <>
+              {`${selectedCyclists[i].number} - ${selectedCyclists[i].lastname}
+              ${selectedCyclists[i].firstname}`}
+            </>
+          )}
+        </div>
+      );
+    }
+    return row;
+  };
   return (
-    <div className="prono">
+    <div className="informResult">
       <Dialogue
         isVisible={visibleModal}
         setIsVisible={setVisibleModal}
         message={"Résultats mis à jour."}
       />
-      <div className="prono__inputAndSelection">
-        <MultiSelect
+      <div className="informResult__DragableAndselection">
+        {/* <MultiSelect
           value={selectedCyclists}
           options={formatedCyclistsStagesForDropDown(cyclists)}
           onChange={(e: MultiSelectChangeParams) =>
@@ -87,12 +134,31 @@ const InformResult = ({ cyclists, stageId }) => {
           itemTemplate={cyclistsTemplate}
           selectionLimit={20}
           fixedPlaceholder={true}
-        />
-        <div className="prono__inputAndSelection__selection">
-          {selectedCyclists.length > 0 ? (
+        /> */}
+        <div className="informResult__DragableAndselection__dragable">
+          {cyclists.map((cyclist) => (
+            <div
+              key={cyclist.number}
+              draggable
+              onDragStart={(e) => handleDragStart(e, cyclist)}
+              className="informResult__DragableAndselection__dragable--items"
+            >
+              {cyclist.number} - {cyclist.lasttname} {cyclist.firstname}
+            </div>
+          ))}
+        </div>
+        <div className="informResult__DragableAndselection__selections">
+          {selectionsArray()}
+        </div>
+        {/* <div
+          className="informResult__DragableAndselection__selection"
+          onDragOver={(e) => handleDragEnd(e)}
+          onDrop={(e) => handleOnDrop(e)}
+        >
+          {selectedCyclists.length > 0 && (
             <>
               <p
-                className="prono__inputAndSelection__selection__header"
+                className="informResult__DragableAndselection__selection__header"
                 style={{
                   color:
                     selectedCyclists.length < 20
@@ -106,30 +172,28 @@ const InformResult = ({ cyclists, stageId }) => {
               </p>
               {selectedCyclists.map((cyclist, index) => (
                 <p
-                  key={cyclist.code}
-                  className="prono__inputAndSelection__selection__cyclist"
+                  key={cyclist.number}
+                  className="informResult__DragableAndselection__selection__cyclist"
                 >
-                  Place n°{index + 1} : {cyclist.name}
+                  {cyclist.number} - {cyclist.lastname} {cyclist.firstname}
                 </p>
               ))}
             </>
-          ) : (
-            <p className="prono__inputAndSelection__selection__header">
-              Aucun cyclistes sélectionnés
-            </p>
           )}
-        </div>
+        </div> */}
       </div>
       {isError && (
-        <div className="prono__errorMessage">
+        <div className="informResult__errorMessage">
           <ErrorMessage message={"Tu dois sélectionner 20 cyclistes"} />
         </div>
       )}
-      <button onClick={handleSetProno} className="prono__validatePronoBtn">
+      <button
+        onClick={handleSetProno}
+        className="informResult__validatePronoBtn"
+      >
         Valider les résultats
       </button>
     </div>
   );
 };
-
 export default InformResult;

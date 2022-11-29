@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import app from "../../../../config/firebaseConfig";
 import { getFirestore, doc, updateDoc, getDoc } from "firebase/firestore";
-import { MultiSelect, MultiSelectChangeParams } from "primereact/multiselect";
 import "../../../Pronos/Prono/prono.scss";
 import ErrorMessage from "../../../Form/ErrorMessage/errorMessage";
 import Dialogue from "../../../Dialogue/Dialogue";
 import "./InformResult.scss";
-import Cyclist from "../../Cyclists/Cyclist/cyclist";
+import { FaTrashAlt } from "react-icons/fa";
 
 interface Cyclist {
   number: string;
@@ -73,9 +72,7 @@ const InformResult = ({ cyclists, stageId }) => {
   };
 
   const handleDragStart = (e, cyclist) => {
-    console.log(e);
     e.dataTransfer.setData("id", cyclist.number);
-    console.log(cyclist);
   };
 
   const handleOnDrop = (e, key) => {
@@ -84,9 +81,6 @@ const InformResult = ({ cyclists, stageId }) => {
     const cyclistDrag = cyclists.find((cyclist) => cyclist.number == id);
     const selectedCyclistsObj = { ...selectedCyclists };
     selectedCyclistsObj[key] = cyclistDrag;
-    console.log(id);
-    console.log(cyclistDrag);
-    console.log(selectedCyclistsObj);
     setSelectedCyclists({ ...selectedCyclistsObj });
   };
 
@@ -100,12 +94,15 @@ const InformResult = ({ cyclists, stageId }) => {
           onDrop={(e) => handleOnDrop(e, i)}
           key={i}
         >
-          {`Place n°: ${i}`}{" "}
+          <span className="informResult__DragableAndselection__selection--strong">
+            {`Place n° ${i} :`}{" "}
+          </span>
           {selectedCyclists[i] !== undefined && (
-            <>
+            <span className="informResult__DragableAndselection__selection__cyclist">
               {`${selectedCyclists[i].number} - ${selectedCyclists[i].lastname}
-              ${selectedCyclists[i].firstname}`}
-            </>
+              ${selectedCyclists[i].firstname}`}{" "}
+              <FaTrashAlt />
+            </span>
           )}
         </div>
       );
@@ -120,67 +117,23 @@ const InformResult = ({ cyclists, stageId }) => {
         message={"Résultats mis à jour."}
       />
       <div className="informResult__DragableAndselection">
-        {/* <MultiSelect
-          value={selectedCyclists}
-          options={formatedCyclistsStagesForDropDown(cyclists)}
-          onChange={(e: MultiSelectChangeParams) =>
-            setSelectedCyclists(e.value)
-          }
-          optionLabel="name"
-          placeholder="Sélectionne les 20 premiers cyclistes"
-          filter
-          showSelectAll={false}
-          className="multiselect-custom"
-          itemTemplate={cyclistsTemplate}
-          selectionLimit={20}
-          fixedPlaceholder={true}
-        /> */}
         <div className="informResult__DragableAndselection__dragable">
-          {cyclists.map((cyclist) => (
-            <div
-              key={cyclist.number}
-              draggable
-              onDragStart={(e) => handleDragStart(e, cyclist)}
-              className="informResult__DragableAndselection__dragable--items"
-            >
-              {cyclist.number} - {cyclist.lasttname} {cyclist.firstname}
-            </div>
-          ))}
+          {cyclists
+            .sort((a, b) => a.number - b.number)
+            .map((cyclist) => (
+              <div
+                key={cyclist.number}
+                draggable
+                onDragStart={(e) => handleDragStart(e, cyclist)}
+                className="informResult__DragableAndselection__dragable--items"
+              >
+                {cyclist.number} - {cyclist.lastname} {cyclist.firstname}
+              </div>
+            ))}
         </div>
         <div className="informResult__DragableAndselection__selections">
           {selectionsArray()}
         </div>
-        {/* <div
-          className="informResult__DragableAndselection__selection"
-          onDragOver={(e) => handleDragEnd(e)}
-          onDrop={(e) => handleOnDrop(e)}
-        >
-          {selectedCyclists.length > 0 && (
-            <>
-              <p
-                className="informResult__DragableAndselection__selection__header"
-                style={{
-                  color:
-                    selectedCyclists.length < 20
-                      ? "rgb(228, 13, 13)"
-                      : "rgb(64, 172, 60)",
-                }}
-              >
-                <strong>{selectedCyclists.length}</strong> cycliste
-                {selectedCyclists.length > 1 && "s"} sélectionné
-                {selectedCyclists.length > 1 && "s"}{" "}
-              </p>
-              {selectedCyclists.map((cyclist, index) => (
-                <p
-                  key={cyclist.number}
-                  className="informResult__DragableAndselection__selection__cyclist"
-                >
-                  {cyclist.number} - {cyclist.lastname} {cyclist.firstname}
-                </p>
-              ))}
-            </>
-          )}
-        </div> */}
       </div>
       {isError && (
         <div className="informResult__errorMessage">

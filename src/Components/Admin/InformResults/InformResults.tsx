@@ -84,16 +84,16 @@ const InformResults = () => {
     <div className="informResults">
       <div className="informResults__header">
         <h1 className="informResults__header__title">
-          Renseigner les résultats
+          Renseigne les résultats
         </h1>
         {stages.length > 0 && (
           <Dropdown
             value={selectedStage}
             options={formatedArrayStagesForDropDown(stages)}
             onChange={onStageChange}
-            optionDisabled={(option) =>
-              new Date(Date.now()).toUTCString() > option.date
-            }
+            // optionDisabled={(option) =>
+            //   new Date(Date.now()).toUTCString() > option.date
+            // }
             optionLabel="stage"
             placeholder="Sélectionne une étape"
           />

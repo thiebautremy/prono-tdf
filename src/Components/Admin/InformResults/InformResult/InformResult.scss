@@ -11,30 +11,53 @@
     margin-bottom: 2rem;
 
     &__dragable {
+      width: 30%;
+      height: 35rem;
+      overflow-y: scroll;
+      padding: 1rem;
       &--items {
+        border: 0.1rem solid var.$grey;
+        padding: 0.5rem 1rem;
+        border-radius: 1rem 2rem;
+        margin: 0 0 0.5rem;
+        font-weight: bold;
+        transition: all 0.2s ease-in-out;
+        background-color: var.$black;
+        color: var.$yellow;
         &:hover {
+          background-color: var.$yellow;
+          color: var.$black;
           cursor: grab;
         }
       }
     }
 
     &__selection {
-      //   min-height: 20rem;
       border: 0.1rem solid var.$grey;
       padding: 1rem 2rem;
       min-width: 20rem;
       border-radius: 1rem 2rem;
-      &__header {
-        font-size: 1.3rem;
-        margin-bottom: 1rem;
-
-        & strong {
-          font-weight: bold;
-        }
+      margin: 0.5rem 0;
+      &--strong {
+        font-weight: bold;
       }
+
       &__cyclist {
-        font-size: 1.2rem;
-        margin-bottom: 0.5rem;
+        border: 0.1rem solid var.$grey;
+        padding: 0.5rem 1rem;
+        border-radius: 1rem 2rem;
+        margin: 0 0 0.5rem;
+        font-weight: bold;
+        transition: all 0.2s ease-in-out;
+        background-color: var.$black;
+        color: var.$yellow;
+
+        & svg {
+          margin-left: 0.5rem;
+          &:hover {
+            cursor: pointer;
+          }
+        }
       }
     }
   }

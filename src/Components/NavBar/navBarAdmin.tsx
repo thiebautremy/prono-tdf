@@ -24,6 +24,9 @@ const NavBarAdmin = () => {
           <Link to="/admin/inform-results" className="navBar__link">
             Renseigner les résultats
           </Link>
+          <Link to="/admin/calculate" className="navBar__link">
+            Calculer les points
+          </Link>
         </nav>
       </>
     </div>

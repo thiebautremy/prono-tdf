@@ -1,23 +1,21 @@
 import React, { useEffect, useContext, useState } from "react";
 import { StagesContext } from "../../../Context/stagesContext";
-import { CyclistsContext } from "../../../Context/cyclistsContext";
 import {
   getFirestore,
   collection,
   getDocs,
   Timestamp,
 } from "firebase/firestore";
+import { getDateFormated } from "../../../Services/functions";
 import app from "../../../config/firebaseConfig";
 import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
-import { getDateFormated } from "../../../Services/functions";
 import Stage from "../Stages/Stage/Stage";
-import InformResult from "./InformResult/InformResult";
-import "./InformResults.scss";
+import "./Calculate.scss";
 
-const InformResults = () => {
-  const [isOpenCyclistList, setIsOpenCyclistList] = useState(false);
+const Calculate = () => {
+  //TODO Récupérer les résultats en plus des pronos
   const [selectedStage, setSelectedStage] = useState(null);
-  const { cyclists, setCyclists } = useContext(CyclistsContext);
+  const [users, setUsers] = useState(null);
   const { stages, setStages } = useContext(StagesContext);
   const db = getFirestore(app);
 
@@ -36,26 +34,6 @@ const InformResults = () => {
       console.log(err);
     }
   };
-
-  const fetchCyclists = async () => {
-    const datas: [] = [];
-    try {
-      const querySnapshot = await getDocs(collection(db, "cyclists"));
-      const response = querySnapshot;
-      if (response) {
-        response.forEach((doc) => {
-          datas.push(doc.data());
-          setCyclists(datas);
-        });
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  useEffect(() => {
-    fetchStages();
-    fetchCyclists();
-  }, []);
   const formatedDateFromFirebase = (date: {
     seconds: number;
     nanoseconds: number;
@@ -80,11 +58,46 @@ const InformResults = () => {
     const stageFound = stages.find((stage) => stage.stageId === e.value.code);
     setSelectedStage(stageFound);
   };
+
+  useEffect(() => {
+    fetchStages();
+  }, []);
+  const fetchUsers = async () => {
+    const datas: [] = [];
+    try {
+      const querySnapshot = await getDocs(collection(db, "users"));
+      const response = querySnapshot;
+      if (response) {
+        response.forEach((doc) => {
+          datas.push(doc.data());
+          setUsers(datas);
+        });
+        calculatePoint(datas);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const handleCalculate = () => {
+    fetchUsers();
+  };
+
+  const calculatePoint = (users) => {
+    console.log(users);
+    console.log(selectedStage);
+    if (users.length > 0) {
+      users.map(
+        (user) =>
+          user.pronos !== undefined &&
+          console.log(user?.pronos[selectedStage.stageId])
+      );
+    }
+  };
   return (
-    <div className="informResults">
-      <div className="informResults__header">
-        <h1 className="informResults__header__title">
-          Renseigne les résultats
+    <div className="calculate">
+      <div className="calculate__header">
+        <h1 className="calculate__header__title">
+          Calculer les points des pronostiques
         </h1>
         {stages.length > 0 && (
           <Dropdown
@@ -99,23 +112,21 @@ const InformResults = () => {
           />
         )}
       </div>
-      <div className="informResults__main">
+      <div className="calculate__main">
         {selectedStage !== null && (
-          <div className="informResults__stage">
+          <div className="calculate__stage">
             <Stage stage={selectedStage} />{" "}
             <button
-              onClick={setIsOpenCyclistList}
-              className="informResults__setResultsBtn"
+              onClick={() => handleCalculate()}
+              className="calculate__calculateBtn"
             >
-              Ajouter les résultats de l'étape
+              Caclculer les points des pronostiques
             </button>
           </div>
-        )}
-        {isOpenCyclistList && cyclists.length > 0 && (
-          <InformResult cyclists={cyclists} stageId={selectedStage.stageId} />
         )}
       </div>
     </div>
   );
 };
-export default InformResults;
+
+export default Calculate;

@@ -6,6 +6,7 @@ import Admin from "../../Pages/Admin/Admin";
 import Users from "../Admin/Users/users";
 import Stages from "../Admin/Stages/Stages";
 import Cyclists from "../Admin/Cyclists/cyclists";
+import Calculate from "../Admin/Calculate/Calculate";
 import Pronos from "../Pronos/Pronos";
 import Resultats from "../Resultats/Resultats";
 import InformResults from "../Admin/InformResults/InformResults";
@@ -62,6 +63,14 @@ const App = () => {
             element={
               <Admin>
                 <InformResults />
+              </Admin>
+            }
+          />
+          <Route
+            path="/admin/calculate"
+            element={
+              <Admin>
+                <Calculate />
               </Admin>
             }
           />

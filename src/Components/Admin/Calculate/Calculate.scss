@@ -1,0 +1,26 @@
+@use "src/Styles/_vars.scss" as var;
+
+.calculate {
+  &__header {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 0.1rem solid var.$grey;
+    &__title {
+      font-size: 1.3rem;
+      padding: 1rem 0.5rem;
+    }
+  }
+
+  &__stage {
+    text-align: center;
+    padding: 2rem;
+  }
+
+  &__main {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-evenly;
+    padding: 2rem 1rem;
+  }
+}

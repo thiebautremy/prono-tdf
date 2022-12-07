@@ -45,6 +45,9 @@ const InformResult = ({ cyclists, stageId }: Props) => {
   const handleDragStart = (e, cyclist: { number: number }) => {
     e.dataTransfer.setData("id", cyclist.number);
   };
+  const handleDragStartDelete = (e, placeNumber: number) => {
+    e.dataTransfer.setData("placeNumber", placeNumber);
+  };
 
   const handleOnDrop = (e, key) => {
     const id = e.dataTransfer.getData("id");
@@ -53,6 +56,12 @@ const InformResult = ({ cyclists, stageId }: Props) => {
     selectedCyclistsObj[key] = cyclistDrag;
     setCyclistsList(cyclistsList.filter((cyclist) => cyclist.number !== id));
     setSelectedCyclists({ ...selectedCyclistsObj });
+  };
+
+  const handleOnDropDelete = (e) => {
+    const placeNumber = e.dataTransfer.getData("placeNumber");
+    setCyclistsList([...cyclistsList, selectedCyclists[placeNumber]]);
+    delete selectedCyclists[placeNumber];
   };
 
   const selectionsArray = () => {
@@ -69,7 +78,11 @@ const InformResult = ({ cyclists, stageId }: Props) => {
             {`Place n° ${i} :`}{" "}
           </span>
           {selectedCyclists[i] !== undefined && (
-            <span className="informResult__DragableAndselection__selection__cyclist">
+            <span
+              className="informResult__DragableAndselection__selection__cyclist"
+              onDragStart={(e) => handleDragStartDelete(e, i)}
+              draggable
+            >
               {`${selectedCyclists[i].number} - ${selectedCyclists[i].lastname}
               ${selectedCyclists[i].firstname}`}
             </span>
@@ -88,7 +101,11 @@ const InformResult = ({ cyclists, stageId }: Props) => {
         message={"Résultats mis à jour."}
       />
       <div className="informResult__DragableAndselection">
-        <div className="informResult__DragableAndselection__dragable">
+        <div
+          className="informResult__DragableAndselection__dragable"
+          onDrop={(e) => handleOnDropDelete(e)}
+          onDragOver={(e) => handleDragEnd(e)}
+        >
           {cyclistsList
             .sort((a, b) => a.number - b.number)
             .map((cyclist) => (

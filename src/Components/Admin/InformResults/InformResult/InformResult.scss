@@ -52,6 +52,12 @@
         background-color: var.$black;
         color: var.$yellow;
 
+        &:hover {
+          background-color: var.$yellow;
+          color: var.$black;
+          cursor: grab;
+        }
+
         & svg {
           margin-left: 0.5rem;
           &:hover {

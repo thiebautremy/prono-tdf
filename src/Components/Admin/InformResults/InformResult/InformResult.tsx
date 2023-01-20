@@ -6,27 +6,27 @@ import ErrorMessage from "../../../Form/ErrorMessage/errorMessage";
 import Dialogue from "../../../Dialogue/Dialogue";
 import "./InformResult.scss";
 
+type Cyclist = {
+  number: string;
+  lastname: string;
+  firstname: string;
+};
 type Props = {
-  cyclists: { number: string; lastname: string; firstname: string };
+  cyclists: Cyclist[];
   stageId: number;
+  currentResults: { enum: Cyclist };
 };
 
-const InformResult = ({ cyclists, stageId }: Props) => {
+const InformResult = ({ cyclists, stageId, currentResults }: Props) => {
   const db = getFirestore(app);
   const [selectedCyclists, setSelectedCyclists] = useState({});
   const [isError, setIsError] = useState(false);
   const [visibleModal, setVisibleModal] = useState(false);
   const [cyclistsList, setCyclistsList] = useState(cyclists);
-  //? On set les cyclistes si les résultats de l'étape ont déjà étaient renseignés
-  const setDefaultPronoValue = () => {
-    // userConnectedInfo.pronos.hasOwnProperty(stageId) &&
-    //   setSelectedCyclists(userConnectedInfo.pronos[stageId]);
-  };
 
   useEffect(() => {
-    setDefaultPronoValue();
+    setSelectedCyclists(currentResults);
   }, [stageId]);
-
   const handleSetResults = async () => {
     Object.keys(selectedCyclists).length < 20
       ? setIsError((prec) => !prec)

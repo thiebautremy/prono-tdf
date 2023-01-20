@@ -5,6 +5,8 @@ import {
   getFirestore,
   collection,
   getDocs,
+  getDoc,
+  doc,
   Timestamp,
 } from "firebase/firestore";
 import app from "../../../config/firebaseConfig";
@@ -17,6 +19,7 @@ import "./InformResults.scss";
 const InformResults = () => {
   const [isOpenCyclistList, setIsOpenCyclistList] = useState(false);
   const [selectedStage, setSelectedStage] = useState(null);
+  const [results, setResults] = useState({});
   const { cyclists, setCyclists } = useContext(CyclistsContext);
   const { stages, setStages } = useContext(StagesContext);
   const db = getFirestore(app);
@@ -32,6 +35,18 @@ const InformResults = () => {
           setStages(datas);
         });
       }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchResults = async (stageFound: { stageId: string }) => {
+    try {
+      const res = await getDoc(
+        doc(db, "results", stageFound.stageId.toString())
+      );
+      res.data() === undefined ? setResults({}) : setResults(res.data());
+      setSelectedStage(stageFound);
     } catch (err) {
       console.log(err);
     }
@@ -78,7 +93,8 @@ const InformResults = () => {
   };
   const onStageChange = (e: DropdownChangeParams) => {
     const stageFound = stages.find((stage) => stage.stageId === e.value.code);
-    setSelectedStage(stageFound);
+    setResults({});
+    fetchResults(stageFound);
   };
   return (
     <div className="informResults">
@@ -112,7 +128,11 @@ const InformResults = () => {
           </div>
         )}
         {isOpenCyclistList && cyclists.length > 0 && (
-          <InformResult cyclists={cyclists} stageId={selectedStage.stageId} />
+          <InformResult
+            cyclists={cyclists}
+            stageId={selectedStage.stageId}
+            currentResults={results}
+          />
         )}
       </div>
     </div>

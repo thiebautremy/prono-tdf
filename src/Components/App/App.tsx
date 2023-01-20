@@ -11,13 +11,21 @@ import Pronos from "../Pronos/Pronos";
 import Resultats from "../Resultats/Resultats";
 import InformResults from "../Admin/InformResults/InformResults";
 import HomeConnected from "../Home/HomeConnected/homeConnected";
+import AdminInformations from "../Admin/AdminInformations/AdminInformations";
 const App = () => {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route
+            path="/admin"
+            element={
+              <Admin>
+                <AdminInformations />
+              </Admin>
+            }
+          />
           <Route
             path="/prono"
             element={

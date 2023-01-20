@@ -10,7 +10,10 @@ const NavBarAdmin = () => {
         <nav>
           <Link to="/" className="navBar__link">
             <FaAngleLeft />
-            Retour
+            Retour à l'application
+          </Link>
+          <Link to="/admin" className="navBar__link">
+            Administration
           </Link>
           <Link to="/admin/users" className="navBar__link">
             Utilisateurs

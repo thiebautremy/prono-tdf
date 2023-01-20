@@ -16,7 +16,6 @@ const Stages = () => {
       if (response) {
         response.forEach((doc) => {
           datas.push(doc.data());
-          console.log(datas);
           setStages(datas);
         });
       }

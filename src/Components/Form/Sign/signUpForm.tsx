@@ -44,8 +44,6 @@ const SignUpForm = () => {
           displayName: userName,
         })
           .then(() => {
-            console.log(success);
-            console.log("profil update");
             if (typeof success === "object" && success !== null) {
               addUserNameAndRole(success.user.uid, userName, email);
             }

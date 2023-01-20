@@ -1,0 +1,28 @@
+@use "src/Styles/_vars.scss" as var;
+
+.adminInformations {
+  padding: 2rem;
+  width: 80%;
+  margin: auto;
+  &__title {
+    font-weight: bold;
+    color: var.$black;
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 2rem;
+  }
+  &__list {
+    &__item {
+      &__title {
+        font-weight: bold;
+        margin: 1rem 0;
+        font-size: 1.3rem;
+        text-decoration: underline;
+      }
+      &__paragraphe {
+        font-size: 1.2rem;
+        padding: 0 0.5rem;
+      }
+    }
+  }
+}

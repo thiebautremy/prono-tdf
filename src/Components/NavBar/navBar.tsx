@@ -31,7 +31,7 @@ const NavBar = () => {
               Pronostiquer
             </Link>
             <Link to="/results" className="navBar__link">
-              Résultats
+              Scores / Statistiques
             </Link>
             {userConnectedInfo.hasOwnProperty("roles") &&
               userConnectedInfo?.roles.some(

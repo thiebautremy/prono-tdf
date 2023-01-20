@@ -59,14 +59,11 @@ const Prono = ({ cyclists, stageId }) => {
   const updateAndFetchData = async () => {
     let pronoObj: { number: string; name: string } = {};
     pronoObj = { ...userConnectedInfo?.pronos };
-    console.log(pronoObj);
     pronoObj[stageId] = selectedCyclists;
-    console.log(pronoObj);
     await updateDoc(userRef, {
       pronos: pronoObj,
     });
     const userDocumentDbRef = await getDoc(doc(db, "users", currentUser.uid));
-    console.log(userDocumentDbRef);
     setUserConnectedInfo(userDocumentDbRef.data());
     setVisibleModal(true);
   };

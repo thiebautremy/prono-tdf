@@ -29,7 +29,6 @@ const Users = () => {
   }, [checkedAdmin]);
   return (
     <div className="users">
-      {users.length > 0 && console.log(users)}
       {users.length > 0 ? (
         users.map(
           (user: { authId: string; username: string; email: string }) => (

@@ -115,6 +115,7 @@ const Calculate = () => {
           const pronoUser = user?.pronos[selectedStage.stageId];
           //TODO Retrouver les points attribués en fonction des bonnes places trouvées
           //TODO Calculer les points et les set en bdd dans la table du user correspondant
+          //TODO Catcher le success de la requête pour afficher un message de succès
         }
       });
     }

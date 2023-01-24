@@ -4,6 +4,8 @@ import {
   getFirestore,
   collection,
   getDocs,
+  getDoc,
+  doc,
   Timestamp,
 } from "firebase/firestore";
 import { getDateFormated } from "../../../Services/functions";
@@ -11,13 +13,32 @@ import app from "../../../config/firebaseConfig";
 import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
 import Stage from "../Stages/Stage/Stage";
 import "./Calculate.scss";
+import ErrorMessage from "../../Form/ErrorMessage/errorMessage";
 
 const Calculate = () => {
   //TODO Récupérer les résultats en plus des pronos
   const [selectedStage, setSelectedStage] = useState(null);
   const [users, setUsers] = useState(null);
+  const [error, setError] = useState("");
+  const [results, setResults] = useState({});
   const { stages, setStages } = useContext(StagesContext);
   const db = getFirestore(app);
+
+  const fetchUsers = async () => {
+    const datas: [] = [];
+    try {
+      const querySnapshot = await getDocs(collection(db, "users"));
+      const response = querySnapshot;
+      if (response) {
+        response.forEach((doc) => {
+          datas.push(doc.data());
+          setUsers(datas);
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const fetchStages = async () => {
     const datas: [] = [];
@@ -30,6 +51,16 @@ const Calculate = () => {
           setStages(datas);
         });
       }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchResults = async (stageId) => {
+    try {
+      const res = await getDoc(doc(db, "results", stageId.toString()));
+      console.log(res);
+      res.data() === undefined ? setResults({}) : setResults(res.data());
     } catch (err) {
       console.log(err);
     }
@@ -56,41 +87,36 @@ const Calculate = () => {
   };
   const onStageChange = (e: DropdownChangeParams) => {
     const stageFound = stages.find((stage) => stage.stageId === e.value.code);
+    setError("");
     setSelectedStage(stageFound);
+    fetchResults(stageFound?.stageId);
   };
 
   useEffect(() => {
     fetchStages();
+    fetchUsers();
   }, []);
-  const fetchUsers = async () => {
-    const datas: [] = [];
-    try {
-      const querySnapshot = await getDocs(collection(db, "users"));
-      const response = querySnapshot;
-      if (response) {
-        response.forEach((doc) => {
-          datas.push(doc.data());
-          setUsers(datas);
-        });
-        calculatePoint(datas);
-      }
-    } catch (err) {
-      console.log(err);
+
+  const handleCalculate = () => {
+    if (Object.keys(results).length === 0) {
+      setError("Les résultats de l'étape n'ont pas été renseignés");
+    } else {
+      calculatePoint();
     }
   };
-  const handleCalculate = () => {
-    fetchUsers();
-  };
 
-  const calculatePoint = (users) => {
+  const calculatePoint = () => {
     console.log(users);
     console.log(selectedStage);
     if (users.length > 0) {
-      users.map(
-        (user) =>
-          user.pronos !== undefined &&
-          console.log(user?.pronos[selectedStage.stageId])
-      );
+      users.map((user) => {
+        if (user.pronos !== undefined) {
+          console.log(user?.pronos[selectedStage.stageId]);
+          const pronoUser = user?.pronos[selectedStage.stageId];
+          //TODO Retrouver les points attribués en fonction des bonnes places trouvées
+          //TODO Calculer les points et les set en bdd dans la table du user correspondant
+        }
+      });
     }
   };
   return (
@@ -116,6 +142,7 @@ const Calculate = () => {
         {selectedStage !== null && (
           <div className="calculate__stage">
             <Stage stage={selectedStage} />{" "}
+            {error.length > 0 && <ErrorMessage message={error} />}
             <button
               onClick={() => handleCalculate()}
               className="calculate__calculateBtn"

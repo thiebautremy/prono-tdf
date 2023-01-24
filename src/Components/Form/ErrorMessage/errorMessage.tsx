@@ -1,6 +1,10 @@
 import React from "react";
 import "./errorMessage.scss";
-const ErrorMessage = ({ message }) => {
+
+type ErrorMessageProps = {
+  message: string;
+};
+const ErrorMessage: React.FC<ErrorMessageProps> = ({ message }) => {
   return <h5 className="errorMessage">{message}</h5>;
 };
 

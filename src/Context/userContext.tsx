@@ -1,10 +1,17 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState, useMemo } from "react";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
 } from "firebase/auth";
 import { auth } from "../config/firebaseConfig";
+type userConnectedInfo = {
+  authId: string;
+  email: string;
+  roles: string[];
+  username: string;
+  pronos: { number: string; firstname: string; lastname: string }[];
+};
 interface IContextProps {
   modalState: {
     signIn: boolean;
@@ -16,22 +23,9 @@ interface IContextProps {
   setCurrentUser: (param: unknown) => void;
   setSignErrorMessage: (param: string) => void;
   currentUser: { displayName: string; uid: string };
-  userInfo: {
-    email: string;
-    username: string;
-    roles: string[];
-    authId: string;
-    prono: number[];
-  };
   setUserConnectedInfo: (param: unknown) => void;
   users: [string];
-  userConnectedInfo: {
-    authId: string;
-    email: string;
-    roles: string[];
-    username: string;
-    pronos: { number: string; firstname: string; lastname: string }[];
-  };
+  userConnectedInfo: userConnectedInfo;
   setUsers: (param: unknown) => void;
   signErrorMessage: string;
 }
@@ -63,8 +57,10 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
     }
   }
   //? ===== GESTION INSCRIPTION ===== \\
-  const [currentUser, setCurrentUser] = useState({});
-  const [userConnectedInfo, setUserConnectedInfo] = useState({});
+  const [currentUser, setCurrentUser] =
+    useState<IContextProps["currentUser"]>();
+  const [userConnectedInfo, setUserConnectedInfo] =
+    useState<userConnectedInfo>();
   const [users, setUsers] = useState({});
   const [loadingData, setLoadingData] = useState(true);
   const signUp = (email: string, password: string) =>
@@ -81,23 +77,26 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
 
     return unsubscribe;
   }, []);
+
+  const providerValue = useMemo(
+    () => ({
+      modalState,
+      toggleModal,
+      signUp,
+      currentUser,
+      setCurrentUser,
+      signIn,
+      signErrorMessage,
+      setSignErrorMessage,
+      userConnectedInfo,
+      setUserConnectedInfo,
+      users,
+      setUsers,
+    }),
+    [users, signIn, signUp]
+  );
   return (
-    <UserContext.Provider
-      value={{
-        modalState,
-        toggleModal,
-        signUp,
-        currentUser,
-        setCurrentUser,
-        signIn,
-        signErrorMessage,
-        setSignErrorMessage,
-        userConnectedInfo,
-        setUserConnectedInfo,
-        users,
-        setUsers,
-      }}
-    >
+    <UserContext.Provider value={providerValue}>
       {!loadingData && children}
     </UserContext.Provider>
   );

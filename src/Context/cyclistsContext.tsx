@@ -16,7 +16,7 @@ interface Props {
   children: JSX.Element | JSX.Element[];
 }
 export const CyclistsContextProvider: React.FC<Props> = ({ children }) => {
-  const [cyclists, setCyclists] = useState<Cyclist[]>();
+  const [cyclists, setCyclists] = useState<Cyclist[]>([]);
   const providerValue = useMemo(
     () => ({
       cyclists,

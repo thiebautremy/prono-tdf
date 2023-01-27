@@ -59,8 +59,7 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
   //? ===== GESTION INSCRIPTION ===== \\
   const [currentUser, setCurrentUser] =
     useState<IContextProps["currentUser"]>();
-  const [userConnectedInfo, setUserConnectedInfo] =
-    useState<userConnectedInfo>();
+  const [userConnectedInfo, setUserConnectedInfo] = useState({});
   const [users, setUsers] = useState({});
   const [loadingData, setLoadingData] = useState(true);
   const signUp = (email: string, password: string) =>
@@ -77,26 +76,23 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
 
     return unsubscribe;
   }, []);
-
-  const providerValue = useMemo(
-    () => ({
-      modalState,
-      toggleModal,
-      signUp,
-      currentUser,
-      setCurrentUser,
-      signIn,
-      signErrorMessage,
-      setSignErrorMessage,
-      userConnectedInfo,
-      setUserConnectedInfo,
-      users,
-      setUsers,
-    }),
-    [users, signIn, signUp]
-  );
   return (
-    <UserContext.Provider value={providerValue}>
+    <UserContext.Provider
+      value={{
+        modalState,
+        toggleModal,
+        signUp,
+        currentUser,
+        setCurrentUser,
+        signIn,
+        signErrorMessage,
+        setSignErrorMessage,
+        userConnectedInfo,
+        setUserConnectedInfo,
+        users,
+        setUsers,
+      }}
+    >
       {!loadingData && children}
     </UserContext.Provider>
   );

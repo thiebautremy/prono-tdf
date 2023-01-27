@@ -16,18 +16,17 @@ const Prono = ({ cyclists, stageId }) => {
   const db = getFirestore(app);
   const { currentUser, userConnectedInfo, setUserConnectedInfo } =
     useContext(UserContext);
-
   const userRef = doc(db, "users", `${currentUser.uid}`);
   const [selectedCyclists, setSelectedCyclists] = useState([]);
   const [isError, setIsError] = useState(false);
   //? On set les cyclistes si le prono de l'étape est déjà renseigné
   const setDefaultPronoValue = () => {
-    userConnectedInfo.pronos.hasOwnProperty(stageId) &&
-      setSelectedCyclists(userConnectedInfo.pronos[stageId]);
+    userConnectedInfo?.pronos.hasOwnProperty(stageId) &&
+      setSelectedCyclists(userConnectedInfo?.pronos[stageId]);
   };
 
   useEffect(() => {
-    setDefaultPronoValue();
+    userConnectedInfo.hasOwnProperty("prono") && setDefaultPronoValue();
   }, [stageId]);
   const cyclistsTemplate = (option) => {
     return (

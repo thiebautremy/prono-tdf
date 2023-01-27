@@ -5,6 +5,7 @@ import {
   collection,
   getDocs,
   getDoc,
+  updateDoc,
   doc,
   Timestamp,
 } from "firebase/firestore";
@@ -14,14 +15,19 @@ import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
 import Stage from "../Stages/Stage/Stage";
 import "./Calculate.scss";
 import ErrorMessage from "../../Form/ErrorMessage/errorMessage";
+import { awardedPoints } from "../../../assets/points/points";
+import UserContext from "../../../Context/userContext";
+import Dialogue from "../../Dialogue/Dialogue";
 
 const Calculate = () => {
-  //TODO Récupérer les résultats en plus des pronos
   const [selectedStage, setSelectedStage] = useState(null);
   const [users, setUsers] = useState(null);
   const [error, setError] = useState("");
   const [results, setResults] = useState({});
   const { stages, setStages } = useContext(StagesContext);
+  const { setUserConnectedInfo } = useContext(UserContext);
+  const [visibleModal, setVisibleModal] = useState(false);
+
   const db = getFirestore(app);
 
   const fetchUsers = async () => {
@@ -59,7 +65,6 @@ const Calculate = () => {
   const fetchResults = async (stageId) => {
     try {
       const res = await getDoc(doc(db, "results", stageId.toString()));
-      console.log(res);
       res.data() === undefined ? setResults({}) : setResults(res.data());
     } catch (err) {
       console.log(err);
@@ -104,24 +109,48 @@ const Calculate = () => {
       calculatePoint();
     }
   };
-
+  function getSum(total, num) {
+    return total + num;
+  }
   const calculatePoint = () => {
-    console.log(users);
-    console.log(selectedStage);
+    const stageId: number = selectedStage.stageId;
     if (users.length > 0) {
       users.map((user) => {
         if (user.pronos !== undefined) {
-          console.log(user?.pronos[selectedStage.stageId]);
-          const pronoUser = user?.pronos[selectedStage.stageId];
-          //TODO Retrouver les points attribués en fonction des bonnes places trouvées
-          //TODO Calculer les points et les set en bdd dans la table du user correspondant
-          //TODO Catcher le success de la requête pour afficher un message de succès
+          const totalPointArray = [];
+          const pronoUser = user?.pronos?.[stageId];
+          pronoUser.map((prono) => {
+            const cyclistPosition = Object.values(results).findIndex(
+              (result) => result.number === prono.code
+            );
+            if (cyclistPosition >= 0) {
+              totalPointArray.push(awardedPoints[0][cyclistPosition + 1]);
+            }
+          });
+          setPointInDb(user, stageId, totalPointArray);
         }
       });
     }
   };
+
+  const setPointInDb = async (user, stageId, totalPoint) => {
+    const pointsObj = { ...user?.points };
+    pointsObj[stageId] = totalPoint.reduce(getSum);
+    const userRef = doc(db, "users", `${user.authId}`);
+    await updateDoc(userRef, {
+      points: pointsObj,
+    });
+    const userDocumentDbRef = await getDoc(doc(db, "users", user.authId));
+    setUserConnectedInfo(userDocumentDbRef.data());
+    setVisibleModal(true);
+  };
   return (
     <div className="calculate">
+      <Dialogue
+        isVisible={visibleModal}
+        setIsVisible={setVisibleModal}
+        message={"Tous les calculs ont été effectués"}
+      />
       <div className="calculate__header">
         <h1 className="calculate__header__title">
           Calculer les points des pronostiques

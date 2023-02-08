@@ -133,16 +133,23 @@ const Calculate = () => {
     }
   };
 
-  const setPointInDb = async (user, stageId, totalPoint) => {
+  const setPointInDb = (user, stageId, totalPoint) => {
     const pointsObj = { ...user?.points };
     pointsObj[stageId] = totalPoint.reduce(getSum);
     const userRef = doc(db, "users", `${user.authId}`);
-    await updateDoc(userRef, {
+    return updateDoc(userRef, {
       points: pointsObj,
-    });
-    const userDocumentDbRef = await getDoc(doc(db, "users", user.authId));
-    setUserConnectedInfo(userDocumentDbRef.data());
-    setVisibleModal(true);
+    })
+      .then(async () => {
+        console.log("Document successfully updated!");
+        const userDocumentDbRef = await getDoc(doc(db, "users", user.authId));
+        setUserConnectedInfo(userDocumentDbRef.data());
+        setVisibleModal(true);
+      })
+      .catch((error) => {
+        // The document probably doesn't exist.
+        console.error("Error updating document: ", error);
+      });
   };
   return (
     <div className="calculate">

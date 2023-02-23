@@ -18,6 +18,11 @@ import ErrorMessage from "../../Form/ErrorMessage/errorMessage";
 import { awardedPoints } from "../../../assets/points/points";
 import UserContext from "../../../Context/userContext";
 import Dialogue from "../../Dialogue/Dialogue";
+import {
+  updateFirebaseDoc,
+  fetchFirebaseData,
+  useFetch,
+} from "../../../Services/api";
 
 const Calculate = () => {
   const [selectedStage, setSelectedStage] = useState(null);
@@ -96,11 +101,13 @@ const Calculate = () => {
     setSelectedStage(stageFound);
     fetchResults(stageFound?.stageId);
   };
-
+  const { status: statusUsers, data: dataUsers } = useFetch("users");
   useEffect(() => {
     fetchStages();
-    fetchUsers();
-  }, []);
+    statusUsers === "fetched" && setUsers(dataUsers);
+    return () => setUsers([]);
+    // fetchUsers();
+  }, [statusUsers]);
 
   const handleCalculate = () => {
     if (Object.keys(results).length === 0) {
@@ -136,20 +143,18 @@ const Calculate = () => {
   const setPointInDb = (user, stageId, totalPoint) => {
     const pointsObj = { ...user?.points };
     pointsObj[stageId] = totalPoint.reduce(getSum);
-    const userRef = doc(db, "users", `${user.authId}`);
-    return updateDoc(userRef, {
-      points: pointsObj,
-    })
-      .then(async () => {
-        console.log("Document successfully updated!");
-        const userDocumentDbRef = await getDoc(doc(db, "users", user.authId));
-        setUserConnectedInfo(userDocumentDbRef.data());
-        setVisibleModal(true);
+    const data = { points: pointsObj };
+    updateFirebaseDoc("users", `${user.authId}`, data)
+      .then(async (res) => {
+        if (res) {
+          const userDocumentDbRef = await getDoc(doc(db, "users", user.authId));
+          setUserConnectedInfo(userDocumentDbRef.data());
+          setVisibleModal(true);
+        } else {
+          console.log("error");
+        }
       })
-      .catch((error) => {
-        // The document probably doesn't exist.
-        console.error("Error updating document: ", error);
-      });
+      .catch((res) => console.log(res));
   };
   return (
     <div className="calculate">

@@ -8,8 +8,8 @@ interface IStage {
   type: string;
 }
 interface IContextProps {
-  setStages: IStage[];
-  stages: IStage[];
+  setStages: (newValue: IStage[]) => void;
+  stages: IStage[] | [];
 }
 export const StagesContext = createContext({} as IContextProps);
 
@@ -17,7 +17,7 @@ interface Props {
   children: JSX.Element | JSX.Element[];
 }
 export const StagesContextProvider: React.FC<Props> = ({ children }) => {
-  const [stages, setStages] = useState<IStage[]>([]);
+  const [stages, setStages] = useState<IStage[] | []>([]);
   return (
     <StagesContext.Provider
       value={{

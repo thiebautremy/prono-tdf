@@ -1,11 +1,11 @@
-import React, { createContext, useEffect, useState, useMemo } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
 } from "firebase/auth";
 import { auth } from "../config/firebaseConfig";
-type userConnectedInfo = {
+type UserConnectedInfo = {
   authId: string;
   email: string;
   roles: string[];
@@ -20,12 +20,12 @@ interface IContextProps {
   toggleModal: (modal: string) => void;
   signUp: (email: string, password: string) => void;
   signIn: (email: string, password: string) => void;
-  setCurrentUser: (param: unknown) => void;
+  setCurrentUser: (param: UserConnectedInfo) => void;
   setSignErrorMessage: (param: string) => void;
   currentUser: { displayName: string; uid: string };
   setUserConnectedInfo: (param: unknown) => void;
   users: [string];
-  userConnectedInfo: userConnectedInfo;
+  userConnectedInfo: UserConnectedInfo;
   setUsers: (param: unknown) => void;
   signErrorMessage: string;
 }

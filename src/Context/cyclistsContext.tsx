@@ -1,4 +1,4 @@
-import React, { createContext, useMemo, useState } from "react";
+import React, { createContext, useState } from "react";
 interface IContextProps {
   setCyclists: Cyclist[];
   cyclists: Cyclist[];
@@ -17,15 +17,8 @@ interface Props {
 }
 export const CyclistsContextProvider: React.FC<Props> = ({ children }) => {
   const [cyclists, setCyclists] = useState<Cyclist[]>([]);
-  const providerValue = useMemo(
-    () => ({
-      cyclists,
-      setCyclists,
-    }),
-    [cyclists]
-  );
   return (
-    <CyclistsContext.Provider value={providerValue}>
+    <CyclistsContext.Provider value={{ cyclists, setCyclists }}>
       {children}
     </CyclistsContext.Provider>
   );

@@ -18,15 +18,13 @@ import ErrorMessage from "../../Form/ErrorMessage/errorMessage";
 import { awardedPoints } from "../../../assets/points/points";
 import UserContext from "../../../Context/userContext";
 import Dialogue from "../../Dialogue/Dialogue";
-import {
-  updateFirebaseDoc,
-  fetchFirebaseData,
-  useFetch,
-} from "../../../Services/api";
+import { useFetch } from "../../../Services/api";
 
 const Calculate = () => {
-  const [selectedStage, setSelectedStage] = useState(null);
-  const [users, setUsers] = useState(null);
+  const [selectedStage, setSelectedStage] = useState<{ stageId: number }>(null);
+  const [users, setUsers] = useState<
+    { pronos: unknown; authId: string }[] | null
+  >(null);
   const [error, setError] = useState("");
   const [results, setResults] = useState({});
   const { stages, setStages } = useContext(StagesContext);
@@ -34,22 +32,6 @@ const Calculate = () => {
   const [visibleModal, setVisibleModal] = useState(false);
 
   const db = getFirestore(app);
-
-  const fetchUsers = async () => {
-    const datas: [] = [];
-    try {
-      const querySnapshot = await getDocs(collection(db, "users"));
-      const response = querySnapshot;
-      if (response) {
-        response.forEach((doc) => {
-          datas.push(doc.data());
-          setUsers(datas);
-        });
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const fetchStages = async () => {
     const datas: [] = [];
@@ -67,7 +49,7 @@ const Calculate = () => {
     }
   };
 
-  const fetchResults = async (stageId) => {
+  const fetchResults = async (stageId: number) => {
     try {
       const res = await getDoc(doc(db, "results", stageId.toString()));
       res.data() === undefined ? setResults({}) : setResults(res.data());
@@ -83,10 +65,21 @@ const Calculate = () => {
     const dateAndHour = timeObj.toDate();
     return dateAndHour.toUTCString();
   };
-  const formatedArrayStagesForDropDown = (arrayToChanged) => {
+  const formatedArrayStagesForDropDown = (
+    arrayToChanged: {
+      date: { seconds: number; nanoseconds: number };
+      stageId: number;
+      endCity: string;
+      startCity: string;
+    }[]
+  ) => {
     const arrayFormated = [];
     for (let i = 0; i < arrayToChanged.length; i++) {
-      const object = {};
+      const object: { stage: string; code: number; date: string } = {
+        stage: "",
+        code: null,
+        date: null,
+      };
       const { date } = getDateFormated(arrayToChanged[i].date);
       object.stage = `Etape n°${arrayToChanged[i].stageId} : ${arrayToChanged[i].startCity} - ${arrayToChanged[i].endCity} le ${date}`;
       object.code = arrayToChanged[i].stageId;
@@ -106,7 +99,6 @@ const Calculate = () => {
     fetchStages();
     statusUsers === "fetched" && setUsers(dataUsers);
     return () => setUsers([]);
-    // fetchUsers();
   }, [statusUsers]);
 
   const handleCalculate = () => {
@@ -116,7 +108,7 @@ const Calculate = () => {
       calculatePoint();
     }
   };
-  function getSum(total, num) {
+  function getSum(total: number, num: number) {
     return total + num;
   }
   const calculatePoint = () => {
@@ -124,37 +116,48 @@ const Calculate = () => {
     if (users.length > 0) {
       users.map((user) => {
         if (user.pronos !== undefined) {
-          const totalPointArray = [];
+          const totalPointArray: string[] = [];
           const pronoUser = user?.pronos?.[stageId];
-          pronoUser.map((prono) => {
-            const cyclistPosition = Object.values(results).findIndex(
-              (result) => result.number === prono.code
-            );
-            if (cyclistPosition >= 0) {
-              totalPointArray.push(awardedPoints[0][cyclistPosition + 1]);
-            }
-          });
-          setPointInDb(user, stageId, totalPointArray);
+          if (pronoUser !== undefined) {
+            pronoUser.map((prono) => {
+              const cyclistPosition = Object.values(results).findIndex(
+                (result) => result.number === prono.code
+              );
+              if (cyclistPosition >= 0) {
+                totalPointArray.push(awardedPoints[0][cyclistPosition + 1]);
+              }
+            });
+            getUsersRef(user.authId, stageId, totalPointArray);
+          }
         }
       });
     }
   };
 
-  const setPointInDb = (user, stageId, totalPoint) => {
-    const pointsObj = { ...user?.points };
+  const getUsersRef = (
+    userId: string,
+    stageId: number,
+    totalPoint: string[]
+  ) => {
+    const refUser = doc(db, "users", `${userId}`);
+    setPointsInDb(refUser, userId, stageId, totalPoint);
+  };
+
+  const setPointsInDb = async (refUser, userId: string, stageId: number, totalPoint: string[]) => {
+    const userDocumentDbRef = await getDoc(doc(db, "users", userId));
+    console.log("userDocumentDbRef", userDocumentDbRef.data());
+    const pointsObj: string{} = { ...userDocumentDbRef.data()?.points };
     pointsObj[stageId] = totalPoint.reduce(getSum);
     const data = { points: pointsObj };
-    updateFirebaseDoc("users", `${user.authId}`, data)
-      .then(async (res) => {
-        if (res) {
-          const userDocumentDbRef = await getDoc(doc(db, "users", user.authId));
-          setUserConnectedInfo(userDocumentDbRef.data());
-          setVisibleModal(true);
-        } else {
-          console.log("error");
-        }
+    return updateDoc(refUser, {
+      ...data,
+    })
+      .then(async () => {
+        const userDocumentDbRef = await getDoc(doc(db, "users", userId));
+        setUserConnectedInfo(userDocumentDbRef.data());
+        setVisibleModal(true);
       })
-      .catch((res) => console.log(res));
+      .catch(() => console.log("error"));
   };
   return (
     <div className="calculate">

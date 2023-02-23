@@ -11,8 +11,12 @@ const HomeConnected: React.FC<PropsWithChildren> = ({ children }) => {
     saveUserConnectedInfo();
   }, []);
   const saveUserConnectedInfo = async () => {
-    const userDocumentDbRef = await getDoc(doc(db, "users", currentUser.uid));
-    setUserConnectedInfo(userDocumentDbRef.data());
+    if (currentUser !== null) {
+      const userDocumentDbRef = await getDoc(
+        doc(db, "users", currentUser?.uid)
+      );
+      setUserConnectedInfo(userDocumentDbRef.data());
+    }
   };
   return (
     <>

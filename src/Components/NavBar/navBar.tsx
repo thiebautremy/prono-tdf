@@ -33,7 +33,7 @@ const NavBar = () => {
             <Link to="/results" className="navBar__link">
               Scores / Statistiques
             </Link>
-            {userConnectedInfo.hasOwnProperty("roles") &&
+            {userConnectedInfo?.hasOwnProperty("roles") &&
               userConnectedInfo?.roles.some(
                 (role) => role === "ADMIN_ROLE"
               ) && (

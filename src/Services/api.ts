@@ -17,7 +17,7 @@ export const updateFirebaseDoc = async (
 ) => {
   const ref = doc(db, tableName, id);
   return updateDoc(ref, {
-    data,
+    ...data,
   })
     .then(() => {
       return true;

@@ -20,16 +20,19 @@ interface IContextProps {
   toggleModal: (modal: string) => void;
   signUp: (email: string, password: string) => void;
   signIn: (email: string, password: string) => void;
-  setCurrentUser: (param: UserConnectedInfo) => void;
-  setSignErrorMessage: (param: string) => void;
-  currentUser: { displayName: string; uid: string };
-  setUserConnectedInfo: (param: unknown) => void;
-  users: [string];
+  setCurrentUser: (newCurrentUser: UserConnectedInfo) => void;
+  setSignErrorMessage: (newSignErrorMessage: string) => void;
+  currentUser: CurrentUser;
+  setUserConnectedInfo: (newUserConnected: CurrentUser) => void;
   userConnectedInfo: UserConnectedInfo;
-  setUsers: (param: unknown) => void;
   signErrorMessage: string;
 }
-export const UserContext = createContext({} as IContextProps);
+
+type CurrentUser = {
+  displayName: string;
+  uid: string;
+};
+export const UserContext = createContext<IContextProps | undefined>(undefined);
 
 interface Props {
   children: JSX.Element | JSX.Element[];
@@ -57,10 +60,9 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
     }
   }
   //? ===== GESTION INSCRIPTION ===== \\
-  const [currentUser, setCurrentUser] =
-    useState<IContextProps["currentUser"]>();
-  const [userConnectedInfo, setUserConnectedInfo] = useState({});
-  const [users, setUsers] = useState({});
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
+  const [userConnectedInfo, setUserConnectedInfo] =
+    useState<UserConnectedInfo | null>();
   const [loadingData, setLoadingData] = useState(true);
   const signUp = (email: string, password: string) =>
     createUserWithEmailAndPassword(auth, email, password);
@@ -89,8 +91,6 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
         setSignErrorMessage,
         userConnectedInfo,
         setUserConnectedInfo,
-        users,
-        setUsers,
       }}
     >
       {!loadingData && children}

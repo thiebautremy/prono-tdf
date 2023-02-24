@@ -1,24 +1,32 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import app from "../../../config/firebaseConfig";
 import { getFirestore, doc, updateDoc } from "firebase/firestore";
-import { Checkbox } from "primereact/checkbox";
+import { Checkbox, CheckboxChangeParams } from "primereact/checkbox";
 
-const User = ({ user, setCheckAdmin }) => {
+type UserType = {
+  user: { authId: string; username: string; email: string; roles: string[] };
+  setCheckAdmin: (prec: any) => void;
+};
+const User: React.FC<UserType> = ({ user, setCheckAdmin }) => {
   const db = getFirestore(app);
   const userRef = doc(db, "users", `${user.authId}`);
-  const onRoleChange = async (e: Checkbox) => {
+
+  const onRoleChange = async (e: CheckboxChangeParams) => {
     if (e.checked) {
       await updateDoc(userRef, {
         roles: ["USER_ROLE", "ADMIN_ROLE"],
       });
-      setCheckAdmin((prec) => !prec);
+      setCheckAdmin((prec: any) => !prec);
     } else {
       await updateDoc(userRef, {
         roles: ["USER_ROLE"],
       });
-      setCheckAdmin((prec) => !prec);
+      setCheckAdmin((prec: any) => !prec);
     }
   };
+
   return (
     <div className="user">
       <p className="user__name">

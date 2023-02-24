@@ -24,7 +24,7 @@ const Stages = () => {
     }
   };
   useEffect(() => {
-    fetchStages();
+    void fetchStages();
   }, []);
   return (
     <div className="stages">

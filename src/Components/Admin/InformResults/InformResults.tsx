@@ -10,7 +10,7 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import app from "../../../config/firebaseConfig";
-import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
+import { Dropdown } from "primereact/dropdown";
 import { getDateFormated } from "../../../Services/functions";
 import Stage from "../Stages/Stage/Stage";
 import InformResult from "./InformResult/InformResult";
@@ -18,7 +18,14 @@ import "./InformResults.scss";
 
 const InformResults = () => {
   const [isOpenCyclistList, setIsOpenCyclistList] = useState(false);
-  const [selectedStage, setSelectedStage] = useState(null);
+  const [selectedStage, setSelectedStage] = useState<{
+    stageId: number;
+    startCity: string;
+    endCity: string;
+    date: { seconds: number; nanoseconds: number };
+    lengthStage: number;
+    type: string;
+  } | null>(null);
   const [results, setResults] = useState({});
   const { cyclists, setCyclists } = useContext(CyclistsContext);
   const { stages, setStages } = useContext(StagesContext);
@@ -68,8 +75,8 @@ const InformResults = () => {
     }
   };
   useEffect(() => {
-    fetchStages();
-    fetchCyclists();
+    void fetchStages();
+    void fetchCyclists();
   }, []);
   const formatedDateFromFirebase = (date: {
     seconds: number;
@@ -79,10 +86,25 @@ const InformResults = () => {
     const dateAndHour = timeObj.toDate();
     return dateAndHour.toUTCString();
   };
-  const formatedArrayStagesForDropDown = (arrayToChanged) => {
+  const formatedArrayStagesForDropDown = (
+    arrayToChanged: {
+      stageId: number;
+      startCity: string;
+      endCity: string;
+      date: { seconds: number; nanoseconds: number };
+    }[]
+  ) => {
     const arrayFormated = [];
     for (let i = 0; i < arrayToChanged.length; i++) {
-      const object = {};
+      const object: {
+        stage: string;
+        code: number | null;
+        date: string;
+      } = {
+        stage: "",
+        code: null,
+        date: null,
+      };
       const { date } = getDateFormated(arrayToChanged[i].date);
       object.stage = `Etape n°${arrayToChanged[i].stageId} : ${arrayToChanged[i].startCity} - ${arrayToChanged[i].endCity} le ${date}`;
       object.code = arrayToChanged[i].stageId;
@@ -91,10 +113,10 @@ const InformResults = () => {
     }
     return arrayFormated;
   };
-  const onStageChange = (e: DropdownChangeParams) => {
+  const onStageChange = (e: { value: { code: number } }) => {
     const stageFound = stages.find((stage) => stage.stageId === e.value.code);
     setResults({});
-    fetchResults(stageFound);
+    void fetchResults(stageFound);
   };
   return (
     <div className="informResults">
@@ -120,7 +142,7 @@ const InformResults = () => {
           <div className="informResults__stage">
             <Stage stage={selectedStage} />{" "}
             <button
-              onClick={setIsOpenCyclistList}
+              onClick={() => setIsOpenCyclistList(true)}
               className="informResults__setResultsBtn"
             >
               Ajouter les résultats de l'étape

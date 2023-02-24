@@ -25,7 +25,7 @@ const Users = () => {
     }
   };
   useEffect(() => {
-    fetchUsers();
+    void fetchUsers();
   }, [checkedAdmin]);
   return (
     <div className="users">

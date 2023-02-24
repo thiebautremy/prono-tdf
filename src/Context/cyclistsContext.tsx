@@ -1,11 +1,11 @@
 import React, { createContext, useState } from "react";
 interface IContextProps {
-  setCyclists: Cyclist[];
+  setCyclists: (newCyclists: Cyclist[]) => void;
   cyclists: Cyclist[];
 }
 export const CyclistsContext = createContext({} as IContextProps);
 
-type Cyclist = {
+export type Cyclist = {
   firstname: string;
   lastname: string;
   team: string;

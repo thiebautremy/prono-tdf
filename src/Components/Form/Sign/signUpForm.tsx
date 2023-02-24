@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, { useRef, useContext, FormEvent } from "react";
 import ErrorMessage from "../ErrorMessage/errorMessage";
@@ -13,7 +15,7 @@ const SignUpForm = () => {
     useContext(UserContext);
 
   const addUserNameAndRole = async (
-    authId: number,
+    authId: string,
     username: string,
     email: string
   ) => {
@@ -29,9 +31,9 @@ const SignUpForm = () => {
   //TODO ajouter un loader à la soumission du formulaire de création de compte
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const userName = (signUpFormRef as any).current[0].value;
-    const email = (signUpFormRef as any).current[1].value;
-    const password = (signUpFormRef as any).current[2].value;
+    const userName = signUpFormRef.current[0].value;
+    const email: string = signUpFormRef.current[1].value;
+    const password: string = signUpFormRef.current[2].value;
     // try {
     const credentialPromise = new Promise(function (myResolve, myReject) {
       myResolve(signUp(email, password));
@@ -39,20 +41,24 @@ const SignUpForm = () => {
     });
 
     credentialPromise
-      .then(function (success: any) {
-        updateProfile(auth.currentUser as any, {
+      .then(function (success: {
+        user: { uid: string };
+        userName: string;
+        email: string;
+      }) {
+        updateProfile(auth.currentUser, {
           displayName: userName,
         })
           .then(() => {
             if (typeof success === "object" && success !== null) {
-              addUserNameAndRole(success.user.uid, userName, email);
+              void addUserNameAndRole(success?.user?.uid, userName, email);
             }
             setSignErrorMessage("");
             toggleModal("close");
           })
           .catch((err) => console.log(err));
       })
-      .catch(function (error) {
+      .catch(function (error: { code: string }) {
         if (error.code === "auth/invalid-email")
           setSignErrorMessage("Format d'email invalide");
         if (error.code === "auth/weak-password")

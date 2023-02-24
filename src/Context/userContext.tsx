@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { createContext, useEffect, useState } from "react";
 import {
   signInWithEmailAndPassword,
@@ -5,12 +6,18 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { auth } from "../config/firebaseConfig";
-type UserConnectedInfo = {
+export type UserConnectedInfo = {
   authId: string;
   email: string;
   roles: string[];
   username: string;
-  pronos: { number: string; firstname: string; lastname: string }[];
+  pronos?: {
+    [stageId: string | number]: {
+      number: string;
+      firstname: string;
+      lastname: string;
+    } | null;
+  }[];
 };
 interface IContextProps {
   modalState: {
@@ -20,10 +27,10 @@ interface IContextProps {
   toggleModal: (modal: string) => void;
   signUp: (email: string, password: string) => void;
   signIn: (email: string, password: string) => void;
-  setCurrentUser: (newCurrentUser: UserConnectedInfo) => void;
+  setCurrentUser: (newCurrentUser: CurrentUser) => void;
   setSignErrorMessage: (newSignErrorMessage: string) => void;
-  currentUser: CurrentUser;
-  setUserConnectedInfo: (newUserConnected: CurrentUser) => void;
+  currentUser?: CurrentUser;
+  setUserConnectedInfo: (newUserConnected: UserConnectedInfo) => void;
   userConnectedInfo: UserConnectedInfo;
   signErrorMessage: string;
 }
@@ -62,7 +69,7 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
   //? ===== GESTION INSCRIPTION ===== \\
   const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
   const [userConnectedInfo, setUserConnectedInfo] =
-    useState<UserConnectedInfo | null>();
+    useState<UserConnectedInfo>();
   const [loadingData, setLoadingData] = useState(true);
   const signUp = (email: string, password: string) =>
     createUserWithEmailAndPassword(auth, email, password);

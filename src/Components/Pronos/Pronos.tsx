@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { useContext, useEffect, useState } from "react";
-import { StagesContext } from "../../Context/stagesContext";
-import { CyclistsContext } from "../../Context/cyclistsContext";
+import { StagesContext, IStage } from "../../Context/stagesContext";
+import { Cyclist, CyclistsContext } from "../../Context/cyclistsContext";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import app from "../../config/firebaseConfig";
 import Stage from "../Admin/Stages/Stage/Stage";
@@ -14,7 +15,7 @@ const Pronos = () => {
   const db = getFirestore(app);
   const { stages, setStages } = useContext(StagesContext);
   const fetchStages = async () => {
-    const datas: [] = [];
+    const datas: IStage[] = [];
     try {
       const querySnapshot = await getDocs(collection(db, "stages"));
       const response = querySnapshot;
@@ -29,7 +30,7 @@ const Pronos = () => {
     }
   };
   const fetchCyclists = async () => {
-    const datas: [] = [];
+    const datas: Cyclist[] = [];
     try {
       const querySnapshot = await getDocs(collection(db, "cyclists"));
       const response = querySnapshot;
@@ -44,20 +45,25 @@ const Pronos = () => {
     }
   };
   useEffect(() => {
-    fetchStages();
-    fetchCyclists();
+    void fetchStages();
+    void fetchCyclists();
   }, []);
-  const [selectedStage, setSelectedStage] = useState(null);
+  const [selectedStage, setSelectedStage] = useState<IStage | null>(null);
   const onStageChange = (e: DropdownChangeParams) => {
     const stageFound = stages.find((stage) => stage.stageId === e.value.code);
     setSelectedStage(stageFound);
   };
 
-  const formatedArrayStagesForDropDown = (arrayToChanged) => {
+  const formatedArrayStagesForDropDown = (
+    arrayToChanged: { stageId: number; startCity: string; endCity: string }[]
+  ) => {
     //TODO ajouter si l'étape est finie ou en cours dans les options du select en fonction de la date et de l'heure !
     const arrayFormated = [];
     for (let i = 0; i < arrayToChanged.length; i++) {
-      const object = {};
+      const object: { stage: string; code: number | null } = {
+        stage: "",
+        code: null,
+      };
       object.stage = `Etape n°${arrayToChanged[i].stageId} : ${arrayToChanged[i].startCity} - ${arrayToChanged[i].endCity}`;
       object.code = arrayToChanged[i].stageId;
       arrayFormated.push(object);
@@ -86,7 +92,7 @@ const Pronos = () => {
           <div className="pronos__stage">
             <Stage stage={selectedStage} />{" "}
             <button
-              onClick={setIsOpenCyclistList}
+              onClick={() => setIsOpenCyclistList(true)}
               className="pronos__setPronoBtn"
             >
               Pronostiquer sur cette étape

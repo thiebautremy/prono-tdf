@@ -1,4 +1,5 @@
-import React, { useRef, useContext } from "react";
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import React, { useRef, useContext, FormEvent } from "react";
 import { UserContext } from "../../../Context/userContext";
 import ErrorMessage from "../ErrorMessage/errorMessage";
 import "./signForm.scss";
@@ -7,10 +8,10 @@ const SignInForm = () => {
   const { signIn, toggleModal, setSignErrorMessage, signErrorMessage } =
     useContext(UserContext);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const email = (signInFormRef as any).current[0].value;
-    const password = (signInFormRef as any).current[1].value;
+    const email: string = signInFormRef.current[0].value;
+    const password: string = signInFormRef.current[1].value;
     try {
       const credential: unknown = signIn(email, password);
       if (credential) {

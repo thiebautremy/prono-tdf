@@ -5,21 +5,28 @@ import "../../../Pronos/Prono/prono.scss";
 import ErrorMessage from "../../../Form/ErrorMessage/errorMessage";
 import Dialogue from "../../../Dialogue/Dialogue";
 import "./InformResult.scss";
+import Cyclist from "../../../../Context/cyclistsContext";
 
 type Cyclist = {
   number: string;
   lastname: string;
   firstname: string;
 };
-type Props = {
+type InformResultType = {
   cyclists: Cyclist[];
   stageId: number;
-  currentResults: { enum: Cyclist };
+  currentResults: Cyclist;
 };
 
-const InformResult = ({ cyclists, stageId, currentResults }: Props) => {
+const InformResult: React.FC<InformResultType> = ({
+  cyclists,
+  stageId,
+  currentResults,
+}) => {
   const db = getFirestore(app);
-  const [selectedCyclists, setSelectedCyclists] = useState({});
+  const [selectedCyclists, setSelectedCyclists] = useState<{
+    [key: string]: Cyclist;
+  } | null>();
   const [isError, setIsError] = useState(false);
   const [visibleModal, setVisibleModal] = useState(false);
   const [cyclistsList, setCyclistsList] = useState(cyclists);
@@ -42,14 +49,20 @@ const InformResult = ({ cyclists, stageId, currentResults }: Props) => {
     e.preventDefault();
   };
 
-  const handleDragStart = (e, cyclist: { number: number }) => {
+  const handleDragStart = (
+    e: React.DragEvent<HTMLDivElement>,
+    cyclist: { number: string }
+  ) => {
     e.dataTransfer.setData("id", cyclist.number);
   };
-  const handleDragStartDelete = (e, placeNumber: number) => {
+  const handleDragStartDelete = (
+    e: React.DragEvent<HTMLSpanElement>,
+    placeNumber: string
+  ) => {
     e.dataTransfer.setData("placeNumber", placeNumber);
   };
 
-  const handleOnDrop = (e, key) => {
+  const handleOnDrop = (e: React.DragEvent<HTMLDivElement>, key: number) => {
     const id = e.dataTransfer.getData("id");
     const cyclistDrag = cyclists.find((cyclist) => cyclist.number == id);
     const selectedCyclistsObj = { ...selectedCyclists };
@@ -58,7 +71,7 @@ const InformResult = ({ cyclists, stageId, currentResults }: Props) => {
     setSelectedCyclists({ ...selectedCyclistsObj });
   };
 
-  const handleOnDropDelete = (e) => {
+  const handleOnDropDelete = (e: React.DragEvent<HTMLDivElement>) => {
     const placeNumber = e.dataTransfer.getData("placeNumber");
     setCyclistsList([...cyclistsList, selectedCyclists[placeNumber]]);
     delete selectedCyclists[placeNumber];
@@ -129,7 +142,7 @@ const InformResult = ({ cyclists, stageId, currentResults }: Props) => {
         </div>
       )}
       <button
-        onClick={handleSetResults}
+        onClick={void handleSetResults}
         className="informResult__validatePronoBtn"
       >
         Valider les résultats

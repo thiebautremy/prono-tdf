@@ -26,7 +26,7 @@ const Cyclists = () => {
     }
   };
   useEffect(() => {
-    fetchCyclists();
+    void fetchCyclists();
   }, []);
   return (
     <div className="cyclists">

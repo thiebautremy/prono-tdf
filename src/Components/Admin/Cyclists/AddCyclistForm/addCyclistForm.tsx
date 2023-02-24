@@ -5,7 +5,7 @@ import { getFirestore, setDoc, doc } from "firebase/firestore";
 import app from "../../../../config/firebaseConfig";
 
 type Props = {
-  fetchCyclists: () => [];
+  fetchCyclists: () => void;
 };
 const AddCyclistForm = ({ fetchCyclists }: Props) => {
   const [cyclistToAdd, setCyclistToAdd] = useState({
@@ -45,7 +45,7 @@ const AddCyclistForm = ({ fetchCyclists }: Props) => {
     <div className="addCyclistForm">
       <form
         onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
-          handleAddCyclistSubmit(e)
+          void handleAddCyclistSubmit(e)
         }
         className="addCyclistForm__form"
       >

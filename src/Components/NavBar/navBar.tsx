@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable no-prototype-builtins */
 import React, { useContext } from "react";
 import { UserContext } from "../../Context/userContext";
 import { signOut } from "firebase/auth";

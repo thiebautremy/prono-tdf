@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { useEffect, useContext, useState } from "react";
 import { StagesContext } from "../../../Context/stagesContext";
 import {
@@ -8,6 +13,8 @@ import {
   updateDoc,
   doc,
   Timestamp,
+  DocumentData,
+  DocumentReference,
 } from "firebase/firestore";
 import { getDateFormated } from "../../../Services/functions";
 import app from "../../../config/firebaseConfig";
@@ -21,7 +28,14 @@ import Dialogue from "../../Dialogue/Dialogue";
 import { useFetch } from "../../../Services/api";
 
 const Calculate = () => {
-  const [selectedStage, setSelectedStage] = useState<{ stageId: number }>(null);
+  const [selectedStage, setSelectedStage] = useState<{
+    stageId: number;
+    startCity: string;
+    endCity: string;
+    date: { seconds: number; nanoseconds: number };
+    lengthStage: number;
+    type: string;
+  } | null>(null);
   const [users, setUsers] = useState<
     { pronos: unknown; authId: string }[] | null
   >(null);
@@ -88,15 +102,15 @@ const Calculate = () => {
     }
     return arrayFormated;
   };
-  const onStageChange = (e: DropdownChangeParams) => {
+  const onStageChange = (e: { value: { code: number } }) => {
     const stageFound = stages.find((stage) => stage.stageId === e.value.code);
     setError("");
     setSelectedStage(stageFound);
-    fetchResults(stageFound?.stageId);
+    void fetchResults(stageFound?.stageId);
   };
   const { status: statusUsers, data: dataUsers } = useFetch("users");
   useEffect(() => {
-    fetchStages();
+    void fetchStages();
     statusUsers === "fetched" && setUsers(dataUsers);
     return () => setUsers([]);
   }, [statusUsers]);
@@ -114,12 +128,12 @@ const Calculate = () => {
   const calculatePoint = () => {
     const stageId: number = selectedStage.stageId;
     if (users.length > 0) {
-      users.map((user) => {
+      users.map((user: { pronos: [stageId: []]; authId: string }) => {
         if (user.pronos !== undefined) {
           const totalPointArray: string[] = [];
-          const pronoUser = user?.pronos?.[stageId];
+          const pronoUser: [] = user?.pronos?.[stageId];
           if (pronoUser !== undefined) {
-            pronoUser.map((prono) => {
+            pronoUser.map((prono: { code: string }) => {
               const cyclistPosition = Object.values(results).findIndex(
                 (result) => result.number === prono.code
               );
@@ -140,11 +154,11 @@ const Calculate = () => {
     totalPoint: string[]
   ) => {
     const refUser = doc(db, "users", `${userId}`);
-    setPointsInDb(refUser, userId, stageId, totalPoint);
+    void setPointsInDb(refUser, userId, stageId, totalPoint);
   };
 
   const setPointsInDb = async (
-    refUser,
+    refUser: DocumentReference<DocumentData>,
     userId: string,
     stageId: number,
     totalPoint: string[]

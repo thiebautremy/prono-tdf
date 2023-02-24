@@ -121,7 +121,7 @@ const InformResult: React.FC<InformResultType> = ({
           onDragOver={(e) => handleDragEnd(e)}
         >
           {cyclistsList
-            .sort((a, b) => a.number - b.number)
+            .sort((a, b) => Number(a.number) - Number(b.number))
             .map((cyclist) => (
               <div
                 key={cyclist.number}

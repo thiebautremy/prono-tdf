@@ -64,7 +64,8 @@ const Prono: React.FC<PronoType> = ({ cyclists, stageId }) => {
       arrayFormated.push(cyclistObj);
     }
     return arrayFormated.sort(
-      (a: { code: string }, b: { code: string }) => a.code - b.code
+      (a: { code: string }, b: { code: string }) =>
+        Number(a.code) - Number(b.code)
     );
   };
 
@@ -125,7 +126,7 @@ const Prono: React.FC<PronoType> = ({ cyclists, stageId }) => {
                 {selectedCyclists.length > 1 && "s"}{" "}
               </p>
               {selectedCyclists
-                .sort((a, b) => a.code - b.code)
+                .sort((a, b) => Number(a.code) - Number(b.code))
                 .map((cyclist) => (
                   <p
                     key={cyclist.code}

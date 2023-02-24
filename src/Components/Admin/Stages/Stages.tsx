@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import React, { useContext, useEffect } from "react";
 import { StagesContext } from "../../../Context/stagesContext";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
@@ -24,7 +25,7 @@ const Stages = () => {
     }
   };
   useEffect(() => {
-    void fetchStages();
+    fetchStages();
   }, []);
   return (
     <div className="stages">

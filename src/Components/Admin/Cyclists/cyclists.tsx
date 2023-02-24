@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useEffect, useContext } from "react";
 import Cyclist from "./Cyclist/cyclist";
 import { CyclistsContext } from "../../../Context/cyclistsContext";
@@ -26,7 +28,7 @@ const Cyclists = () => {
     }
   };
   useEffect(() => {
-    void fetchCyclists();
+    fetchCyclists();
   }, []);
   return (
     <div className="cyclists">

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import React, { useState, useEffect } from "react";
 import "./user.scss";
 import app from "../../../config/firebaseConfig";
@@ -25,7 +26,7 @@ const Users = () => {
     }
   };
   useEffect(() => {
-    void fetchUsers();
+    fetchUsers();
   }, [checkedAdmin]);
   return (
     <div className="users">

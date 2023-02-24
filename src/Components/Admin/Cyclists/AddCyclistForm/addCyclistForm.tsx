@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useState } from "react";
 import "./addCyclistForm.scss";
 import nationalitiesData from "../../../../assets/data/countries.json";
@@ -45,7 +46,7 @@ const AddCyclistForm = ({ fetchCyclists }: Props) => {
     <div className="addCyclistForm">
       <form
         onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
-          void handleAddCyclistSubmit(e)
+          handleAddCyclistSubmit(e)
         }
         className="addCyclistForm__form"
       >

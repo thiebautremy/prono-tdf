@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { useContext, useEffect, useState } from "react";
 import { StagesContext, IStage } from "../../Context/stagesContext";
@@ -45,8 +46,8 @@ const Pronos = () => {
     }
   };
   useEffect(() => {
-    void fetchStages();
-    void fetchCyclists();
+    fetchStages();
+    fetchCyclists();
   }, []);
   const [selectedStage, setSelectedStage] = useState<IStage | null>(null);
   const onStageChange = (e: DropdownChangeParams) => {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import React, { useEffect, useContext, PropsWithChildren } from "react";
 import { UserContext } from "../../../Context/userContext";
@@ -9,7 +10,7 @@ const HomeConnected: React.FC<PropsWithChildren> = ({ children }) => {
   const { currentUser, setUserConnectedInfo } = useContext(UserContext);
   const db = getFirestore(app);
   useEffect(() => {
-    void saveUserConnectedInfo();
+    saveUserConnectedInfo();
   }, []);
   const saveUserConnectedInfo = async () => {
     if (currentUser !== null) {

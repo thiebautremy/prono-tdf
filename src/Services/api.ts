@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { useState, useEffect } from "react";
 import { getFirestore, getDocs, collection } from "firebase/firestore";
@@ -23,7 +24,7 @@ export const useFetch = (tableName: string) => {
         setStatus("fetched");
       }
     };
-    void fetchData();
+    fetchData();
     return () => setData([]);
   }, [tableName]);
 

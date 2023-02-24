@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -106,11 +107,11 @@ const Calculate = () => {
     const stageFound = stages.find((stage) => stage.stageId === e.value.code);
     setError("");
     setSelectedStage(stageFound);
-    void fetchResults(stageFound?.stageId);
+    fetchResults(stageFound?.stageId);
   };
   const { status: statusUsers, data: dataUsers } = useFetch("users");
   useEffect(() => {
-    void fetchStages();
+    fetchStages();
     statusUsers === "fetched" && setUsers(dataUsers);
     return () => setUsers([]);
   }, [statusUsers]);
@@ -154,7 +155,7 @@ const Calculate = () => {
     totalPoint: string[]
   ) => {
     const refUser = doc(db, "users", `${userId}`);
-    void setPointsInDb(refUser, userId, stageId, totalPoint);
+    setPointsInDb(refUser, userId, stageId, totalPoint);
   };
 
   const setPointsInDb = async (

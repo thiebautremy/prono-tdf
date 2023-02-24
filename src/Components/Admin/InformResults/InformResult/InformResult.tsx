@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useState, useEffect } from "react";
 import app from "../../../../config/firebaseConfig";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
@@ -142,7 +143,7 @@ const InformResult: React.FC<InformResultType> = ({
         </div>
       )}
       <button
-        onClick={void handleSetResults}
+        onClick={handleSetResults}
         className="informResult__validatePronoBtn"
       >
         Valider les résultats

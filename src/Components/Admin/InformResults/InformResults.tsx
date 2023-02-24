@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import React, { useEffect, useContext, useState } from "react";
 import { StagesContext } from "../../../Context/stagesContext";
 import { CyclistsContext } from "../../../Context/cyclistsContext";
@@ -75,8 +76,8 @@ const InformResults = () => {
     }
   };
   useEffect(() => {
-    void fetchStages();
-    void fetchCyclists();
+    fetchStages();
+    fetchCyclists();
   }, []);
   const formatedDateFromFirebase = (date: {
     seconds: number;
@@ -116,7 +117,7 @@ const InformResults = () => {
   const onStageChange = (e: { value: { code: number } }) => {
     const stageFound = stages.find((stage) => stage.stageId === e.value.code);
     setResults({});
-    void fetchResults(stageFound);
+    fetchResults(stageFound);
   };
   return (
     <div className="informResults">

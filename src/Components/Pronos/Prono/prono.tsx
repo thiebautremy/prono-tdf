@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable no-prototype-builtins */
 import React, { useState, useContext, useEffect } from "react";
@@ -70,7 +71,7 @@ const Prono: React.FC<PronoType> = ({ cyclists, stageId }) => {
   const handleSetProno = () => {
     selectedCyclists.length < 5
       ? setIsError((prec) => !prec)
-      : void updateAndFetchData();
+      : updateAndFetchData();
   };
   const [visibleModal, setVisibleModal] = useState(false);
   const updateAndFetchData = async () => {

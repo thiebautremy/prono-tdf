@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -51,7 +52,7 @@ const SignUpForm = () => {
         })
           .then(() => {
             if (typeof success === "object" && success !== null) {
-              void addUserNameAndRole(success?.user?.uid, userName, email);
+              addUserNameAndRole(success?.user?.uid, userName, email);
             }
             setSignErrorMessage("");
             toggleModal("close");

@@ -143,10 +143,14 @@ const Calculate = () => {
     setPointsInDb(refUser, userId, stageId, totalPoint);
   };
 
-  const setPointsInDb = async (refUser, userId: string, stageId: number, totalPoint: string[]) => {
+  const setPointsInDb = async (
+    refUser,
+    userId: string,
+    stageId: number,
+    totalPoint: string[]
+  ) => {
     const userDocumentDbRef = await getDoc(doc(db, "users", userId));
-    console.log("userDocumentDbRef", userDocumentDbRef.data());
-    const pointsObj: string{} = { ...userDocumentDbRef.data()?.points };
+    const pointsObj = { ...userDocumentDbRef.data()?.points };
     pointsObj[stageId] = totalPoint.reduce(getSum);
     const data = { points: pointsObj };
     return updateDoc(refUser, {

@@ -12,7 +12,7 @@ import Dialogue from "../../Dialogue/Dialogue";
 import Cyclist from "../../../Context/cyclistsContext";
 
 interface Cyclist {
-  number: string;
+  number: number;
   lastname: string;
   firstname: string;
 }
@@ -27,7 +27,7 @@ const Prono: React.FC<PronoType> = ({ cyclists, stageId }) => {
   const userRef = doc(db, "users", `${currentUser?.uid}`);
   const [selectedCyclists, setSelectedCyclists] = useState<
     | {
-        number: string;
+        number: number;
         lastname: string;
         firstname: string;
         code: string;
@@ -54,17 +54,24 @@ const Prono: React.FC<PronoType> = ({ cyclists, stageId }) => {
   };
 
   const formatedCyclistsStagesForDropDown = (
-    arrayToChanged: { number: string; lastname: string; firstname: string }[]
+    arrayToChanged: {
+      number: string | number;
+      lastname: string;
+      firstname: string;
+    }[]
   ) => {
     const arrayFormated = [];
     for (const cyclist of arrayToChanged) {
-      const cyclistObj: { name: string; code: string } = { name: "", code: "" };
+      const cyclistObj: { name: string; code: number } = {
+        name: "",
+        code: null,
+      };
       cyclistObj.name = `${cyclist.number} - ${cyclist.lastname} ${cyclist.firstname}`;
-      cyclistObj.code = cyclist.number;
+      cyclistObj.code = Number(cyclist.number);
       arrayFormated.push(cyclistObj);
     }
     return arrayFormated.sort(
-      (a: { code: string }, b: { code: string }) =>
+      (a: { code: number }, b: { code: number }) =>
         Number(a.code) - Number(b.code)
     );
   };

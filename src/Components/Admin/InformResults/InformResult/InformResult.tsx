@@ -46,7 +46,7 @@ const InformResult: React.FC<InformResultType> = ({
     setVisibleModal(true);
     setIsError(false);
   };
-  const handleDragEnd = (e: DragEvent) => {
+  const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
   };
 
@@ -94,7 +94,7 @@ const InformResult: React.FC<InformResultType> = ({
           {selectedCyclists[i] !== undefined && (
             <span
               className="informResult__DragableAndselection__selection__cyclist"
-              onDragStart={(e) => handleDragStartDelete(e, i)}
+              onDragStart={(e) => handleDragStartDelete(e, i.toString())}
               draggable
             >
               {`${selectedCyclists[i].number} - ${selectedCyclists[i].lastname}

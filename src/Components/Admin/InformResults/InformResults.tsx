@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import React, { useEffect, useContext, useState } from "react";
 import { StagesContext } from "../../../Context/stagesContext";
@@ -9,6 +10,7 @@ import {
   getDoc,
   doc,
   Timestamp,
+  DocumentData,
 } from "firebase/firestore";
 import app from "../../../config/firebaseConfig";
 import { Dropdown } from "primereact/dropdown";
@@ -33,7 +35,7 @@ const InformResults = () => {
   const db = getFirestore(app);
 
   const fetchStages = async () => {
-    const datas: [] = [];
+    const datas: DocumentData = [];
     try {
       const querySnapshot = await getDocs(collection(db, "stages"));
       const response = querySnapshot;
@@ -61,7 +63,7 @@ const InformResults = () => {
   };
 
   const fetchCyclists = async () => {
-    const datas: [] = [];
+    const datas: DocumentData = [];
     try {
       const querySnapshot = await getDocs(collection(db, "cyclists"));
       const response = querySnapshot;

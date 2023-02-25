@@ -19,7 +19,7 @@ import {
 } from "firebase/firestore";
 import { getDateFormated } from "../../../Services/functions";
 import app from "../../../config/firebaseConfig";
-import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
+import { Dropdown } from "primereact/dropdown";
 import Stage from "../Stages/Stage/Stage";
 import "./Calculate.scss";
 import ErrorMessage from "../../Form/ErrorMessage/errorMessage";
@@ -49,7 +49,7 @@ const Calculate = () => {
   const db = getFirestore(app);
 
   const fetchStages = async () => {
-    const datas: [] = [];
+    const datas: DocumentData = [];
     try {
       const querySnapshot = await getDocs(collection(db, "stages"));
       const response = querySnapshot;
@@ -123,7 +123,7 @@ const Calculate = () => {
       calculatePoint();
     }
   };
-  function getSum(total: number, num: number) {
+  function getSum(total: string, num: string) {
     return total + num;
   }
   const calculatePoint = () => {
@@ -135,11 +135,13 @@ const Calculate = () => {
           const pronoUser: [] = user?.pronos?.[stageId];
           if (pronoUser !== undefined) {
             pronoUser.map((prono: { code: string }) => {
-              const cyclistPosition = Object.values(results).findIndex(
-                (result) => result.number === prono.code
+              const cyclistPosition: number = Object.values(results).findIndex(
+                (result: { number: string }) => result.number === prono.code
               );
               if (cyclistPosition >= 0) {
-                totalPointArray.push(awardedPoints[0][cyclistPosition + 1]);
+                totalPointArray.push(
+                  awardedPoints[0].toString()[cyclistPosition + 1]
+                );
               }
             });
             getUsersRef(user.authId, stageId, totalPointArray);

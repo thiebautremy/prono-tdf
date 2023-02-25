@@ -1,7 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import React, { useContext, useEffect } from "react";
 import { StagesContext } from "../../../Context/stagesContext";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  DocumentData,
+} from "firebase/firestore";
 import app from "../../../config/firebaseConfig";
 import Stage from "./Stage/Stage";
 import "./stages.scss";
@@ -10,7 +16,7 @@ const Stages = () => {
   const db = getFirestore(app);
   const { stages, setStages } = useContext(StagesContext);
   const fetchStages = async () => {
-    const datas: [] = [];
+    const datas: DocumentData = [];
     try {
       const querySnapshot = await getDocs(collection(db, "stages"));
       const response = querySnapshot;

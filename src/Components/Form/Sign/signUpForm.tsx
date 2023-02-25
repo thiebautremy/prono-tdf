@@ -2,7 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import React, { useRef, useContext, FormEvent } from "react";
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import React, { useRef, useContext } from "react";
 import ErrorMessage from "../ErrorMessage/errorMessage";
 import "./signForm.scss";
 import UserContext from "../../../Context/userContext";
@@ -11,7 +12,7 @@ import { updateProfile } from "firebase/auth";
 import { getFirestore, setDoc, doc } from "firebase/firestore";
 
 const SignUpForm = () => {
-  const signUpFormRef = useRef<HTMLFormElement>(null);
+  const signUpFormRef = useRef(null);
   const { signUp, toggleModal, signErrorMessage, setSignErrorMessage } =
     useContext(UserContext);
 
@@ -30,12 +31,12 @@ const SignUpForm = () => {
   };
 
   //TODO ajouter un loader à la soumission du formulaire de création de compte
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const userName = signUpFormRef.current[0].value;
     const email: string = signUpFormRef.current[1].value;
     const password: string = signUpFormRef.current[2].value;
-    // try {
+
     const credentialPromise = new Promise(function (myResolve, myReject) {
       myResolve(signUp(email, password));
       myReject("Error");
@@ -69,7 +70,6 @@ const SignUpForm = () => {
       });
   };
 
-  // }
   return (
     <form
       ref={signUpFormRef}

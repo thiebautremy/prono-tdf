@@ -1,6 +1,7 @@
+import { DocumentData } from "firebase/firestore";
 import React, { createContext, useState } from "react";
 interface IContextProps {
-  setCyclists: (newCyclists: Cyclist[]) => void;
+  setCyclists: (newCyclists: Cyclist[] | DocumentData) => void;
   cyclists: Cyclist[];
 }
 export const CyclistsContext = createContext({} as IContextProps);

@@ -1,9 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { useContext, useEffect, useState } from "react";
 import { StagesContext, IStage } from "../../Context/stagesContext";
 import { Cyclist, CyclistsContext } from "../../Context/cyclistsContext";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  DocumentData,
+} from "firebase/firestore";
 import app from "../../config/firebaseConfig";
 import Stage from "../Admin/Stages/Stage/Stage";
 import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
@@ -16,7 +22,7 @@ const Pronos = () => {
   const db = getFirestore(app);
   const { stages, setStages } = useContext(StagesContext);
   const fetchStages = async () => {
-    const datas: IStage[] = [];
+    const datas: DocumentData = [];
     try {
       const querySnapshot = await getDocs(collection(db, "stages"));
       const response = querySnapshot;
@@ -31,7 +37,7 @@ const Pronos = () => {
     }
   };
   const fetchCyclists = async () => {
-    const datas: Cyclist[] = [];
+    const datas: DocumentData = [];
     try {
       const querySnapshot = await getDocs(collection(db, "cyclists"));
       const response = querySnapshot;

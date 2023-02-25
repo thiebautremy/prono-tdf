@@ -1,10 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useEffect, useContext } from "react";
 import Cyclist from "./Cyclist/cyclist";
 import { CyclistsContext } from "../../../Context/cyclistsContext";
 import app from "../../../config/firebaseConfig";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  DocumentData,
+} from "firebase/firestore";
 import AddCyclistForm from "./AddCyclistForm/addCyclistForm";
 import "./cyclists.scss";
 
@@ -13,7 +19,7 @@ const Cyclists = () => {
   const { cyclists, setCyclists } = useContext(CyclistsContext);
   //TODO Faire la liste des coureurs avec à droite avec une petite poubelle pour les supprimer facilement
   const fetchCyclists = async () => {
-    const datas: [] = [];
+    const datas: DocumentData = [];
     try {
       const querySnapshot = await getDocs(collection(db, "cyclists"));
       const response = querySnapshot;

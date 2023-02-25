@@ -1,3 +1,4 @@
+import { DocumentData } from "firebase/firestore";
 import React, { createContext, useState } from "react";
 export type IStage = {
   stageId: number;
@@ -8,7 +9,7 @@ export type IStage = {
   type: string;
 };
 interface IContextProps {
-  setStages: (newValue: IStage[]) => void;
+  setStages: (newValue: IStage[] | DocumentData) => void;
   stages: IStage[];
 }
 export const StagesContext = createContext({} as IContextProps);

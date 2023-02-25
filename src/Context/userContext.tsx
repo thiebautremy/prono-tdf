@@ -6,6 +6,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { auth } from "../config/firebaseConfig";
+import { DocumentData } from "firebase/firestore";
 export type UserConnectedInfo = {
   authId: string;
   email: string;
@@ -30,7 +31,9 @@ interface IContextProps {
   setCurrentUser: (newCurrentUser: CurrentUser) => void;
   setSignErrorMessage: (newSignErrorMessage: string) => void;
   currentUser?: CurrentUser;
-  setUserConnectedInfo: (newUserConnected: UserConnectedInfo) => void;
+  setUserConnectedInfo: (
+    newUserConnected: UserConnectedInfo | DocumentData
+  ) => void;
   userConnectedInfo: UserConnectedInfo;
   signErrorMessage: string;
 }

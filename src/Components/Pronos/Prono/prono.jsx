@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable no-prototype-builtins */
@@ -11,31 +14,22 @@ import ErrorMessage from "../../Form/ErrorMessage/errorMessage";
 import Dialogue from "../../Dialogue/Dialogue";
 import Cyclist from "../../../Context/cyclistsContext";
 
-interface Cyclist {
-  number: number;
-  lastname: string;
-  firstname: string;
-}
-type PronoType = {
-  cyclists: Cyclist[];
-  stageId: string | number;
-};
-const Prono: React.FC<PronoType> = ({ cyclists, stageId }) => {
+// interface Cyclist {
+//   number: number;
+//   lastname: string;
+//   firstname: string;
+// }
+// type PronoType = {
+//   cyclists: Cyclist[];
+//   stageId: string | number;
+// };
+const Prono = ({ cyclists, stageId }) => {
   const db = getFirestore(app);
   const { currentUser, userConnectedInfo, setUserConnectedInfo } =
     useContext(UserContext);
   const userRef = doc(db, "users", `${currentUser?.uid}`);
-  const [selectedCyclists, setSelectedCyclists] = useState<
-    | {
-        number: number;
-        lastname: string;
-        firstname: string;
-        code: string;
-        name: string;
-      }[]
-    | null
-  >([]);
-  const [isError, setIsError] = useState<boolean>(false);
+  const [selectedCyclists, setSelectedCyclists] = useState([]);
+  const [isError, setIsError] = useState(false);
   //? On set les cyclistes si le prono de l'étape est déjà renseigné
   const setDefaultPronoValue = () => {
     userConnectedInfo?.pronos.hasOwnProperty(stageId) &&
@@ -45,7 +39,7 @@ const Prono: React.FC<PronoType> = ({ cyclists, stageId }) => {
   useEffect(() => {
     userConnectedInfo.hasOwnProperty("prono") && setDefaultPronoValue();
   }, [stageId]);
-  const cyclistsTemplate = (option: { name: string }) => {
+  const cyclistsTemplate = (option) => {
     return (
       <div className="country-item">
         <div>{option.name}</div>
@@ -53,27 +47,15 @@ const Prono: React.FC<PronoType> = ({ cyclists, stageId }) => {
     );
   };
 
-  const formatedCyclistsStagesForDropDown = (
-    arrayToChanged: {
-      number: string | number;
-      lastname: string;
-      firstname: string;
-    }[]
-  ) => {
+  const formatedCyclistsStagesForDropDown = (arrayToChanged) => {
     const arrayFormated = [];
     for (const cyclist of arrayToChanged) {
-      const cyclistObj: { name: string; code: number } = {
-        name: "",
-        code: null,
-      };
+      const cyclistObj = {};
       cyclistObj.name = `${cyclist.number} - ${cyclist.lastname} ${cyclist.firstname}`;
       cyclistObj.code = Number(cyclist.number);
       arrayFormated.push(cyclistObj);
     }
-    return arrayFormated.sort(
-      (a: { code: number }, b: { code: number }) =>
-        Number(a.code) - Number(b.code)
-    );
+    return arrayFormated.sort((a, b) => Number(a.code) - Number(b.code));
   };
 
   const handleSetProno = () => {
@@ -83,7 +65,7 @@ const Prono: React.FC<PronoType> = ({ cyclists, stageId }) => {
   };
   const [visibleModal, setVisibleModal] = useState(false);
   const updateAndFetchData = async () => {
-    let pronoObj: { [stageId: number]: { number: string; name: string } } = {};
+    let pronoObj = {};
     pronoObj = { ...userConnectedInfo?.pronos };
     pronoObj[stageId] = selectedCyclists;
     await updateDoc(userRef, {
@@ -104,9 +86,7 @@ const Prono: React.FC<PronoType> = ({ cyclists, stageId }) => {
         <MultiSelect
           value={selectedCyclists}
           options={formatedCyclistsStagesForDropDown(cyclists)}
-          onChange={(e: MultiSelectChangeParams) =>
-            setSelectedCyclists(e.value)
-          }
+          onChange={(e) => setSelectedCyclists(e.value)}
           optionLabel="name"
           placeholder="Sélectionne 5 cyclistes"
           filter

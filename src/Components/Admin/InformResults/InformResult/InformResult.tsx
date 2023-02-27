@@ -9,14 +9,16 @@ import "./InformResult.scss";
 import Cyclist from "../../../../Context/cyclistsContext";
 
 type Cyclist = {
-  number: string;
+  number: string | number;
   lastname: string;
   firstname: string;
 };
 type InformResultType = {
   cyclists: Cyclist[];
   stageId: number;
-  currentResults: Cyclist;
+  currentResults: {
+    [key: string]: Cyclist;
+  };
 };
 
 const InformResult: React.FC<InformResultType> = ({
@@ -52,9 +54,9 @@ const InformResult: React.FC<InformResultType> = ({
 
   const handleDragStart = (
     e: React.DragEvent<HTMLDivElement>,
-    cyclist: { number: string }
+    cyclist: { number: string | number }
   ) => {
-    e.dataTransfer.setData("id", cyclist.number);
+    e.dataTransfer.setData("id", cyclist.number.toString());
   };
   const handleDragStartDelete = (
     e: React.DragEvent<HTMLSpanElement>,

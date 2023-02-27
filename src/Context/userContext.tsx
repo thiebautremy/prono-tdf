@@ -12,13 +12,21 @@ export type UserConnectedInfo = {
   email: string;
   roles: string[];
   username: string;
-  pronos?: {
-    [stageId: string | number]: {
-      number: string;
-      firstname: string;
-      lastname: string;
-    } | null;
-  }[];
+  pronos: [
+    string,
+    {
+      [stageId: string]: {
+        number: string;
+        firstname: string;
+        lastname: string;
+      };
+      [stageId: number]: {
+        number: string;
+        firstname: string;
+        lastname: string;
+      };
+    }
+  ][];
 };
 interface IContextProps {
   modalState: {

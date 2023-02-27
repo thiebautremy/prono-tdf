@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import React, { useEffect, useContext, useState } from "react";
 import { StagesContext } from "../../../Context/stagesContext";
-import { CyclistsContext } from "../../../Context/cyclistsContext";
+import { CyclistsContext, Cyclist } from "../../../Context/cyclistsContext";
 import {
   getFirestore,
   collection,
@@ -29,7 +29,7 @@ const InformResults = () => {
     lengthStage: number;
     type: string;
   } | null>(null);
-  const [results, setResults] = useState({});
+  const [results, setResults] = useState<{ [key: string]: Cyclist }>({});
   const { cyclists, setCyclists } = useContext(CyclistsContext);
   const { stages, setStages } = useContext(StagesContext);
   const db = getFirestore(app);
@@ -50,7 +50,14 @@ const InformResults = () => {
     }
   };
 
-  const fetchResults = async (stageFound: { stageId: string }) => {
+  const fetchResults = async (stageFound: {
+    stageId: number;
+    startCity: string;
+    endCity: string;
+    date: { seconds: number; nanoseconds: number };
+    lengthStage: number;
+    type: string;
+  }) => {
     try {
       const res = await getDoc(
         doc(db, "results", stageFound.stageId.toString())

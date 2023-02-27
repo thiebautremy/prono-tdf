@@ -4,7 +4,7 @@ import "./cyclist.scss";
 
 interface CyclistInterface {
   lastname: string;
-  number: number;
+  number: number | string;
   team: string;
   firstname: string;
   nationality: string;

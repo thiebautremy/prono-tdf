@@ -45,7 +45,7 @@ const Cyclists = () => {
         </h1>
         {cyclists.length > 0 &&
           cyclists
-            .sort((a, b) => a.number - b.number)
+            .sort((a, b) => Number(a.number) - Number(b.number))
             .map((cyclist) => <Cyclist key={cyclist.number} {...cyclist} />)}
       </div>
     </div>

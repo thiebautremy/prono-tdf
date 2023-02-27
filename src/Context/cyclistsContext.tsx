@@ -11,7 +11,7 @@ export type Cyclist = {
   lastname: string;
   team: string;
   nationality: string;
-  number: number;
+  number: number | string;
 };
 interface Props {
   children: JSX.Element | JSX.Element[];

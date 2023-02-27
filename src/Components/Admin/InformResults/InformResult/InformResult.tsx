@@ -29,7 +29,7 @@ const InformResult: React.FC<InformResultType> = ({
   const db = getFirestore(app);
   const [selectedCyclists, setSelectedCyclists] = useState<{
     [key: string]: Cyclist;
-  } | null>();
+  } | null>({});
   const [isError, setIsError] = useState(false);
   const [visibleModal, setVisibleModal] = useState(false);
   const [cyclistsList, setCyclistsList] = useState(cyclists);

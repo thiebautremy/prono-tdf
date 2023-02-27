@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { useContext, useEffect, useState } from "react";
 import { StagesContext, IStage } from "../../Context/stagesContext";
-import { Cyclist, CyclistsContext } from "../../Context/cyclistsContext";
+import { CyclistsContext } from "../../Context/cyclistsContext";
 import {
   getFirestore,
   collection,

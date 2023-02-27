@@ -7,22 +7,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import app from "../../../config/firebaseConfig";
 import { getFirestore, doc, updateDoc, getDoc } from "firebase/firestore";
-import { MultiSelect, MultiSelectChangeParams } from "primereact/multiselect";
+import { MultiSelect } from "primereact/multiselect";
 import UserContext from "../../../Context/userContext";
 import "./prono.scss";
 import ErrorMessage from "../../Form/ErrorMessage/errorMessage";
 import Dialogue from "../../Dialogue/Dialogue";
-import Cyclist from "../../../Context/cyclistsContext";
 
-// interface Cyclist {
-//   number: number;
-//   lastname: string;
-//   firstname: string;
-// }
-// type PronoType = {
-//   cyclists: Cyclist[];
-//   stageId: string | number;
-// };
 const Prono = ({ cyclists, stageId }) => {
   const db = getFirestore(app);
   const { currentUser, userConnectedInfo, setUserConnectedInfo } =

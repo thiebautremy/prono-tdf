@@ -1,0 +1,26 @@
+const teamsArray: { value: string; name: string }[] = [
+  { value: "AG2R", name: "AG2R Citroën Team" },
+  { value: "ALP-DEC", name: "Alpecin - Deceuninck" },
+  { value: "ASTANA", name: "Astana" },
+  { value: "BAHRAIN", name: "Bahrain Victorious" },
+  { value: "BORA", name: "BORA - Hansgrohe" },
+  { value: "COFIDIS", name: "Cofidis" },
+  { value: "DSM", name: "DSM" },
+  { value: "EFEDUCATION", name: "EF Education - Easypost" },
+  { value: "GROUP-FDJ", name: "Groupama - FDJ " },
+  { value: "INEOS", name: "Ineos Grenadiers " },
+  { value: "INT-CIR-WAN", name: "Intermarché - Circus - Wanty " },
+  { value: "ISRAEL", name: "Israel - Premier Tech" },
+  { value: "JAYCO", name: "Jayco AlUla" },
+  { value: "JUMBO", name: "Jumbo - Visma" },
+  { value: "LOTTO", name: "Lotto Dstny" },
+  { value: "MOVISTAR", name: "Movistar Team" },
+  { value: "SOUDAL", name: "Soudal Quick-Step" },
+  { value: "ARKEA", name: "Team Arkea - Samsic" },
+  { value: "TOTAL", name: "TotalEnergies" },
+  { value: "TREK", name: "Trek - Segafredo" },
+  { value: "UAE", name: "UAE Team Emirates" },
+  { value: "UNO-X", name: "Uno-X Pro Cycling Team" },
+];
+
+export default teamsArray;

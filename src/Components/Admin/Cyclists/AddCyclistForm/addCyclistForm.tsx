@@ -4,7 +4,7 @@ import "./addCyclistForm.scss";
 import nationalitiesData from "../../../../assets/data/countries.json";
 import { getFirestore, setDoc, doc } from "firebase/firestore";
 import app from "../../../../config/firebaseConfig";
-
+import teamsArray from "./teams";
 type Props = {
   fetchCyclists: () => void;
 };
@@ -103,9 +103,11 @@ const AddCyclistForm = ({ fetchCyclists }: Props) => {
           <option value="DEFAULT_TEAM" disabled>
             Sélectionner une équipe
           </option>
-          <option value="FDJ">Française des jeux</option>
-          <option value="UAE">UAE</option>
-          <option value="BOUH">Bouh</option>
+          {teamsArray.map((team: { value: string; name: string }) => (
+            <option value={team.value} key={team.value}>
+              {team.name}
+            </option>
+          ))}
         </select>
         <label htmlFor="nationality" className="addCyclistForm__form__label">
           Nationalité

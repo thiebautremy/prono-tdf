@@ -12,6 +12,7 @@ export type UserConnectedInfo = {
   email: string;
   roles: string[];
   username: string;
+  points: { [key: number]: number };
   pronos: [
     string,
     {

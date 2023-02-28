@@ -1,0 +1,12 @@
+@use "src/Styles/_vars.scss" as var;
+
+.resultats {
+  display: flex;
+
+  &__left {
+    width: 60%;
+  }
+  &__right {
+    width: 40%;
+  }
+}

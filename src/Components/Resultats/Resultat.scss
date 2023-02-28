@@ -1,0 +1,53 @@
+@use "src/Styles/_vars.scss" as var;
+
+.resultat {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+
+  &:nth-child(odd) {
+    background-color: #f2e6e6;
+  }
+
+  &__username {
+    min-width: 8rem;
+    font-size: 1.4rem;
+    font-weight: bold;
+  }
+  &__table {
+    font-size: 1.2rem;
+    &__thead {
+      &__th {
+        font-weight: bold;
+        padding: 0.5rem 1rem;
+        border: 1px solid var.$black;
+      }
+      &__th:nth-child(odd) {
+        background-color: var.$grey;
+      }
+    }
+
+    &__tbody {
+      &__td {
+        border: 1px solid var.$black;
+        padding: 0.5rem 1rem;
+      }
+      &__td:nth-child(odd):not(:last-child) {
+        background-color: var.$grey;
+      }
+    }
+
+    &__tbody__tr,
+    &__thead__tr {
+      border: 1px solid var.$black;
+    }
+
+    &__total {
+      background-color: var.$green;
+      strong {
+        font-weight: bold;
+        margin-left: 0.2rem;
+      }
+    }
+  }
+}

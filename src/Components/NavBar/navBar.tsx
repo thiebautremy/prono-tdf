@@ -28,12 +28,11 @@ const NavBar = () => {
                 {currentUser.displayName}
               </span>
             </h2>
-
+            <Link to="/" className="navBar__link">
+              Accueil & Scores
+            </Link>
             <Link to="/prono" className="navBar__link">
               Pronostiquer
-            </Link>
-            <Link to="/results" className="navBar__link">
-              Scores / Statistiques
             </Link>
             {userConnectedInfo?.hasOwnProperty("roles") &&
               userConnectedInfo?.roles.some(

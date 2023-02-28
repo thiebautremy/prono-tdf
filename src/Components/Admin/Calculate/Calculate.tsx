@@ -123,7 +123,7 @@ const Calculate = () => {
       calculatePoint();
     }
   };
-  function getSum(total: string, num: string) {
+  function getSum(total: number, num: number) {
     return total + num;
   }
   const calculatePoint = () => {
@@ -131,7 +131,7 @@ const Calculate = () => {
     if (users.length > 0) {
       users.map((user: { pronos: [stageId: []]; authId: string }) => {
         if (user.pronos !== undefined) {
-          const totalPointArray: string[] = [];
+          const totalPointArray: number[] = [];
           const pronoUser: [] = user?.pronos?.[stageId];
           if (pronoUser !== undefined) {
             pronoUser.map((prono: { code: string }) => {
@@ -139,9 +139,8 @@ const Calculate = () => {
                 (result: { number: string }) => result.number === prono.code
               );
               if (cyclistPosition >= 0) {
-                totalPointArray.push(
-                  awardedPoints[0].toString()[cyclistPosition + 1]
-                );
+                const position = Number(cyclistPosition + 1);
+                totalPointArray.push(awardedPoints[position]);
               }
             });
             getUsersRef(user.authId, stageId, totalPointArray);
@@ -154,7 +153,7 @@ const Calculate = () => {
   const getUsersRef = (
     userId: string,
     stageId: number,
-    totalPoint: string[]
+    totalPoint: number[]
   ) => {
     const refUser = doc(db, "users", `${userId}`);
     setPointsInDb(refUser, userId, stageId, totalPoint);
@@ -164,10 +163,13 @@ const Calculate = () => {
     refUser: DocumentReference<DocumentData>,
     userId: string,
     stageId: number,
-    totalPoint: string[]
+    totalPoint: number[]
   ) => {
     const userDocumentDbRef = await getDoc(doc(db, "users", userId));
-    const pointsObj = { ...userDocumentDbRef.data()?.points };
+    const pointsObj =
+      userDocumentDbRef.data()?.points === undefined
+        ? {}
+        : { ...userDocumentDbRef.data()?.points };
     pointsObj[stageId] = totalPoint.reduce(getSum);
     const data = { points: pointsObj };
     return updateDoc(refUser, {

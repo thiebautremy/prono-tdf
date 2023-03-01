@@ -3,10 +3,10 @@
 .resultats {
   display: flex;
 
-  &__left {
-    width: 60%;
-  }
-  &__right {
+  &__fixture {
     width: 40%;
+  }
+  &__scores {
+    width: 60%;
   }
 }

@@ -36,13 +36,13 @@ const Resultats = () => {
   }, []);
   return (
     <div className="resultats">
-      <div className="resultats__left">
+      <div className="resultats__fixture">Classement</div>
+      <div className="resultats__scores">
         {users.length > 0 &&
           users.map((user: UserConnectedInfo) => (
             <Resultat key={user.authId} {...user} />
           ))}
       </div>
-      <div className="resultats__right">Classement</div>
     </div>
   );
 };

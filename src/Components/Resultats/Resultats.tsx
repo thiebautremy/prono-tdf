@@ -36,7 +36,9 @@ const Resultats = () => {
   }, []);
   return (
     <div className="resultats">
-      <div className="resultats__fixture">Classement</div>
+      <div className="resultats__fixture">
+        <p>Classement</p>
+      </div>
       <div className="resultats__scores">
         {users.length > 0 &&
           users.map((user: UserConnectedInfo) => (

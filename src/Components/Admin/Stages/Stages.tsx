@@ -10,7 +10,6 @@ import {
 } from "firebase/firestore";
 import app from "../../../config/firebaseConfig";
 import Stage from "./Stage/Stage";
-import "./stages.scss";
 
 const Stages = () => {
   const db = getFirestore(app);
@@ -33,6 +32,7 @@ const Stages = () => {
   useEffect(() => {
     fetchStages();
   }, []);
+
   return (
     <div className="stages">
       {stages.length > 0 &&

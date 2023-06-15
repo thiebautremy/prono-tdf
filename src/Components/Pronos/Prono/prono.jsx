@@ -70,7 +70,7 @@ const Prono = ({ cyclists, stageId }) => {
       <Dialogue
         isVisible={visibleModal}
         setIsVisible={setVisibleModal}
-        message={"Votre pronostique a été mis à jour."}
+        message={"Pronostiques mis à jour."}
       />
       <div className="prono__inputAndSelection">
         <MultiSelect
@@ -126,7 +126,7 @@ const Prono = ({ cyclists, stageId }) => {
         </div>
       )}
       <button onClick={handleSetProno} className="prono__validatePronoBtn">
-        Valider tes pronostiques
+        Valider les pronostiques
       </button>
     </div>
   );

@@ -9,12 +9,27 @@
     width: 50%;
     height: 100%;
     filter: grayscale(100%);
+
+    @media screen and (max-width: 500px) {
+      display: none;
+    }
   }
 
   &__intro {
     background-color: var.$black;
     width: 50%;
     text-align: center;
+
+    @media screen and (max-width: 500px) {
+      width: 100%;
+      height: 100vh;
+    }
+
+    & > button {
+      @media screen and (max-width: 500px) {
+        margin-bottom: 2rem;
+      }
+    }
 
     &__forms {
       min-height: 30rem;

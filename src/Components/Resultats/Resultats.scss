@@ -2,11 +2,25 @@
 
 .resultats {
   display: flex;
+  @media screen and (max-width: 500px) {
+    flex-direction: column;
+  }
 
   &__fixture {
     width: 40%;
+
+    p {
+      margin: 0.5rem 1rem 3rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
   }
   &__scores {
     width: 60%;
+
+    @media screen and (max-width: 500px) {
+      width: 90%;
+      margin: auto;
+    }
   }
 }

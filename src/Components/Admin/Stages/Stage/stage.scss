@@ -2,7 +2,6 @@
 
 .stage {
   padding: 1rem 2rem;
-  width: fit-content;
   margin: 0 auto 2rem;
   backdrop-filter: blur(0px);
   background-color: rgba(255, 255, 255, 0.9);
@@ -28,6 +27,8 @@
   &__title {
     font-size: 1.5rem;
     font-weight: bold;
+    display: flex;
+    flex-direction: column;
 
     &__date {
       font-size: 1.2rem;
@@ -35,7 +36,7 @@
       padding: 0.2rem 1rem;
       font-weight: normal;
       border-radius: 1rem 2rem;
-      margin-left: 2rem;
+      margin-top: 1rem;
     }
   }
   &__type,

@@ -5,7 +5,7 @@ import { UserContext } from "../../Context/userContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../../config/firebaseConfig";
 import { FiLogOut } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import "./navBar.scss";
 
 const NavBar = () => {
@@ -13,6 +13,7 @@ const NavBar = () => {
   const logOut = async () => {
     try {
       await signOut(auth);
+      return redirect("/");
     } catch (err) {
       console.log(err);
     }

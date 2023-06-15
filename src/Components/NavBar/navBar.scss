@@ -23,11 +23,28 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  & nav {
+    @media screen and (max-width: 500px) {
+      display: flex;
+      flex-direction: column;
+    }
+
+    & a {
+      @media screen and (max-width: 500px) {
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
   &__userName {
     display: inline-block;
     color: var.$yellow;
     font-size: 1.5rem;
     margin-right: 3rem;
+
+    @media screen and (max-width: 500px) {
+      display: none;
+    }
 
     &--strong {
       font-weight: bold;
@@ -39,9 +56,18 @@
     display: flex;
     align-items: center;
 
+    @media screen and (max-width: 500px) {
+      font-size: 0.8rem !important;
+      margin: 0 0 0 1rem !important;
+    }
+
     &__icon {
       margin-left: 0.5rem;
       font-size: 1.4rem;
+
+      @media screen and (max-width: 500px) {
+        font-size: 0.8rem !important;
+      }
     }
   }
 }

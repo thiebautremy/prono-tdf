@@ -10,7 +10,7 @@
     width: 40%;
 
     p {
-      margin: 0.5rem 1rem 3rem;
+      margin: 1rem 1rem 3rem 2rem;
       font-size: 1.5rem;
       font-weight: bold;
     }
@@ -22,5 +22,10 @@
       width: 90%;
       margin: auto;
     }
+  }
+  img.map {
+    width: 90%;
+    height: auto;
+    margin: 2rem auto;
   }
 }

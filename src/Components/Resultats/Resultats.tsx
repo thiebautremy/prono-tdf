@@ -11,6 +11,7 @@ import {
 import { UserConnectedInfo } from "../../Context/userContext";
 import Resultat from "./Resultat";
 import "./Resultats.scss";
+import map from "../../assets/pictures/f8d5d.jpg";
 
 const Resultats = () => {
   const [users, setUsers] = useState<DocumentData>([]);
@@ -45,6 +46,8 @@ const Resultats = () => {
             <Resultat key={user.authId} {...user} />
           ))}
       </div>
+      <div className="map"></div>
+      <img src={map} alt="" className="map" />
     </div>
   );
 };

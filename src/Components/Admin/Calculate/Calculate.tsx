@@ -138,7 +138,8 @@ const Calculate = () => {
           if (pronoUser !== undefined) {
             pronoUser.map((prono: { code: string }) => {
               const cyclistPosition: number = Object.values(results).findIndex(
-                (result: { number: string }) => result.number === prono.code
+                (result: { number: string }) =>
+                  result.number === prono.code.toString()
               );
               if (cyclistPosition >= 0) {
                 const position = Number(cyclistPosition + 1);
@@ -217,7 +218,7 @@ const Calculate = () => {
               onClick={() => handleCalculate()}
               className="calculate__calculateBtn"
             >
-              Caclculer les points des pronostiques
+              Calculer les points des pronostiques
             </button>
           </div>
         )}

@@ -173,7 +173,9 @@ const Calculate = () => {
       userDocumentDbRef.data()?.points === undefined
         ? {}
         : { ...userDocumentDbRef.data()?.points };
-    pointsObj[stageId] = totalPoint.reduce(getSum);
+    console.log(totalPoint.length);
+    pointsObj[stageId] =
+      totalPoint.length === 0 ? 0 : totalPoint.reduce(getSum);
     const data = { points: pointsObj };
     return updateDoc(refUser, {
       ...data,

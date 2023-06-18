@@ -80,6 +80,7 @@ const Prono = ({ cyclists, stageId }) => {
           optionLabel="name"
           placeholder="Sélectionne 5 cyclistes"
           filter
+          display="chip"
           showSelectAll={false}
           className="multiselect-custom"
           itemTemplate={cyclistsTemplate}

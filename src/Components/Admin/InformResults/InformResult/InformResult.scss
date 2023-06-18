@@ -7,12 +7,18 @@
   &__DragableAndselection {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
     margin-bottom: 2rem;
+
+    &__selections {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      max-height: 45rem;
+    }
 
     &__dragable {
       width: 30%;
-      height: 35rem;
+      height: 45rem;
       overflow-y: scroll;
       padding: 1rem;
       &--items {

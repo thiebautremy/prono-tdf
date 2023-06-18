@@ -101,7 +101,9 @@ const Calculate = () => {
       object.date = formatedDateFromFirebase(arrayToChanged[i].date);
       arrayFormated.push(object);
     }
-    return arrayFormated;
+    return arrayFormated.sort(function (a, b) {
+      return a.code - b.code;
+    });
   };
   const onStageChange = (e: { value: { code: number } }) => {
     const stageFound = stages.find((stage) => stage.stageId === e.value.code);

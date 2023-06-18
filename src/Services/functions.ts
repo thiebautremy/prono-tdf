@@ -17,7 +17,12 @@ export const getDateFormated = (timestampFirestore: {
     dateAndHour.getMonth() + 1 < 10
       ? `0${dateAndHour.getMonth() + 1}`
       : `${dateAndHour.getMonth() + 1}`;
-  const date = `${dateAndHour.getDate()}/${month}/${dateAndHour.getUTCFullYear()}`;
+  const day =
+    dateAndHour.getDate() < 10
+      ? `0${dateAndHour.getDate()}`
+      : dateAndHour.getDate();
+
+  const date = `${day}/${month}/${dateAndHour.getUTCFullYear()}`;
   const hour = `${dateAndHour.getHours()}:${minutes}`;
   return { date, hour };
 };

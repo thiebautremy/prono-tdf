@@ -75,7 +75,9 @@ const Pronos = () => {
       object.code = arrayToChanged[i].stageId;
       arrayFormated.push(object);
     }
-    return arrayFormated;
+    return arrayFormated.sort(function (a, b) {
+      return a.code - b.code;
+    });
   };
 
   return (

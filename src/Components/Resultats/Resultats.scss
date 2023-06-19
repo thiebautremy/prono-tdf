@@ -9,7 +9,7 @@
   &__fixture {
     width: 40%;
 
-    p {
+    h1 {
       margin: 1rem 1rem 3rem 2rem;
       font-size: 1.5rem;
       font-weight: bold;
@@ -28,5 +28,37 @@
     width: 90%;
     height: auto;
     margin: 2rem auto;
+  }
+
+  h2 {
+    margin: 3rem 1rem 2rem 1rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: underline;
+  }
+
+  &__table {
+    width: 80%;
+    margin: auto;
+    thead {
+      background-color: var.$black;
+      color: var.$white;
+      th {
+        text-align: center;
+        font-weight: bold;
+        padding: 0.5rem;
+      }
+    }
+
+    tbody {
+      background-color: var.$grey;
+
+      td {
+        padding: 0.2rem 0;
+        text-align: center;
+        border: 1px solid var.$white;
+      }
+    }
   }
 }

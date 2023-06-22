@@ -36,7 +36,6 @@ const Resultats = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
-  console.log(Object.values(awardedPoints));
   return (
     <div className="resultats">
       <div className="resultats__fixture">

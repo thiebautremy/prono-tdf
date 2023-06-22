@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./AdminInformations.scss";
 
 const AdminInformations: React.FC = () => {
@@ -8,14 +9,24 @@ const AdminInformations: React.FC = () => {
       </h1>
       <ul className="adminInformations__list">
         <li className="adminInformations__list__item">
-          <h2 className="adminInformations__list__item__title">Utilisateurs</h2>
+          <Link to="/admin/users">
+            <h2 className="adminInformations__list__item__title">
+              Utilisateurs
+            </h2>
+          </Link>
           <p className="adminInformations__list__item__paragraphe">
             Cet onglet permet de gérer les droits attribués aux utilisateurs de
             l'application
           </p>
         </li>
         <li className="adminInformations__list__item">
-          <h2 className="adminInformations__list__item__title">Cyclistes</h2>
+          <p>
+            <Link to="/admin/cyclists">
+              <h2 className="adminInformations__list__item__title">
+                Cyclistes
+              </h2>
+            </Link>
+          </p>
           <p className="adminInformations__list__item__paragraphe">
             Cet onglet permet de gérer la liste des cyclistes présent sur le
             tour de France. Il est possible d'en ajouter afin d'avoir la liste
@@ -25,7 +36,9 @@ const AdminInformations: React.FC = () => {
           </p>
         </li>
         <li className="adminInformations__list__item">
-          <h2 className="adminInformations__list__item__title">Etapes</h2>
+          <Link to="/admin/stages">
+            <h2 className="adminInformations__list__item__title">Etapes</h2>
+          </Link>
           <p className="adminInformations__list__item__paragraphe">
             Cet onglet permet de voir les étapes présentes en base de données.
             Il n'est pour l'instant pas possible d'ajouter les étapes via
@@ -33,9 +46,11 @@ const AdminInformations: React.FC = () => {
           </p>
         </li>
         <li className="adminInformations__list__item">
-          <h2 className="adminInformations__list__item__title">
-            Renseigner les résultats
-          </h2>
+          <Link to="/admin/inform-results">
+            <h2 className="adminInformations__list__item__title">
+              Renseigner les résultats
+            </h2>
+          </Link>
           <p className="adminInformations__list__item__paragraphe">
             Cet onglet permet de renseigner les résultats des étapes. A chaque
             fin d'étapes un administrateur devra renseigner les 20 premiers
@@ -44,9 +59,11 @@ const AdminInformations: React.FC = () => {
           </p>
         </li>
         <li className="adminInformations__list__item">
-          <h2 className="adminInformations__list__item__title">
-            Calculer les points
-          </h2>
+          <Link to="/admin/calculate">
+            <h2 className="adminInformations__list__item__title">
+              Calculer les points
+            </h2>
+          </Link>
           <p className="adminInformations__list__item__paragraphe">
             Cet onglet permet de calculer les points des utilisateurs de
             l'application. Un administrateur devra calculer les points a chaque

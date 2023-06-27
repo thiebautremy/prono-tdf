@@ -13,12 +13,12 @@ const teamsArray: { value: string; name: string }[] = [
   { value: "ISRAEL", name: "Israel - Premier Tech" },
   { value: "JAYCO", name: "Jayco AlUla" },
   { value: "JUMBO", name: "Jumbo - Visma" },
+  { value: "LIDL", name: "LIDL - Trek" },
   { value: "LOTTO", name: "Lotto Dstny" },
   { value: "MOVISTAR", name: "Movistar Team" },
   { value: "SOUDAL", name: "Soudal Quick-Step" },
   { value: "ARKEA", name: "Team Arkea - Samsic" },
   { value: "TOTAL", name: "TotalEnergies" },
-  { value: "LIDL", name: "LIDL - Trek" },
   { value: "UAE", name: "UAE Team Emirates" },
   { value: "UNO-X", name: "Uno-X Pro Cycling Team" },
 ];

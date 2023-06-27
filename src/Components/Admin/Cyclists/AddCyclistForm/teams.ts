@@ -18,7 +18,7 @@ const teamsArray: { value: string; name: string }[] = [
   { value: "SOUDAL", name: "Soudal Quick-Step" },
   { value: "ARKEA", name: "Team Arkea - Samsic" },
   { value: "TOTAL", name: "TotalEnergies" },
-  { value: "TREK", name: "Trek - Segafredo" },
+  { value: "LIDL", name: "LIDL - Trek" },
   { value: "UAE", name: "UAE Team Emirates" },
   { value: "UNO-X", name: "Uno-X Pro Cycling Team" },
 ];

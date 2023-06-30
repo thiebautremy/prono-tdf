@@ -27,7 +27,7 @@ const Prono = ({ cyclists, stageId }) => {
   };
 
   useEffect(() => {
-    userConnectedInfo.hasOwnProperty("prono") && setDefaultPronoValue();
+    userConnectedInfo.hasOwnProperty("pronos") && setDefaultPronoValue();
   }, [stageId]);
   const cyclistsTemplate = (option) => {
     return (

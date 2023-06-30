@@ -5,15 +5,17 @@ import { UserContext } from "../../Context/userContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../../config/firebaseConfig";
 import { FiLogOut } from "react-icons/fi";
-import { Link, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./navBar.scss";
 
 const NavBar = () => {
-  const { currentUser, userConnectedInfo } = useContext(UserContext);
+  const { currentUser, userConnectedInfo, setCurrentUser } =
+    useContext(UserContext);
   const logOut = async () => {
     try {
       await signOut(auth);
-      return redirect("/");
+      setCurrentUser(null);
+      window.location.replace("/");
     } catch (err) {
       console.log(err);
     }

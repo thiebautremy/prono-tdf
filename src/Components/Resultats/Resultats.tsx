@@ -17,7 +17,6 @@ import { awardedPoints } from "../../assets/points/points";
 const Resultats = () => {
   const [users, setUsers] = useState<DocumentData>([]);
   const db = getFirestore(app);
-
   const fetchUsers = async () => {
     const datas: DocumentData = [];
     try {

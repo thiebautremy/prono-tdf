@@ -16,6 +16,7 @@
   }
   &__table {
     font-size: 1.2rem;
+    position: relative;
     &__thead {
       &__th {
         font-weight: bold;
@@ -31,6 +32,10 @@
       &__td {
         border: 1px solid var.$black;
         padding: 0.5rem 1rem;
+
+        &:hover {
+          cursor: pointer;
+        }
       }
       &__td:nth-child(odd):not(:last-child) {
         background-color: var.$grey;
@@ -48,6 +53,39 @@
         font-weight: bold;
         margin-left: 0.2rem;
       }
+    }
+  }
+}
+.modal {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background-color: var.$grey;
+  width: fit-content;
+  padding: 0.5rem 1rem;
+  border: 1px solid var.$yellow;
+  z-index: 100;
+  top: 5px;
+  left: 5px;
+
+  color: var.$black;
+
+  .cross {
+    position: absolute;
+    font-size: 1.3rem;
+    top: 5px;
+    right: 5px;
+    font-weight: bold;
+    border-radius: 50%;
+    border: 1px solid var.$black;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      cursor: pointer;
     }
   }
 }

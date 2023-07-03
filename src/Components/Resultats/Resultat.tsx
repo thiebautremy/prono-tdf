@@ -1,11 +1,23 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import React, { useState } from "react";
 import "./Resultat.scss";
 
 type ResultatType = {
   username: string;
   points: { [key: number]: number };
+  pronos: any;
 };
-const Resultat: React.FC<ResultatType> = ({ username, points }) => {
+
+const Resultat: React.FC<ResultatType> = ({ username, points, pronos }) => {
+  const [modal, setModal] = useState({
+    isVisible: false,
+    value: [],
+  });
   const convertPointsInArray = (points: { [key: number]: number }) => {
     let keys: string[] = [];
     let values: number[] = [];
@@ -16,11 +28,19 @@ const Resultat: React.FC<ResultatType> = ({ username, points }) => {
     return { keys, values };
   };
   const { keys, values } = convertPointsInArray(points);
+  const handleModal = (value: []) => {
+    setModal({
+      isVisible: true,
+      value,
+    });
+  };
+
   return (
     <div className="resultat">
       <h1 className="resultat__username">{username}</h1>
       {points === undefined && <p>Pas de points attribués</p>}
       <table className="resultat__table">
+        {modal.isVisible && <Modal modal={modal} setModal={setModal} />}
         <thead className="resultat__table__thead">
           <tr className="resultat__table__thead__tr">
             {keys.length > 0 &&
@@ -34,11 +54,16 @@ const Resultat: React.FC<ResultatType> = ({ username, points }) => {
         <tbody className="resultat__table__tbody">
           <tr className="resultat__table__tbody__tr">
             {values.length > 0 &&
-              values.map((value) => (
-                <td className="resultat__table__tbody__td" key={value}>
+              values.map((value, index) => (
+                <td
+                  className="resultat__table__tbody__td"
+                  key={value}
+                  onClick={() => handleModal(pronos[index + 1])}
+                >
                   {value}
                 </td>
               ))}
+
             {values.length > 0 && (
               <td className="resultat__table__tbody__td resultat__table__total">
                 Total:
@@ -52,6 +77,27 @@ const Resultat: React.FC<ResultatType> = ({ username, points }) => {
           </tr>
         </tbody>
       </table>
+    </div>
+  );
+};
+
+const Modal = (modal: any) => {
+  return (
+    <div className="modal">
+      {modal.modal.value.map((item: any) => (
+        <span key={item.name}>{item.name}</span>
+      ))}
+      <span
+        className="cross"
+        onClick={() =>
+          modal.setModal({
+            isVisible: false,
+            value: modal.values,
+          })
+        }
+      >
+        X
+      </span>
     </div>
   );
 };

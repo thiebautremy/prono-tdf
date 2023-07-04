@@ -49,6 +49,7 @@ const Resultat: React.FC<ResultatType> = ({ username, points, pronos }) => {
                   {key}
                 </th>
               ))}
+            <th className="resultat__table__thead__username">{username}</th>
           </tr>
         </thead>
         <tbody className="resultat__table__tbody">

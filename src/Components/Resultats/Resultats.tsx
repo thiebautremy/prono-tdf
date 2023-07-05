@@ -12,7 +12,7 @@ import { UserConnectedInfo } from "../../Context/userContext";
 import Resultat from "./Resultat";
 import "./Resultats.scss";
 import map from "../../assets/pictures/f8d5d.jpg";
-import { awardedPoints } from "../../assets/points/points";
+import { awardedPointsInfos } from "../../assets/points/pointsInfo";
 
 const Resultats = () => {
   const [users, setUsers] = useState<DocumentData>([]);
@@ -35,6 +35,9 @@ const Resultats = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  console.log(awardedPointsInfos);
+
   return (
     <div className="resultats">
       <div className="resultats__fixture">
@@ -55,13 +58,12 @@ const Resultats = () => {
           </tr>
         </thead>
         <tbody>
-          {Object.values(awardedPoints).map((awardedPoint, index) => (
+          {Object.values(awardedPointsInfos).map((awardedPoint, index) => (
             <tr key={index}>
               <td>
-                {`${index + 1}`}
-                <sup>{`${index === 0 ? " er" : " ième"}`}</sup>
+                <sup>{awardedPoint.position}</sup>
               </td>
-              <td>{`${awardedPoint} pts`}</td>
+              <td>{`${awardedPoint.points} pts`}</td>
             </tr>
           ))}
         </tbody>

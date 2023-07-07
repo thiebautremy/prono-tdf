@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/unbound-method */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -9,10 +11,12 @@ import {
   collection,
   getDocs,
   DocumentData,
+  Timestamp,
 } from "firebase/firestore";
 import app from "../../config/firebaseConfig";
 import Stage from "../Admin/Stages/Stage/Stage";
 import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
+import { getDateFormatedWithoutYearAndHour } from "../../Services/functions";
 import Prono from "./Prono/prono";
 import "./pronos.scss";
 
@@ -61,18 +65,55 @@ const Pronos = () => {
     setSelectedStage(stageFound);
   };
 
+  const formatedDateFromFirebase = (date: {
+    seconds: number;
+    nanoseconds: number;
+  }) => {
+    const timeObj = new Timestamp(date.seconds, date.nanoseconds);
+    const dateAndHour = timeObj.toDate();
+    return dateAndHour.toUTCString();
+  };
+
   const formatedArrayStagesForDropDown = (
-    arrayToChanged: { stageId: number; startCity: string; endCity: string }[]
+    arrayToChanged: {
+      stageId: number;
+      startCity: string;
+      endCity: string;
+      date: { seconds: number; nanoseconds: number };
+    }[]
   ) => {
     //TODO ajouter si l'étape est finie ou en cours dans les options du select en fonction de la date et de l'heure !
     const arrayFormated = [];
     for (let i = 0; i < arrayToChanged.length; i++) {
-      const object: { stage: string; code: number | null } = {
+      const object: {
+        stage: string;
+        code: number | null;
+        date: string;
+        optionDisabled: boolean;
+      } = {
         stage: "",
+        date: "",
         code: null,
+        optionDisabled: false,
       };
-      object.stage = `Etape n°${arrayToChanged[i].stageId} : ${arrayToChanged[i].startCity} - ${arrayToChanged[i].endCity}`;
+      object.stage = `n°${arrayToChanged[i].stageId}: ${
+        arrayToChanged[i].startCity
+      } - ${arrayToChanged[i].endCity} ${
+        getDateFormatedWithoutYearAndHour(arrayToChanged[i].date).date
+      }`;
       object.code = arrayToChanged[i].stageId;
+      object.date = formatedDateFromFirebase(arrayToChanged[i].date);
+      const stageDate = new Date(
+        formatedDateFromFirebase(arrayToChanged[i].date)
+      );
+      const desiredOffset = -120;
+      const currentOffset = stageDate.getTimezoneOffset();
+      const offsetDiff = desiredOffset - currentOffset;
+      const newStageDate = stageDate.setMinutes(
+        stageDate.getMinutes() + offsetDiff
+      );
+      const currentDate = new Date();
+      object.optionDisabled = currentDate > new Date(newStageDate);
       arrayFormated.push(object);
     }
     return arrayFormated.sort(function (a, b) {
@@ -91,6 +132,7 @@ const Pronos = () => {
             value={selectedStage}
             options={formatedArrayStagesForDropDown(stages)}
             onChange={onStageChange}
+            optionDisabled="optionDisabled"
             optionLabel="stage"
             placeholder="Sélectionne une étape"
           />

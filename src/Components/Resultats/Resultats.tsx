@@ -36,8 +36,6 @@ const Resultats = () => {
     fetchUsers();
   }, []);
 
-  console.log(awardedPointsInfos);
-
   return (
     <div className="resultats">
       <div className="resultats__fixture">

@@ -10,12 +10,12 @@
   }
 
   &__username {
-    min-width: 8rem;
-    font-size: 1.4rem;
+    min-width: 4rem;
+    font-size: 1rem;
     font-weight: bold;
   }
   &__table {
-    font-size: 1.2rem;
+    font-size: 0.95rem;
     position: relative;
     &__thead {
       &__th {
@@ -58,7 +58,9 @@
       min-width: 6.5rem;
       strong {
         font-weight: bold;
+        font-size: 1.1rem;
         margin-left: 0.2rem;
+        letter-spacing: 0.1rem;
       }
     }
   }

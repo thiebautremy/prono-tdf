@@ -30,7 +30,8 @@
 
       &__username {
         font-weight: bold;
-        background-color: var.$blue;
+        background-color: rgba($color: var.$blue, $alpha: 0.6);
+        letter-spacing: 0.1rem;
       }
     }
 
@@ -54,7 +55,7 @@
     }
 
     &__total {
-      background-color: var.$green;
+      background-color: rgba($color: var.$yellow, $alpha: 0.8);
       min-width: 6.5rem;
       strong {
         font-weight: bold;
@@ -75,7 +76,7 @@
   border: 1px solid var.$yellow;
   z-index: 100;
   top: 5px;
-  left: 5px;
+  right: 20%;
 
   color: var.$black;
 

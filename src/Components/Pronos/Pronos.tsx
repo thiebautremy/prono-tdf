@@ -106,7 +106,7 @@ const Pronos = () => {
       const stageDate = new Date(
         formatedDateFromFirebase(arrayToChanged[i].date)
       );
-      const desiredOffset = -120;
+      const desiredOffset = -60;
       const currentOffset = stageDate.getTimezoneOffset();
       const offsetDiff = desiredOffset - currentOffset;
       const newStageDate = stageDate.setMinutes(

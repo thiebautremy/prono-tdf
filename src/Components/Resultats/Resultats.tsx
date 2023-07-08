@@ -42,6 +42,7 @@ const Resultats = () => {
         <h1>Classement</h1>
       </div>
       <div className="resultats__scores">
+        {console.log(users)}
         {users.length > 0 &&
           users.map((user: UserConnectedInfo) => (
             <Resultat key={user.authId} {...user} />

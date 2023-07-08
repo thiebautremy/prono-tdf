@@ -34,7 +34,7 @@ const Resultat: React.FC<ResultatType> = ({ username, points, pronos }) => {
       value,
     });
   };
-
+  console.log(convertPointsInArray(points));
   return (
     <div className="resultat">
       <h1 className="resultat__username">{username}</h1>

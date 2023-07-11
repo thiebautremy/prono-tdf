@@ -34,7 +34,7 @@ const Resultat: React.FC<ResultatType> = ({ username, points, pronos }) => {
       value,
     });
   };
-  console.log(convertPointsInArray(points));
+  console.log(values.length);
   return (
     <div className="resultat">
       <h1 className="resultat__username">{username}</h1>
@@ -49,7 +49,9 @@ const Resultat: React.FC<ResultatType> = ({ username, points, pronos }) => {
                   {key}
                 </th>
               ))}
-            <th className="resultat__table__thead__username">{username}</th>
+            <th className="resultat__table__thead__username" colSpan={2}>
+              {username}
+            </th>
           </tr>
         </thead>
         <tbody className="resultat__table__tbody">
@@ -66,14 +68,29 @@ const Resultat: React.FC<ResultatType> = ({ username, points, pronos }) => {
               ))}
 
             {values.length > 0 && (
-              <td className="resultat__table__tbody__td resultat__table__total">
-                Total:
-                <strong>
-                  {values.reduce(
-                    (accumulator, currentValue) => accumulator + currentValue
-                  )}
-                </strong>
-              </td>
+              <>
+                <td className="resultat__table__tbody__td resultat__table__average">
+                  Moyenne :{" "}
+                  <strong>
+                    {Math.round(
+                      values.reduce(
+                        (accumulator, currentValue) =>
+                          accumulator + currentValue
+                      ) / values.length
+                    )}{" "}
+                  </strong>
+                  pts
+                </td>
+                <td className="resultat__table__tbody__td resultat__table__total">
+                  Total:
+                  <strong>
+                    {values.reduce(
+                      (accumulator, currentValue) => accumulator + currentValue
+                    )}{" "}
+                  </strong>
+                  pts
+                </td>
+              </>
             )}
           </tr>
         </tbody>

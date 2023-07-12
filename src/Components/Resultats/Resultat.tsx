@@ -11,9 +11,15 @@ type ResultatType = {
   username: string;
   points: { [key: number]: number };
   pronos: any;
+  position: number;
 };
 
-const Resultat: React.FC<ResultatType> = ({ username, points, pronos }) => {
+const Resultat: React.FC<ResultatType> = ({
+  username,
+  points,
+  pronos,
+  position,
+}) => {
   const [modal, setModal] = useState({
     isVisible: false,
     value: [],
@@ -34,53 +40,37 @@ const Resultat: React.FC<ResultatType> = ({ username, points, pronos }) => {
       value,
     });
   };
-  console.log(values.length);
   return (
     <div className="resultat">
-      <h1 className="resultat__username">{username}</h1>
       {points === undefined && <p>Pas de points attribués</p>}
       <table className="resultat__table">
         {modal.isVisible && <Modal modal={modal} setModal={setModal} />}
-        <thead className="resultat__table__thead">
-          <tr className="resultat__table__thead__tr">
-            {keys.length > 0 &&
-              keys.map((key) => (
-                <th key={key} className="resultat__table__thead__th">
-                  {key}
-                </th>
-              ))}
-            <th className="resultat__table__thead__username" colSpan={2}>
-              {username}
-            </th>
-          </tr>
-        </thead>
         <tbody className="resultat__table__tbody">
           <tr className="resultat__table__tbody__tr">
-            {values.length > 0 &&
-              values.map((value, index) => (
-                <td
-                  className="resultat__table__tbody__td"
-                  key={value}
-                  onClick={() => handleModal(pronos[index + 1])}
-                >
-                  {value}
+            <td
+              rowSpan={2}
+              className={`resultat__table__tbody__td resultat__table__tbody__position ${
+                position === 1
+                  ? "gold"
+                  : position === 2
+                  ? "silver"
+                  : position === 3 && "bronze"
+              }`}
+            >
+              {position} <sup>{position === 1 ? "er" : "ième"}</sup>
+            </td>
+            <td className="resultat__table__tbody__username">{username}</td>
+            {keys.length > 0 &&
+              keys.map((key) => (
+                <td key={key} className="resultat__table__tbody__td">
+                  {key}
                 </td>
               ))}
-
+            <td className="resultat__table__tbody__average">Moyenne :</td>
+          </tr>
+          <tr>
             {values.length > 0 && (
               <>
-                <td className="resultat__table__tbody__td resultat__table__average">
-                  Moyenne :{" "}
-                  <strong>
-                    {Math.round(
-                      values.reduce(
-                        (accumulator, currentValue) =>
-                          accumulator + currentValue
-                      ) / values.length
-                    )}{" "}
-                  </strong>
-                  pts
-                </td>
                 <td className="resultat__table__tbody__td resultat__table__total">
                   Total:
                   <strong>
@@ -92,6 +82,24 @@ const Resultat: React.FC<ResultatType> = ({ username, points, pronos }) => {
                 </td>
               </>
             )}
+            {values.length > 0 &&
+              values.map((value, index) => (
+                <td
+                  className="resultat__table__tbody__td"
+                  key={value}
+                  onClick={() => handleModal(pronos[index + 1])}
+                >
+                  {value}
+                </td>
+              ))}
+            <td className="resultat__table__tbody__td resultat__table__average">
+              {Math.round(
+                values.reduce(
+                  (accumulator, currentValue) => accumulator + currentValue
+                ) / values.length
+              )}{" "}
+              pts
+            </td>
           </tr>
         </tbody>
       </table>

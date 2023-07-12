@@ -1,3 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import React, { useEffect, useState } from "react";
@@ -25,7 +32,8 @@ const Resultats = () => {
       if (response) {
         response.forEach((doc) => {
           datas.push(doc.data());
-          setUsers(datas);
+          // setUsers(datas);
+          calculateTotalAndSetState(datas);
         });
       }
     } catch (err) {
@@ -36,17 +44,46 @@ const Resultats = () => {
     fetchUsers();
   }, []);
 
+  const calculateTotalAndSetState = (datas: [] | DocumentData) => {
+    const usersUpdated:
+      | React.SetStateAction<DocumentData>
+      | Map<unknown, unknown>[] = [];
+    if (datas.length > 0) {
+      datas.map((user: { total?: number; points: {} }) => {
+        const { values } = convertPointsInArray(user.points);
+        user["total"] = values.reduce(
+          (accumulator: any, currentValue: any) => accumulator + currentValue
+        );
+        usersUpdated.push(user);
+      });
+    }
+    setUsers(usersUpdated);
+  };
+
+  const convertPointsInArray = (points: { [key: number]: number }) => {
+    let keys: string[] = [];
+    let values: number[] = [];
+    if (points !== undefined) {
+      keys = Object.keys(points);
+      values = Object.values(points);
+    }
+    return { keys, values };
+  };
+
   return (
     <div className="resultats">
       <div className="resultats__fixture">
         <h1>Classement</h1>
       </div>
       <div className="resultats__scores">
-        {console.log(users)}
         {users.length > 0 &&
-          users.map((user: UserConnectedInfo) => (
-            <Resultat key={user.authId} {...user} />
-          ))}
+          users
+            .sort(
+              (a: { total: number }, b: { total: number }) => b.total - a.total
+            )
+            .map((user: UserConnectedInfo, index: number) => (
+              <Resultat key={user.authId} {...user} position={index + 1} />
+            ))}
       </div>
       <h2>Points attribués en fonction du classement du coureur</h2>
       <table className="resultats__table">

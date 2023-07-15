@@ -41,7 +41,7 @@ const Prono = ({ cyclists, stageId }) => {
     const arrayFormated = [];
     for (const cyclist of arrayToChanged) {
       const cyclistObj = {};
-      cyclistObj.name = `${cyclist.number} - ${cyclist.lastname} ${cyclist.firstname}`;
+      cyclistObj.name = `${cyclist.number} - ${cyclist.lastname} ${cyclist.firstname} - ${cyclist.team}`;
       cyclistObj.code = Number(cyclist.number);
       arrayFormated.push(cyclistObj);
     }

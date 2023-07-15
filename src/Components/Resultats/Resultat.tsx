@@ -67,6 +67,9 @@ const Resultat: React.FC<ResultatType> = ({
                 </td>
               ))}
             <td className="resultat__table__tbody__average">Moyenne :</td>
+            <td className="resultat__table__tbody__username__last" rowSpan={2}>
+              {username}
+            </td>
           </tr>
           <tr>
             {values.length > 0 && (

@@ -24,11 +24,20 @@
         font-weight: bold;
         background-color: rgba($color: var.$blue, $alpha: 0.6);
         letter-spacing: 0.1rem;
+
+        &__last {
+          min-width: 4rem;
+          vertical-align: middle;
+          text-align: center;
+          background-color: rgba($color: var.$blue, $alpha: 0.6);
+          border: 1px solid black;
+        }
       }
       &__average {
         text-align: center;
         background-color: rgba($color: var.$green, $alpha: 0.7);
         min-width: 5rem;
+        border: 1px solid black;
         strong {
           font-size: 1rem;
           font-weight: unset;

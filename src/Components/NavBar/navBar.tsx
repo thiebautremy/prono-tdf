@@ -37,6 +37,9 @@ const NavBar = () => {
             <Link to="/prono" className="navBar__link">
               Pronostiquer
             </Link>
+            <Link to="/stats" className="navBar__link">
+              Statistiques
+            </Link>
             {userConnectedInfo?.hasOwnProperty("roles") &&
               userConnectedInfo?.roles.some(
                 (role) => role === "ADMIN_ROLE"

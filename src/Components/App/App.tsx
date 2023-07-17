@@ -12,6 +12,8 @@ import Resultats from "../Resultats/Resultats";
 import InformResults from "../Admin/InformResults/InformResults";
 import HomeConnected from "../Home/HomeConnected/homeConnected";
 import AdminInformations from "../Admin/AdminInformations/AdminInformations";
+import Statistiques from "../Statistiques/Statistiques";
+
 const App = () => {
   return (
     <div className="App">
@@ -39,6 +41,14 @@ const App = () => {
             element={
               <HomeConnected>
                 <Resultats />
+              </HomeConnected>
+            }
+          />
+          <Route
+            path="/stats"
+            element={
+              <HomeConnected>
+                <Statistiques />
               </HomeConnected>
             }
           />

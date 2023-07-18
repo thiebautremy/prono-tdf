@@ -4,8 +4,6 @@ import React, { useContext } from "react";
 import { UserContext } from "../../Context/userContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../../config/firebaseConfig";
-import { FiLogOut } from "react-icons/fi";
-import { Link } from "react-router-dom";
 import "./navBar.scss";
 import { Menubar } from "primereact/menubar";
 import { MenuItem } from "primereact/menuitem";
@@ -21,9 +19,6 @@ const NavBar = () => {
     } catch (err) {
       console.log(err);
     }
-  };
-  const handleLog = () => {
-    console.log("elem cliqué");
   };
 
   const items: MenuItem[] = [
@@ -46,12 +41,6 @@ const NavBar = () => {
       icon: "pi pi-fw pi-chart-line",
       url: "/stats",
     },
-    // userConnectedInfo?.hasOwnProperty("roles") &&
-    //   userConnectedInfo?.roles.some((role) => role === "ADMIN_ROLE") && {
-    //     label: "Administration",
-    //     icon: "pi pi-fw pi-sitemap",
-    //     url: "/admin",
-    //   },
   ];
 
   const itemsNotAdmin = [

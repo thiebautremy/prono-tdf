@@ -44,10 +44,14 @@ const Statistiques = () => {
   const convertDatas = (
     data: DocumentData[] | { color: string; points: []; username: string }[]
   ) => {
-    console.log(data);
     if (data.length > 0) {
       const options = {
         responsive: true,
+        scales: {
+          y: {
+            max: 115,
+          },
+        },
         plugins: {
           legend: {
             position: "top" as const,
@@ -83,7 +87,6 @@ const Statistiques = () => {
         newDataset.data = Object.values(user.points);
         newDataset.borderColor = `rgb(${user.color})`;
         newDataset.backgroundColor = `rgba(${user.color}, 0.5)`;
-        console.log(newDataset);
         newDatasets.push(newDataset);
       });
 

@@ -7,7 +7,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import app from "../../config/firebaseConfig";
 import {
   getFirestore,
@@ -16,7 +16,6 @@ import {
   DocumentData,
 } from "firebase/firestore";
 import { UserConnectedInfo } from "../../Context/userContext";
-import { UsersContext } from "../../Context/usersContext";
 import Resultat from "./Resultat";
 import "./Resultats.scss";
 import map from "../../assets/pictures/f8d5d.jpg";
@@ -24,8 +23,6 @@ import { awardedPointsInfos } from "../../assets/points/pointsInfo";
 
 const Resultats = () => {
   const [users, setUsers] = useState<DocumentData>([]);
-
-  const { setUsersData } = useContext(UsersContext);
 
   const db = getFirestore(app);
   const fetchUsers = async () => {
@@ -37,7 +34,6 @@ const Resultats = () => {
         response.forEach((doc) => {
           datas.push(doc.data());
           calculateTotalAndSetState(datas);
-          setUsersData(datas);
         });
       }
     } catch (err) {

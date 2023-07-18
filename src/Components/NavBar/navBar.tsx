@@ -7,6 +7,8 @@ import { auth } from "../../config/firebaseConfig";
 import { FiLogOut } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import "./navBar.scss";
+import { Menubar } from "primereact/menubar";
+import { MenuItem } from "primereact/menuitem";
 
 const NavBar = () => {
   const { currentUser, userConnectedInfo, setCurrentUser } =
@@ -20,43 +22,72 @@ const NavBar = () => {
       console.log(err);
     }
   };
+  const handleLog = () => {
+    console.log("elem cliqué");
+  };
+
+  const items: MenuItem[] = [
+    {
+      label: `Bonjour ${currentUser.displayName}`,
+      icon: "pi pi-fw pi-user",
+    },
+    {
+      label: "Accueil & Scores",
+      icon: "pi pi-fw pi-home",
+      url: "/",
+    },
+    {
+      label: "Pronostiquer",
+      icon: "pi pi-fw pi-save",
+      url: "/prono",
+    },
+    {
+      label: "Statistiques",
+      icon: "pi pi-fw pi-chart-line",
+      url: "/stats",
+    },
+    // userConnectedInfo?.hasOwnProperty("roles") &&
+    //   userConnectedInfo?.roles.some((role) => role === "ADMIN_ROLE") && {
+    //     label: "Administration",
+    //     icon: "pi pi-fw pi-sitemap",
+    //     url: "/admin",
+    //   },
+  ];
+
+  const itemsNotAdmin = [
+    ...items,
+    {
+      label: "Se déconnecter",
+      icon: "pi pi-fw pi-power-off",
+      command: logOut,
+    },
+  ];
+  const itemsAdmin = [
+    ...items,
+    {
+      label: "Administration",
+      icon: "pi pi-fw pi-sitemap",
+      url: "/admin",
+    },
+    {
+      label: "Se déconnecter",
+      icon: "pi pi-fw pi-power-off",
+      command: logOut,
+    },
+  ];
+
   return (
     <div className="navBar">
-      <>
-        {currentUser && (
-          <nav>
-            <h2 className="navBar__userName">
-              Bonjour
-              <span className="navBar__userName--strong">
-                {currentUser.displayName}
-              </span>
-            </h2>
-            <Link to="/" className="navBar__link">
-              Accueil & Scores
-            </Link>
-            <Link to="/prono" className="navBar__link">
-              Pronostiquer
-            </Link>
-            <Link to="/stats" className="navBar__link">
-              Statistiques
-            </Link>
-            {userConnectedInfo?.hasOwnProperty("roles") &&
-              userConnectedInfo?.roles.some(
-                (role) => role === "ADMIN_ROLE"
-              ) && (
-                <Link to="/admin" className="navBar__link">
-                  Administration
-                </Link>
-              )}
-          </nav>
-        )}
-      </>
-      <button
-        className="navBar__button navBar__logoutBtn"
-        onClick={() => logOut()}
-      >
-        Se déconnecter <FiLogOut className="navBar__logoutBtn__icon" />
-      </button>
+      {currentUser && (
+        <Menubar
+          model={
+            userConnectedInfo?.hasOwnProperty("roles") &&
+            userConnectedInfo?.roles.some((role) => role === "ADMIN_ROLE")
+              ? itemsAdmin
+              : itemsNotAdmin
+          }
+        />
+      )}
     </div>
   );
 };

@@ -6,6 +6,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, { useEffect, useContext, useState } from "react";
 import "./Statistiques.scss";
+import app from "../../config/firebaseConfig";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -16,19 +17,48 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  DocumentData,
+} from "firebase/firestore";
 import { Line } from "react-chartjs-2";
-import UsersContext from "../../Context/usersContext";
-import { DocumentData } from "firebase/firestore";
 
 const Statistiques = () => {
-  const { usersData } = useContext(UsersContext);
+  const [usersDataTest, setUsersDataTest] = useState<
+    DocumentData[] | { color: string; points: []; username: string }[]
+  >(null);
   const [dataChart, setDataChart] = useState({
     options: {},
     dataChartObject: null,
   });
-
+  const db = getFirestore(app);
   useEffect(() => {
-    convertDatas(usersData);
+    const datas: DocumentData[] = [];
+
+    const fetchData = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "users"));
+        const response = querySnapshot;
+
+        if (!response.empty) {
+          response.forEach((doc) => {
+            datas.push(doc.data());
+          });
+          setUsersDataTest(datas);
+          convertDatas(datas);
+        } else {
+          // Aucune donnée disponible
+          console.log("no data retrieve");
+        }
+      } catch (error) {
+        // Gère les erreurs de requête
+        console.error("Erreur lors de la récupération des données:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   ChartJS.register(

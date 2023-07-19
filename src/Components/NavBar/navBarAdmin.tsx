@@ -1,6 +1,4 @@
 import React from "react";
-import { FaAngleLeft } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import "./navBar.scss";
 import { Menubar } from "primereact/menubar";
 import { MenuItem } from "primereact/menuitem";

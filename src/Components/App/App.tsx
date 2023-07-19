@@ -13,6 +13,7 @@ import InformResults from "../Admin/InformResults/InformResults";
 import HomeConnected from "../Home/HomeConnected/homeConnected";
 import AdminInformations from "../Admin/AdminInformations/AdminInformations";
 import Statistiques from "../Statistiques/Statistiques";
+import Profil from "../Profil/Profil";
 
 const App = () => {
   return (
@@ -26,6 +27,14 @@ const App = () => {
               <Admin>
                 <AdminInformations />
               </Admin>
+            }
+          />
+          <Route
+            path="/profil"
+            element={
+              <HomeConnected>
+                <Profil />
+              </HomeConnected>
             }
           />
           <Route

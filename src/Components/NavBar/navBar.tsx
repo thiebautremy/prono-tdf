@@ -23,8 +23,9 @@ const NavBar = () => {
 
   const items: MenuItem[] = [
     {
-      label: `Bonjour ${currentUser.displayName}`,
+      label: "Mon profil",
       icon: "pi pi-fw pi-user",
+      url: "/profil",
     },
     {
       label: "Accueil & Scores",

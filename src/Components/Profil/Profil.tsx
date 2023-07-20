@@ -84,10 +84,20 @@ const Profil = () => {
     <div className="profil">
       {userConnectedInfo && (
         <>
-          <h1>{`Bonjour ${userConnectedInfo.username}`}</h1>
-          <h2>{`Maximum sur une étape: ${userProfil.maxPoints} points`}</h2>
-          <h2>{`Minimum sur une étape: ${userProfil.minPoints} points`}</h2>
-          <h2>{`Moyenne par étape: ${userProfil.average} points`}</h2>
+          <h1 className="profil__username">{`Bonjour ${userConnectedInfo.username}`}</h1>
+          <div className="profil__statistiques">
+            <h2 className="profil__statistiques__points">
+              Maximum sur une étape: <strong>{userProfil.maxPoints}</strong>{" "}
+              points
+            </h2>
+            <h2 className="profil__statistiques__points">
+              Minimum sur une étape: <strong>{userProfil.minPoints}</strong>{" "}
+              points
+            </h2>
+            <h2 className="profil__statistiques__points">
+              Moyenne par étape: <strong>{userProfil.average}</strong> points
+            </h2>
+          </div>
         </>
       )}
     </div>

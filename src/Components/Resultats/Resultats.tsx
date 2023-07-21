@@ -85,25 +85,27 @@ const Resultats = () => {
               <Resultat key={user.authId} {...user} position={index + 1} />
             ))}
       </div>
-      <h2>Points attribués en fonction du classement du coureur</h2>
-      <table className="resultats__table">
-        <thead>
-          <tr>
-            <th>Position</th>
-            <th>Points attribués</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Object.values(awardedPointsInfos).map((awardedPoint, index) => (
-            <tr key={index}>
-              <td>
-                <sup>{awardedPoint.position}</sup>
-              </td>
-              <td>{`${awardedPoint.points} pts`}</td>
+      <div>
+        <h2>Points attribués en fonction du classement du coureur</h2>
+        <table className="resultats__table">
+          <thead>
+            <tr>
+              <th>Position</th>
+              <th>Points attribués</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {Object.values(awardedPointsInfos).map((awardedPoint, index) => (
+              <tr key={index}>
+                <td>
+                  <sup>{awardedPoint.position}</sup>
+                </td>
+                <td>{`${awardedPoint.points} pts`}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <img src={map} alt="" className="map" />
     </div>
   );

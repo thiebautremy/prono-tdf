@@ -2,13 +2,12 @@
 
 .resultats {
   display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
   @media screen and (max-width: 500px) {
-    flex-direction: column;
   }
 
   &__fixture {
-    width: 40%;
-
     h1 {
       margin: 1rem 1rem 3rem 2rem;
       font-size: 1.5rem;
@@ -16,8 +15,8 @@
     }
   }
   &__scores {
+    width: 100%;
     overflow-x: scroll;
-    width: 60%;
 
     @media screen and (max-width: 500px) {
       width: 90%;

@@ -2,6 +2,12 @@ import React from "react";
 import "./navBar.scss";
 import { Menubar } from "primereact/menubar";
 import { MenuItem } from "primereact/menuitem";
+import {
+  MdOutlineDirectionsBike,
+  MdOutlineSave,
+  MdFormatListNumbered,
+} from "react-icons/md";
+import { BsCalculator } from "react-icons/bs";
 
 const NavBarAdmin = () => {
   const itemsAdmin: MenuItem[] = [
@@ -11,33 +17,28 @@ const NavBarAdmin = () => {
       url: "/",
     },
     {
-      label: "Administration",
-      icon: "pi pi-fw pi-home",
-      url: "/admin",
-    },
-    {
       label: "Utilisateurs",
       icon: "pi pi-fw pi-user-edit",
       url: "/admin/users",
     },
     {
       label: "Cyclistes",
-      icon: "pi pi-fw pi-users",
+      icon: <MdOutlineDirectionsBike />,
       url: "/admin/cyclists",
     },
     {
       label: "Etapes",
-      icon: "pi pi-fw pi-book",
+      icon: <MdFormatListNumbered />,
       url: "/admin/stages",
     },
     {
       label: "Renseigner les résultats",
-      icon: "pi pi-fw pi-server",
+      icon: <MdOutlineSave />,
       url: "/admin/inform-results",
     },
     {
       label: "Calculer les points",
-      icon: "pi pi-fw pi-file-excel",
+      icon: <BsCalculator />,
       url: "/admin/calculate",
     },
   ];

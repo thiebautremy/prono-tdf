@@ -14,6 +14,7 @@ import HomeConnected from "../Home/HomeConnected/homeConnected";
 import AdminInformations from "../Admin/AdminInformations/AdminInformations";
 import Statistiques from "../Statistiques/Statistiques";
 import Profil from "../Profil/Profil";
+import CyclistsList from "../CyclistsList/CyclistsList";
 
 const App = () => {
   return (
@@ -46,10 +47,10 @@ const App = () => {
             }
           />
           <Route
-            path="/results"
+            path="/cyclists"
             element={
               <HomeConnected>
-                <Resultats />
+                <CyclistsList />
               </HomeConnected>
             }
           />

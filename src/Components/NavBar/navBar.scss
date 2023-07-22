@@ -77,8 +77,11 @@
   .p-menuitem-text {
     color: var.$yellow !important;
   }
-  .p-menuitem-icon {
+  .p-menuitem-icon,
+  svg {
     color: var.$yellow !important;
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
   }
 }
 

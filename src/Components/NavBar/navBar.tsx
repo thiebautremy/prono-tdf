@@ -7,6 +7,8 @@ import { auth } from "../../config/firebaseConfig";
 import "./navBar.scss";
 import { Menubar } from "primereact/menubar";
 import { MenuItem } from "primereact/menuitem";
+import { MdOutlineDirectionsBike, MdOutlineFolderShared } from "react-icons/md";
+import { IoGameControllerOutline } from "react-icons/io5";
 
 const NavBar = () => {
   const { currentUser, userConnectedInfo, setCurrentUser } =
@@ -34,8 +36,13 @@ const NavBar = () => {
     },
     {
       label: "Pronostiquer",
-      icon: "pi pi-fw pi-save",
+      icon: <IoGameControllerOutline />,
       url: "/prono",
+    },
+    {
+      label: "Cyclistes",
+      icon: <MdOutlineDirectionsBike />,
+      url: "/cyclists",
     },
     {
       label: "Statistiques",
@@ -56,7 +63,7 @@ const NavBar = () => {
     ...items,
     {
       label: "Administration",
-      icon: "pi pi-fw pi-sitemap",
+      icon: <MdOutlineFolderShared />,
       url: "/admin",
     },
     {

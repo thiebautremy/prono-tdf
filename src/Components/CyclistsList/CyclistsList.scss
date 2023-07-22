@@ -1,0 +1,14 @@
+@use "src/Styles/_vars.scss" as var;
+
+.cyclistsList {
+  width: 60%;
+  margin: auto;
+
+  @media screen and (max-width: 900px) {
+    width: 100%;
+  }
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+  padding: 0.5rem 1rem !important;
+}

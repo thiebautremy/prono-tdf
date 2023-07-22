@@ -13,6 +13,7 @@ export type UserConnectedInfo = {
   roles: string[];
   username: string;
   points: { [key: number]: number };
+  color: string;
   pronos: [
     string,
     {

@@ -12,6 +12,7 @@ type ResultatType = {
   points: { [key: number]: number };
   pronos: any;
   position: number;
+  color: string;
 };
 
 const Resultat: React.FC<ResultatType> = ({
@@ -19,6 +20,7 @@ const Resultat: React.FC<ResultatType> = ({
   points,
   pronos,
   position,
+  color,
 }) => {
   const [modal, setModal] = useState({
     isVisible: false,
@@ -62,7 +64,11 @@ const Resultat: React.FC<ResultatType> = ({
             <td className="resultat__table__tbody__username">{username}</td>
             {keys.length > 0 &&
               keys.map((key) => (
-                <td key={key} className="resultat__table__tbody__td">
+                <td
+                  key={key}
+                  className="resultat__table__tbody__td resultat__table__tbody__key"
+                  style={{ backgroundColor: `rgb(#${color})` }}
+                >
                   {key}
                 </td>
               ))}

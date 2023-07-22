@@ -73,7 +73,7 @@ const CyclistsList = () => {
             (a, b) => Number(a.number) - Number(b.number)
           )}
           paginator
-          rows={12}
+          rows={100}
           dataKey="id"
           filterDisplay="row"
           filters={filters}

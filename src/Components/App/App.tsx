@@ -8,7 +8,6 @@ import Stages from "../Admin/Stages/Stages";
 import Cyclists from "../Admin/Cyclists/cyclists";
 import Calculate from "../Admin/Calculate/Calculate";
 import Pronos from "../Pronos/Pronos";
-import Resultats from "../Resultats/Resultats";
 import InformResults from "../Admin/InformResults/InformResults";
 import HomeConnected from "../Home/HomeConnected/homeConnected";
 import AdminInformations from "../Admin/AdminInformations/AdminInformations";

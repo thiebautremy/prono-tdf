@@ -42,6 +42,7 @@ const Resultat: React.FC<ResultatType> = ({
       value,
     });
   };
+
   return (
     <div className="resultat">
       {points === undefined && <p>Pas de points attribués</p>}
@@ -61,26 +62,43 @@ const Resultat: React.FC<ResultatType> = ({
             >
               {position} <sup>{position === 1 ? "er" : "ième"}</sup>
             </td>
-            <td className="resultat__table__tbody__username">{username}</td>
+            <td
+              className="resultat__table__tbody__username"
+              style={{ backgroundColor: `rgba(${color}, 0.6)` }}
+            >
+              {username}
+            </td>
             {keys.length > 0 &&
-              keys.map((key) => (
+              keys.map((key, index) => (
                 <td
-                  key={key}
+                  key={index}
                   className="resultat__table__tbody__td resultat__table__tbody__key"
-                  style={{ backgroundColor: `rgb(#${color})` }}
+                  style={{ backgroundColor: `rgba(${color}, 0.6)` }}
                 >
                   {key}
                 </td>
               ))}
-            <td className="resultat__table__tbody__average">Moyenne :</td>
-            <td className="resultat__table__tbody__username__last" rowSpan={2}>
+            <td
+              className="resultat__table__tbody__average"
+              style={{ backgroundColor: `rgba(${color}, 0.6)` }}
+            >
+              Moyenne :
+            </td>
+            <td
+              className="resultat__table__tbody__username__last"
+              rowSpan={2}
+              style={{ backgroundColor: `rgba(${color}, 0.6)` }}
+            >
               {username}
             </td>
           </tr>
           <tr>
             {values.length > 0 && (
               <>
-                <td className="resultat__table__tbody__td resultat__table__total">
+                <td
+                  className="resultat__table__tbody__td resultat__table__total"
+                  style={{ backgroundColor: `rgba(${color}, 0.6)` }}
+                >
                   Total:
                   <strong>
                     {values.reduce(
@@ -95,7 +113,7 @@ const Resultat: React.FC<ResultatType> = ({
               values.map((value, index) => (
                 <td
                   className="resultat__table__tbody__td"
-                  key={value}
+                  key={index}
                   onClick={() => handleModal(pronos[index + 1])}
                 >
                   {value}

@@ -19,27 +19,20 @@
         }
       }
 
-      &__key {
-        // background-color: rgba($color: var.$green, $alpha: 0.7);
-      }
-
       &__username {
         text-align: center;
         font-weight: bold;
-        background-color: rgba($color: var.$blue, $alpha: 0.6);
         letter-spacing: 0.1rem;
 
         &__last {
           min-width: 4rem;
           vertical-align: middle;
           text-align: center;
-          background-color: rgba($color: var.$blue, $alpha: 0.6);
           border: 1px solid black;
         }
       }
       &__average {
         text-align: center;
-        background-color: rgba($color: var.$green, $alpha: 0.7);
         min-width: 5rem;
         border: 1px solid black;
         strong {
@@ -66,7 +59,7 @@
     }
 
     &__total {
-      background-color: rgba($color: var.$yellow, $alpha: 0.9);
+      // background-color: rgba($color: var.$yellow, $alpha: 0.9);
       min-width: 8rem;
       strong {
         font-weight: bold;

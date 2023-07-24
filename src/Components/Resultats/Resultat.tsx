@@ -5,6 +5,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { useState } from "react";
+import { getTotalPoints, convertPointsInArray } from "../../Services/functions";
 import "./Resultat.scss";
 
 type ResultatType = {
@@ -13,6 +14,7 @@ type ResultatType = {
   pronos: any;
   position: number;
   color: string;
+  previousTotalPoint: number;
 };
 
 const Resultat: React.FC<ResultatType> = ({
@@ -21,20 +23,13 @@ const Resultat: React.FC<ResultatType> = ({
   pronos,
   position,
   color,
+  previousTotalPoint,
 }) => {
   const [modal, setModal] = useState({
     isVisible: false,
     value: [],
   });
-  const convertPointsInArray = (points: { [key: number]: number }) => {
-    let keys: string[] = [];
-    let values: number[] = [];
-    if (points !== undefined) {
-      keys = Object.keys(points);
-      values = Object.values(points);
-    }
-    return { keys, values };
-  };
+
   const { keys, values } = convertPointsInArray(points);
   const handleModal = (value: []) => {
     setModal({
@@ -100,12 +95,13 @@ const Resultat: React.FC<ResultatType> = ({
                   style={{ backgroundColor: `rgba(${color}, 0.6)` }}
                 >
                   Total:
-                  <strong>
-                    {values.reduce(
-                      (accumulator, currentValue) => accumulator + currentValue
-                    )}{" "}
-                  </strong>
+                  <strong>{getTotalPoints(values)}</strong>
                   pts
+                  {previousTotalPoint !== undefined && (
+                    <span className="resultat__table__difference">{` ( + ${
+                      previousTotalPoint - getTotalPoints(values)
+                    } pts)`}</span>
+                  )}
                 </td>
               </>
             )}

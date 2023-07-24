@@ -48,3 +48,19 @@ export const getDateFormatedWithoutYearAndHour = (timestampFirestore: {
   const date = `${day}/${month}`;
   return { date };
 };
+
+export const getTotalPoints = (array: number[]) => {
+  return array.reduce(
+    (accumulator: number, currentValue: number) => accumulator + currentValue
+  );
+};
+
+export const convertPointsInArray = (points: { [key: number]: number }) => {
+  let keys: string[] = [];
+  let values: number[] = [];
+  if (points !== undefined) {
+    keys = Object.keys(points);
+    values = Object.values(points);
+  }
+  return { keys, values };
+};

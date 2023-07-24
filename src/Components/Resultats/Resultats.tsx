@@ -20,6 +20,8 @@ import Resultat from "./Resultat";
 import "./Resultats.scss";
 import map from "../../assets/pictures/f8d5d.jpg";
 import { awardedPointsInfos } from "../../assets/points/pointsInfo";
+import { convertPointsInArray, getTotalPoints } from "../../Services/functions";
+import Loader from "../Loader/Loader";
 
 const Resultats = () => {
   const [users, setUsers] = useState<DocumentData>([]);
@@ -60,30 +62,34 @@ const Resultats = () => {
     setUsers(usersUpdated);
   };
 
-  const convertPointsInArray = (points: { [key: number]: number }) => {
-    let keys: string[] = [];
-    let values: number[] = [];
-    if (points !== undefined) {
-      keys = Object.keys(points);
-      values = Object.values(points);
-    }
-    return { keys, values };
-  };
-
   return (
     <div className="resultats">
       <div className="resultats__fixture">
         <h1>Classement</h1>
       </div>
       <div className="resultats__scores">
-        {users.length > 0 &&
+        {users.length > 0 ? (
           users
             .sort(
               (a: { total: number }, b: { total: number }) => b.total - a.total
             )
             .map((user: UserConnectedInfo, index: number) => (
-              <Resultat key={user.authId} {...user} position={index + 1} />
-            ))}
+              <Resultat
+                key={user.authId}
+                {...user}
+                position={index + 1}
+                previousTotalPoint={
+                  index > 0
+                    ? getTotalPoints(
+                        convertPointsInArray(users[index - 1].points).values
+                      )
+                    : undefined
+                }
+              />
+            ))
+        ) : (
+          <Loader />
+        )}
       </div>
       <div>
         <h2>Points attribués en fonction du classement du coureur</h2>

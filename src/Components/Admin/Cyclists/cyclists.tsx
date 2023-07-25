@@ -109,7 +109,7 @@ const Cyclists = () => {
       <Toast ref={toast} />
       {isConfirmDialog && (
         <Dialog
-          title={"Êtes-vous sur de supprimer ce cycliste ?"}
+          title={"Êtes-vous sur de vouloir supprimer ce cycliste ?"}
           message={<Message {...message} />}
           handleNo={() => setIsConfirmDialog(false)}
           handleYes={() => handleDeleteCyclist()}

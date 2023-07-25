@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./addCyclistForm.scss";
 import nationalitiesData from "../../../../assets/data/countries.json";
 import { getFirestore, setDoc, doc } from "firebase/firestore";
 import app from "../../../../config/firebaseConfig";
 import teamsArray from "./teams";
+import { Toast } from "primereact/toast";
+
 type Props = {
   fetchCyclists: () => void;
 };
@@ -16,6 +18,7 @@ const AddCyclistForm = ({ fetchCyclists }: Props) => {
     number: "",
     nationality: "DEFAULT_NATIONALITY",
   });
+  const toast = useRef<Toast>(null);
   //TODO Check si aucune info est vide avant d'envoyer
   //TODO Conditionner le retour de l'API pour afficher une pop up de confirmation
   const handleAddCyclistSubmit = async (
@@ -29,7 +32,12 @@ const AddCyclistForm = ({ fetchCyclists }: Props) => {
       nationality: cyclistToAdd.nationality,
       number: cyclistToAdd.number,
       team: cyclistToAdd.team,
-    });
+    })
+      .then(() => succeedAdd())
+      .catch((err) => {
+        console.error(err);
+        errorAdd();
+      });
     setCyclistToAdd({
       lastname: "",
       firstname: "",
@@ -42,8 +50,27 @@ const AddCyclistForm = ({ fetchCyclists }: Props) => {
   const nationalitiesDataSortedByName = nationalitiesData.sort((a, b) => {
     return a.nom_fr.toLowerCase() > b.nom_fr.toLowerCase() ? 1 : -1;
   });
+
+  const succeedAdd = () => {
+    toast.current.show({
+      severity: "success",
+      summary: "Succès",
+      detail: "Le cycliste a été correctement ajouté",
+      life: 3000,
+    });
+  };
+
+  const errorAdd = () => {
+    toast.current.show({
+      severity: "error",
+      summary: "Erreur",
+      detail: "Erreur lors de l'ajout",
+      life: 3000,
+    });
+  };
   return (
     <div className="addCyclistForm">
+      <Toast ref={toast} />
       <form
         onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
           handleAddCyclistSubmit(e)
@@ -63,7 +90,7 @@ const AddCyclistForm = ({ fetchCyclists }: Props) => {
           onChange={(e) =>
             setCyclistToAdd({
               ...cyclistToAdd,
-              lastname: e.currentTarget.value,
+              lastname: e.currentTarget.value.toLocaleUpperCase(),
             })
           }
         />

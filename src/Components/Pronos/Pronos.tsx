@@ -82,7 +82,6 @@ const Pronos = () => {
       date: { seconds: number; nanoseconds: number };
     }[]
   ) => {
-    //TODO ajouter si l'étape est finie ou en cours dans les options du select en fonction de la date et de l'heure !
     const arrayFormated = [];
     for (let i = 0; i < arrayToChanged.length; i++) {
       const object: {

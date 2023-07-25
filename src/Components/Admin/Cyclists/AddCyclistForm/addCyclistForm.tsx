@@ -19,8 +19,6 @@ const AddCyclistForm = ({ fetchCyclists }: Props) => {
     nationality: "DEFAULT_NATIONALITY",
   });
   const toast = useRef<Toast>(null);
-  //TODO Check si aucune info est vide avant d'envoyer
-  //TODO Conditionner le retour de l'API pour afficher une pop up de confirmation
   const handleAddCyclistSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {

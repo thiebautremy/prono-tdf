@@ -18,6 +18,7 @@ button.informResult__validatePronoBtn {
   letter-spacing: 0.1rem;
   transition: all 0.3s ease-in-out;
   font-family: var.$font-bold !important;
+  min-width: max-content;
 
   &:hover {
     color: var.$black;

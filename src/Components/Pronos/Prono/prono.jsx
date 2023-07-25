@@ -1,19 +1,23 @@
+/* eslint-disable no-undef */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable no-prototype-builtins */
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import app from "../../../config/firebaseConfig";
 import { getFirestore, doc, updateDoc, getDoc } from "firebase/firestore";
 import { MultiSelect } from "primereact/multiselect";
 import UserContext from "../../../Context/userContext";
 import "./prono.scss";
 import ErrorMessage from "../../Form/ErrorMessage/errorMessage";
-import Dialogue from "../../Dialogue/Dialogue";
+import { Toast } from "primereact/toast";
 
 const Prono = ({ cyclists, stageId }) => {
+  const toast = useRef(null);
+
   const db = getFirestore(app);
   const { currentUser, userConnectedInfo, setUserConnectedInfo } =
     useContext(UserContext);
@@ -53,25 +57,44 @@ const Prono = ({ cyclists, stageId }) => {
       ? setIsError((prec) => !prec)
       : updateAndFetchData();
   };
-  const [visibleModal, setVisibleModal] = useState(false);
-  const updateAndFetchData = async () => {
+
+  const updateAndFetchData = () => {
     let pronoObj = {};
     pronoObj = { ...userConnectedInfo?.pronos };
     pronoObj[stageId] = selectedCyclists;
-    await updateDoc(userRef, {
+    updateDoc(userRef, {
       pronos: pronoObj,
+    })
+      .then(async () => {
+        const userDocumentDbRef = await getDoc(
+          doc(db, "users", currentUser.uid)
+        );
+        setUserConnectedInfo(userDocumentDbRef.data());
+        succeedUpdate();
+      })
+      .catch(() => errorUpdate());
+  };
+
+  const succeedUpdate = () => {
+    toast.current.show({
+      severity: "success",
+      summary: "Succès",
+      detail: "Les pronostiques ont été mis à jour",
+      life: 3000,
     });
-    const userDocumentDbRef = await getDoc(doc(db, "users", currentUser.uid));
-    setUserConnectedInfo(userDocumentDbRef.data());
-    setVisibleModal(true);
+  };
+
+  const errorUpdate = () => {
+    toast.current.show({
+      severity: "error",
+      summary: "Erreur",
+      detail: "Erreur lors de lors de la mise à jour",
+      life: 3000,
+    });
   };
   return (
     <div className="prono">
-      <Dialogue
-        isVisible={visibleModal}
-        setIsVisible={setVisibleModal}
-        message={"Pronostiques mis à jour."}
-      />
+      <Toast ref={toast} position="bottom-left" />
       <div className="prono__inputAndSelection">
         <MultiSelect
           value={selectedCyclists}

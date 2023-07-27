@@ -43,7 +43,7 @@ const NavBarAdmin = () => {
       url: "/admin/calculate",
     },
     {
-      label: "Archiver les points",
+      label: "Archivage",
       icon: <MdArchive />,
       url: "/admin/archive",
     },

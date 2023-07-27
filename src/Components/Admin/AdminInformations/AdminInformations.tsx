@@ -71,6 +71,17 @@ const AdminInformations: React.FC = () => {
             dernière.
           </p>
         </li>
+        <li className="adminInformations__list__item">
+          <Link to="/admin/archive">
+            <h2 className="adminInformations__list__item__title">
+              Archiver les points et les performances
+            </h2>
+          </Link>
+          <p className="adminInformations__list__item__paragraphe">
+            Cet onglet permet d'archiver les points et les performances une fois
+            une édition du tour de France terminée.
+          </p>
+        </li>
       </ul>
     </div>
   );

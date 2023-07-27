@@ -14,6 +14,10 @@ export type UserConnectedInfo = {
   username: string;
   points: { [key: number]: number };
   color: string;
+  historic: {
+    [key: string]: { points: { [key: string]: string }; averagePoints: string };
+  };
+  imageUrl: string;
   pronos: [
     string,
     {

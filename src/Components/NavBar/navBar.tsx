@@ -22,11 +22,10 @@ const NavBar = () => {
       console.log(err);
     }
   };
-
   const items: MenuItem[] = [
     {
       label: "Mon profil",
-      icon: "pi pi-fw pi-user",
+      icon: <ProfilPicture imageUrl={userConnectedInfo?.imageUrl} />,
       url: "/profil",
     },
     {
@@ -87,6 +86,12 @@ const NavBar = () => {
       )}
     </div>
   );
+};
+type ProfilPictureType = {
+  imageUrl: string;
+};
+const ProfilPicture: React.FC<ProfilPictureType> = ({ imageUrl }) => {
+  return <img src={imageUrl} className="profilPicture" />;
 };
 
 export default NavBar;

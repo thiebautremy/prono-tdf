@@ -21,6 +21,10 @@ import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
 import { Toast, ToastSeverityType } from "primereact/toast";
 import { SelectItemOptionsType } from "primereact/selectitem";
 import { InputNumber } from "primereact/inputnumber";
+import {
+  getTotalPoints,
+  convertPointsInArray,
+} from "../../../Services/functions";
 
 const Archive = () => {
   const db = getFirestore(app);
@@ -73,11 +77,14 @@ const Archive = () => {
       users.map(async (user: { authId: string }) => {
         const userDocumentDbRef = doc(db, "users", `${user.authId}`);
         const userDocumentDbData = (await getDoc(userDocumentDbRef)).data();
-
+        const convertedArray = convertPointsInArray(userDocumentDbData.points);
         const archive = {
           historic: {
             ...userDocumentDbData?.historic,
-            [selectedYear]: { ["points"]: userDocumentDbData.points },
+            [selectedYear]: {
+              ["points"]: userDocumentDbData.points,
+              ["totalPoints"]: getTotalPoints(convertedArray.values),
+            },
           },
         };
 
@@ -99,9 +106,8 @@ const Archive = () => {
 
     const archive = {
       historic: {
-        ...userDocumentDbData?.historic,
         [selectedYear]: {
-          ["points"]: userDocumentDbData.points,
+          ...userDocumentDbData?.historic[selectedYear],
           ...performances,
         },
       },
@@ -137,6 +143,14 @@ const Archive = () => {
   );
 
   const handleChangePerfUser = (value: string) => {
+    if (Object.values(performances).every((property) => property !== null)) {
+      setPerformances({
+        maxPoint: null,
+        minPoint: null,
+        averagePoint: null,
+        victoriesStages: null,
+      });
+    }
     setUserSelected(
       users.find((user: { username: string }) => user.username === value)
     );
@@ -193,7 +207,6 @@ const Archive = () => {
             optionLabel="label"
             onChange={(e) => handleChangePerfUser(e.value)}
             placeholder="Sélectionner un utilisateur"
-            showClear
           />
           {userSelected !== null && (
             <div className="archive__performances__inputsContainer">

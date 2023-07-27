@@ -18,7 +18,7 @@ import {
 import app from "../../../config/firebaseConfig";
 import "./Archive.scss";
 import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
-import { Toast } from "primereact/toast";
+import { Toast, ToastSeverityType } from "primereact/toast";
 import { SelectItemOptionsType } from "primereact/selectitem";
 import { InputNumber } from "primereact/inputnumber";
 
@@ -83,11 +83,11 @@ const Archive = () => {
 
         updateDoc(userDocumentDbRef, archive)
           .then(() => {
-            succeedArchive();
+            toastArchive("success", "Les points ont correctement été archivés");
           })
           .catch((error) => {
             console.error("Erreur lors de la mise à jour du document :", error);
-            errorArchive();
+            toastArchive("error", "Les points n'ont pas pu être archivés");
           });
       });
     }
@@ -109,37 +109,22 @@ const Archive = () => {
 
     updateDoc(userDocumentDbRef, archive)
       .then(() => {
-        succeedArchivePerf();
+        toastArchive(
+          "success",
+          "Les performances ont correctement été archivés"
+        );
       })
       .catch((error) => {
         console.error("Erreur lors de la mise à jour du document :", error);
-        errorArchive();
+        toastArchive("error", "Les points n'ont pas pu être archivés");
       });
   };
 
-  const succeedArchive = () => {
+  const toastArchive = (type: ToastSeverityType, message: string) => {
     toast.current.show({
-      severity: "success",
-      summary: "Succès",
+      severity: type,
+      summary: type === "success" ? "Succès" : "Erreur",
       detail: "Les points ont correctement été archivés",
-      life: 3000,
-    });
-  };
-
-  const succeedArchivePerf = () => {
-    toast.current.show({
-      severity: "success",
-      summary: "Succès",
-      detail: "Les performances ont correctement été archivés",
-      life: 3000,
-    });
-  };
-
-  const errorArchive = () => {
-    toast.current.show({
-      severity: "error",
-      summary: "Erreur",
-      detail: "Les points n'ont pas pu être archivés",
       life: 3000,
     });
   };
@@ -212,36 +197,45 @@ const Archive = () => {
           />
           {userSelected !== null && (
             <div className="archive__performances__inputsContainer">
-              <InputNumber
-                value={performances.maxPoint}
-                onChange={(e) => handleChangePerfInputs(e)}
-                name="maxPoint"
-                placeholder="Points maximum"
-              />
-              <InputNumber
-                value={performances.minPoint}
-                onChange={(e) => handleChangePerfInputs(e)}
-                name="minPoint"
-                placeholder="Points minimum"
-              />
-              <InputNumber
-                value={performances.averagePoint}
-                onChange={(e) => handleChangePerfInputs(e)}
-                name="averagePoint"
-                placeholder="Moyenne de point"
-              />
+              <span className="p-float-label">
+                <InputNumber
+                  value={performances.maxPoint}
+                  onChange={(e) => handleChangePerfInputs(e)}
+                  name="maxPoint"
+                  id="number-maxPoint"
+                />
+                <label htmlFor="number-maxPoint">Points maximum</label>
+              </span>
+              <span className="p-float-label">
+                <InputNumber
+                  value={performances.minPoint}
+                  onChange={(e) => handleChangePerfInputs(e)}
+                  name="minPoint"
+                  id="number-minPoint"
+                />
+                <label htmlFor="number-minPoint">Points minimum</label>
+              </span>
+              <span className="p-float-label">
+                <InputNumber
+                  value={performances.averagePoint}
+                  onChange={(e) => handleChangePerfInputs(e)}
+                  name="averagePoint"
+                  id="number-averagePoint"
+                />
+                <label htmlFor="number-averagePoint">Moyenne de point</label>
+              </span>
               <span className="p-float-label">
                 <InputNumber
                   value={performances.victoriesStages}
                   onChange={(e) => handleChangePerfInputs(e)}
                   name="victoriesStages"
-                  placeholder="Nombre de victoire d'étape"
                   id="number-victoriesStages"
                 />
                 <label htmlFor="number-victoriesStages">
                   Nombre de victoire d'étape
                 </label>
               </span>
+
               {Object.values(performances).every(
                 (property) => property !== null
               ) && (

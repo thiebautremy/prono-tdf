@@ -29,7 +29,7 @@ const Archive = () => {
   const [userSelected, setUserSelected] = useState<{
     username: string;
     authId: string;
-  }>(null);
+  }>({ username: "", authId: "" });
   const [performances, setPerformances] = useState({
     maxPoint: null,
     minPoint: null,

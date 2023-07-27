@@ -14,6 +14,7 @@ import AdminInformations from "../Admin/AdminInformations/AdminInformations";
 import Statistiques from "../Statistiques/Statistiques";
 import Profil from "../Profil/Profil";
 import CyclistsList from "../CyclistsList/CyclistsList";
+import Archive from "../Admin/Archive/Archive";
 
 const App = () => {
   return (
@@ -98,6 +99,14 @@ const App = () => {
             element={
               <Admin>
                 <Calculate />
+              </Admin>
+            }
+          />
+          <Route
+            path="/admin/archive"
+            element={
+              <Admin>
+                <Archive />
               </Admin>
             }
           />

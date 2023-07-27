@@ -202,9 +202,6 @@ const Calculate = () => {
             value={selectedStage}
             options={formatedArrayStagesForDropDown(stages)}
             onChange={onStageChange}
-            // optionDisabled={(option) =>
-            //   new Date(Date.now()).toUTCString() > option.date
-            // }
             optionLabel="stage"
             placeholder="Sélectionne une étape"
           />

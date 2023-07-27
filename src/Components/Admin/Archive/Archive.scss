@@ -1,0 +1,37 @@
+@use "src/Styles/_vars.scss" as var;
+
+.archive {
+  padding: 1rem 3rem;
+  &__title {
+    font-size: 1.3rem;
+    padding: 2rem 0.5rem;
+  }
+
+  &__inputYear {
+    margin-right: 2rem !important;
+  }
+
+  &__performances {
+    padding: 1rem 0;
+
+    &__title {
+      font-size: 1.2rem;
+      padding: 2rem 0.5rem;
+    }
+
+    &__inputsContainer {
+      padding: 2rem 0;
+      display: flex;
+      flex-direction: column;
+      width: 20%;
+
+      label {
+        font-size: 0.9rem !important;
+      }
+    }
+  }
+}
+
+.p-inputnumber {
+  margin-bottom: 2rem;
+}

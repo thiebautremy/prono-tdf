@@ -52,7 +52,7 @@ const Resultats = () => {
       | Map<unknown, unknown>[] = [];
     if (datas.length > 0) {
       datas.map((user: { total?: number; points: {} }) => {
-        const { values } = convertPointsInArray(user.points);
+        const { values } = convertPointsInArray(user?.points);
         user["total"] = values.reduce(
           (accumulator: any, currentValue: any) => accumulator + currentValue
         );
@@ -81,7 +81,7 @@ const Resultats = () => {
                 previousTotalPoint={
                   index > 0
                     ? getTotalPoints(
-                        convertPointsInArray(users[index - 1].points).values
+                        convertPointsInArray(users[index - 1]?.points).values
                       )
                     : undefined
                 }

@@ -6,6 +6,7 @@ import {
   MdOutlineDirectionsBike,
   MdOutlineSave,
   MdFormatListNumbered,
+  MdArchive,
 } from "react-icons/md";
 import { BsCalculator } from "react-icons/bs";
 
@@ -41,35 +42,14 @@ const NavBarAdmin = () => {
       icon: <BsCalculator />,
       url: "/admin/calculate",
     },
+    {
+      label: "Archiver les points",
+      icon: <MdArchive />,
+      url: "/admin/archive",
+    },
   ];
   return (
     <div className="navBarAdmin">
-      {/* <>
-        <nav>
-          <Link to="/" className="navBar__link">
-            <FaAngleLeft />
-            Retour à l'application
-          </Link>
-          <Link to="/admin" className="navBar__link">
-            Administration
-          </Link>
-          <Link to="/admin/users" className="navBar__link">
-            Utilisateurs
-          </Link>
-          <Link to="/admin/cyclists" className="navBar__link">
-            Cyclistes
-          </Link>
-          <Link to="/admin/stages" className="navBar__link">
-            Etapes
-          </Link>
-          <Link to="/admin/inform-results" className="navBar__link">
-            Renseigner les résultats
-          </Link>
-          <Link to="/admin/calculate" className="navBar__link">
-            Calculer les points
-          </Link>
-        </nav>
-      </> */}
       <Menubar model={itemsAdmin} />
     </div>
   );

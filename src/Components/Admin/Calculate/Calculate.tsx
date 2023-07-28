@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import { StagesContext } from "../../../Context/stagesContext";
 import {
   getFirestore,
@@ -17,7 +17,11 @@ import {
   DocumentData,
   DocumentReference,
 } from "firebase/firestore";
-import { getDateFormated } from "../../../Services/functions";
+import {
+  convertPointsInArray,
+  getDateFormated,
+  getTotalPoints,
+} from "../../../Services/functions";
 import app from "../../../config/firebaseConfig";
 import { Dropdown } from "primereact/dropdown";
 import Stage from "../Stages/Stage/Stage";
@@ -25,8 +29,8 @@ import "./Calculate.scss";
 import ErrorMessage from "../../Form/ErrorMessage/errorMessage";
 import { awardedPoints } from "../../../assets/points/points";
 import UserContext from "../../../Context/userContext";
-import Dialogue from "../../Dialogue/Dialogue";
 import { useFetch } from "../../../Services/api";
+import { Toast, ToastSeverityType } from "primereact/toast";
 
 const Calculate = () => {
   const [selectedStage, setSelectedStage] = useState<{
@@ -44,8 +48,7 @@ const Calculate = () => {
   const [results, setResults] = useState({});
   const { stages, setStages } = useContext(StagesContext);
   const { setUserConnectedInfo } = useContext(UserContext);
-  const [visibleModal, setVisibleModal] = useState(false);
-
+  const toast = useRef<Toast>(null);
   const db = getFirestore(app);
 
   const fetchStages = async () => {
@@ -175,24 +178,43 @@ const Calculate = () => {
         : { ...userDocumentDbRef.data()?.points };
     pointsObj[stageId] =
       totalPoint.length === 0 ? 0 : totalPoint.reduce(getSum);
-    const data = { points: pointsObj };
+    const convertedArray = convertPointsInArray(
+      userDocumentDbRef.data().points
+    );
+    const maxNumber =
+      convertedArray.values.length > 0 ? Math.max(...convertedArray.values) : 0;
+    const minNumber =
+      convertedArray.values.length > 0 ? Math.min(...convertedArray.values) : 0;
+    const data = {
+      points: pointsObj,
+      totalPoints: getTotalPoints(convertedArray.values),
+      maxPoint: maxNumber,
+      minPoint: minNumber,
+    };
     return updateDoc(refUser, {
       ...data,
     })
       .then(async () => {
         const userDocumentDbRef = await getDoc(doc(db, "users", userId));
         setUserConnectedInfo(userDocumentDbRef.data());
-        setVisibleModal(true);
+        toastCalculate("success", "Les points ont été correctement calculés");
       })
       .catch(() => console.log("error"));
   };
+
+  const toastCalculate = (type: ToastSeverityType, message: string) => {
+    toast.current.show({
+      severity: type,
+      summary: type === "success" ? "Succès" : "Erreur",
+      detail: message,
+      life: 3000,
+    });
+  };
+
   return (
     <div className="calculate">
-      <Dialogue
-        isVisible={visibleModal}
-        setIsVisible={setVisibleModal}
-        message={"Tous les calculs ont été effectués"}
-      />
+      <Toast ref={toast} />
+
       <div className="calculate__header">
         <h1 className="calculate__header__title">
           Calculer les points des pronostiques

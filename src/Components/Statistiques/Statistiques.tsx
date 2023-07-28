@@ -25,16 +25,20 @@ import {
   DocumentData,
 } from "firebase/firestore";
 import { Line } from "react-chartjs-2";
+import { Dropdown } from "primereact/dropdown";
 
 const Statistiques = () => {
-  const [usersDataTest, setUsersDataTest] = useState<
-    DocumentData[] | { color: string; points: []; username: string }[]
-  >(null);
+  const [selectedYear, setSelectedYear] = useState({
+    name: "Actuelle",
+    code: "Actuelle",
+  });
   const [dataChart, setDataChart] = useState({
     options: {},
     dataChartObject: null,
   });
+  const [users, setUsers] = useState<DocumentData[]>();
   const db = getFirestore(app);
+
   useEffect(() => {
     const datas: DocumentData[] = [];
 
@@ -47,11 +51,11 @@ const Statistiques = () => {
           response.forEach((doc) => {
             datas.push(doc.data());
           });
-          setUsersDataTest(datas);
           convertDatas(datas);
+          setUsers(datas);
         } else {
           // Aucune donnée disponible
-          console.log("no data retrieve");
+          console.error("no data retrieve");
         }
       } catch (error) {
         // Gère les erreurs de requête
@@ -73,9 +77,24 @@ const Statistiques = () => {
   );
 
   const convertDatas = (
-    data: DocumentData[] | { color: string; points: []; username: string }[]
+    data:
+      | DocumentData[]
+      | {
+          color: string;
+          points: [];
+          username: string;
+          historic: { [key: string]: { points: Record<string, unknown> } };
+        }[],
+    year = "Actuelle"
   ) => {
     if (data.length > 0) {
+      const newDatasets: {
+        borderColor: string;
+        backgroundColor: string;
+        label: string;
+        data: never[] | [];
+      }[] = [];
+
       const options = {
         responsive: true,
         scales: {
@@ -94,13 +113,6 @@ const Statistiques = () => {
         },
       };
 
-      const newDatasets: {
-        borderColor: string;
-        backgroundColor: string;
-        label: string;
-        data: never[] | [];
-      }[] = [];
-
       data.map((user) => {
         const newDataset: {
           borderColor: string;
@@ -115,7 +127,12 @@ const Statistiques = () => {
         };
 
         newDataset.label = user.username;
-        newDataset.data = Object.values(user.points);
+        console.log(selectedYear);
+        newDataset.data =
+          year === "Actuelle"
+            ? Object.values(user.points)
+            : Object.values(user.historic[year].points);
+
         newDataset.borderColor = `rgb(${user.color})`;
         newDataset.backgroundColor = `rgba(${user.color}, 0.5)`;
         newDatasets.push(newDataset);
@@ -129,9 +146,30 @@ const Statistiques = () => {
     }
   };
 
+  const years = [
+    { name: "Actuelle", code: "Actuelle" },
+    { name: "2023", code: "2023" },
+  ];
+
+  const handleSelectedYear = (event: {
+    value: { code: string; name: string };
+  }) => {
+    setSelectedYear(event.value);
+    convertDatas(users, event.value.code);
+  };
+
   return (
     <div className="statistiques">
       <h1 className="statistiques__title">Statistiques</h1>
+      <div className="statistiques__dropdown">
+        <Dropdown
+          value={selectedYear}
+          onChange={(e) => handleSelectedYear(e)}
+          options={years}
+          optionLabel="name"
+          placeholder="Sélectionner une année"
+        />
+      </div>
       {!!dataChart.dataChartObject && (
         <Line options={dataChart.options} data={dataChart.dataChartObject} />
       )}

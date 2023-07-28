@@ -35,9 +35,6 @@ const Archive = () => {
     authId: string;
   }>({ username: "", authId: "" });
   const [performances, setPerformances] = useState({
-    maxPoint: null,
-    minPoint: null,
-    averagePoint: null,
     victoriesStages: null,
   });
   const [users, setUsers] = useState<DocumentData>([]);
@@ -78,12 +75,25 @@ const Archive = () => {
         const userDocumentDbRef = doc(db, "users", `${user.authId}`);
         const userDocumentDbData = (await getDoc(userDocumentDbRef)).data();
         const convertedArray = convertPointsInArray(userDocumentDbData.points);
+        const maxNumber =
+          convertedArray.values.length > 0
+            ? Math.max(...convertedArray.values)
+            : 0;
+        const minNumber =
+          convertedArray.values.length > 0
+            ? Math.min(...convertedArray.values)
+            : 0;
         const archive = {
           historic: {
             ...userDocumentDbData?.historic,
             [selectedYear]: {
               ["points"]: userDocumentDbData.points,
               ["totalPoints"]: getTotalPoints(convertedArray.values),
+              ["maxPoint"]: maxNumber,
+              ["minPoint"]: minNumber,
+              ["averagePoint"]: Math.round(
+                getTotalPoints(convertedArray.values) / 21
+              ),
             },
           },
         };
@@ -130,7 +140,7 @@ const Archive = () => {
     toast.current.show({
       severity: type,
       summary: type === "success" ? "Succès" : "Erreur",
-      detail: "Les points ont correctement été archivés",
+      detail: message,
       life: 3000,
     });
   };
@@ -145,9 +155,6 @@ const Archive = () => {
   const handleChangePerfUser = (value: string) => {
     if (Object.values(performances).every((property) => property !== null)) {
       setPerformances({
-        maxPoint: null,
-        minPoint: null,
-        averagePoint: null,
         victoriesStages: null,
       });
     }
@@ -212,33 +219,6 @@ const Archive = () => {
             <div className="archive__performances__inputsContainer">
               <span className="p-float-label">
                 <InputNumber
-                  value={performances.maxPoint}
-                  onChange={(e) => handleChangePerfInputs(e)}
-                  name="maxPoint"
-                  id="number-maxPoint"
-                />
-                <label htmlFor="number-maxPoint">Points maximum</label>
-              </span>
-              <span className="p-float-label">
-                <InputNumber
-                  value={performances.minPoint}
-                  onChange={(e) => handleChangePerfInputs(e)}
-                  name="minPoint"
-                  id="number-minPoint"
-                />
-                <label htmlFor="number-minPoint">Points minimum</label>
-              </span>
-              <span className="p-float-label">
-                <InputNumber
-                  value={performances.averagePoint}
-                  onChange={(e) => handleChangePerfInputs(e)}
-                  name="averagePoint"
-                  id="number-averagePoint"
-                />
-                <label htmlFor="number-averagePoint">Moyenne de point</label>
-              </span>
-              <span className="p-float-label">
-                <InputNumber
                   value={performances.victoriesStages}
                   onChange={(e) => handleChangePerfInputs(e)}
                   name="victoriesStages"
@@ -256,7 +236,7 @@ const Archive = () => {
                   onClick={() => handleArchivePerf()}
                   className="archive__btnPoints"
                 >
-                  {`Cliquer ici si vous souhaitez archiver les performance pour l'année ${selectedYear} pour l'utilisateur ${userSelected.username}`}
+                  {`Cliquer ici si vous souhaitez archiver le nombre de victoire pour l'année ${selectedYear} pour l'utilisateur ${userSelected.username}`}
                 </button>
               )}
             </div>

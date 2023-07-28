@@ -6,4 +6,10 @@
     font-size: 1.5rem;
     font-weight: bold;
   }
+
+  &__dropdown {
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+  }
 }

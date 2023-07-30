@@ -26,6 +26,7 @@ import {
 } from "firebase/firestore";
 import { Line } from "react-chartjs-2";
 import { Dropdown } from "primereact/dropdown";
+import UserCardStats, { UserCardType } from "./UserCardStats";
 
 const Statistiques = () => {
   const [selectedYear, setSelectedYear] = useState({
@@ -127,7 +128,6 @@ const Statistiques = () => {
         };
 
         newDataset.label = user.username;
-        console.log(selectedYear);
         newDataset.data =
           year === "Actuelle"
             ? Object.values(user.points)
@@ -170,6 +170,21 @@ const Statistiques = () => {
           placeholder="Sélectionner une année"
         />
       </div>
+      {!!users && (
+        <div className="userCardStatsContainer">
+          {users
+            .sort((userA: UserCardType, userB: UserCardType) =>
+              userA.username.localeCompare(userB.username)
+            )
+            .map((user: UserCardType) => (
+              <UserCardStats
+                {...user}
+                selectedYear={selectedYear}
+                key={user.authId}
+              />
+            ))}
+        </div>
+      )}
       {!!dataChart.dataChartObject && (
         <Line options={dataChart.options} data={dataChart.dataChartObject} />
       )}

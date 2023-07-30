@@ -1,0 +1,40 @@
+@use "src/Styles/_vars.scss" as var;
+
+.userCardStats {
+  border-radius: 1rem;
+  filter: drop-shadow(0 0 44px rgba(8, 24, 25, 0.08));
+  background-color: var.$white;
+  overflow: hidden;
+  min-width: 15rem;
+
+  @media screen and (max-width: 500px) {
+    margin-bottom: 1rem;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    &__username {
+      font-size: 1.2rem;
+    }
+
+    &__catchPrase {
+      margin: 0.2rem 0 0 0.2rem;
+      font-size: 1rem;
+      font-style: italic;
+    }
+  }
+
+  &__content {
+    padding: 1rem;
+
+    &__point {
+      margin: 0.2rem 0;
+
+      & strong {
+        font-weight: bold;
+      }
+    }
+  }
+}

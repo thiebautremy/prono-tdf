@@ -190,6 +190,7 @@ const Calculate = () => {
       totalPoints: getTotalPoints(convertedArray.values),
       maxPoint: maxNumber,
       minPoint: minNumber,
+      averagePoint: Math.round(getTotalPoints(convertedArray.values) / stageId),
     };
     return updateDoc(refUser, {
       ...data,

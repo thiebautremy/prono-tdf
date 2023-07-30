@@ -63,6 +63,12 @@ const Resultat: React.FC<ResultatType> = ({
             >
               {username}
             </td>
+            <td
+              className="resultat__table__tbody__td "
+              style={{ backgroundColor: `rgba(${color}, 0.6)` }}
+            >
+              Écart
+            </td>
             {keys.length > 0 &&
               keys.map((key, index) => (
                 <td
@@ -73,12 +79,6 @@ const Resultat: React.FC<ResultatType> = ({
                   {key}
                 </td>
               ))}
-            <td
-              className="resultat__table__tbody__average"
-              style={{ backgroundColor: `rgba(${color}, 0.6)` }}
-            >
-              Moyenne :
-            </td>
             <td
               className="resultat__table__tbody__username__last"
               rowSpan={2}
@@ -97,10 +97,14 @@ const Resultat: React.FC<ResultatType> = ({
                   Total:
                   <strong>{getTotalPoints(values)}</strong>
                   pts
-                  {previousTotalPoint !== undefined && (
-                    <span className="resultat__table__difference">{` ( + ${
+                </td>
+                <td className="resultat__table__tbody__td resultat__table__gap">
+                  {previousTotalPoint !== undefined ? (
+                    <span className="resultat__table__difference">{` + ${
                       previousTotalPoint - getTotalPoints(values)
-                    } pts)`}</span>
+                    } pts`}</span>
+                  ) : (
+                    <span>/</span>
                   )}
                 </td>
               </>
@@ -115,14 +119,6 @@ const Resultat: React.FC<ResultatType> = ({
                   {value}
                 </td>
               ))}
-            <td className="resultat__table__tbody__td resultat__table__average">
-              {Math.round(
-                values.reduce(
-                  (accumulator, currentValue) => accumulator + currentValue
-                ) / values.length
-              )}{" "}
-              pts
-            </td>
           </tr>
         </tbody>
       </table>

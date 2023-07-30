@@ -9,6 +9,7 @@ import { auth } from "../config/firebaseConfig";
 import { DocumentData } from "firebase/firestore";
 export type UserConnectedInfo = {
   authId: string;
+  catchPhrase?: string;
   email: string;
   roles: string[];
   username: string;

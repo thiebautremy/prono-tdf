@@ -1,103 +1,139 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 
-import React, { useContext, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+} from "react";
 import UserContext from "../../Context/userContext";
-import { StagesContext } from "../../Context/stagesContext";
 import "./Profil.scss";
 import {
   getFirestore,
+  updateDoc,
   collection,
-  getDocs,
+  getDoc,
   DocumentData,
+  doc,
+  DocumentReference,
 } from "firebase/firestore";
 import app from "../../config/firebaseConfig";
+import { InputText } from "primereact/inputtext";
+import { Toast, ToastSeverityType } from "primereact/toast";
+
 type UserProfilType = {
-  maxPoints: number;
-  minPoints: number;
-  average: number;
-  maxPointsStageIndex: number | number[];
-  minPointsStageIndex: number | number[];
+  imageUrl: string;
+  catchPhrase: string;
 };
+
 const Profil = () => {
-  const { userConnectedInfo } = useContext(UserContext);
-  const [userProfil, setUserProfil] = useState<UserProfilType>({
-    maxPoints: null,
-    minPoints: null,
-    average: null,
-    maxPointsStageIndex: null,
-    minPointsStageIndex: null,
+  const toast = useRef<Toast>(null);
+  const { userConnectedInfo, setUserConnectedInfo } = useContext(UserContext);
+  const [newUserProfil, setNewUserProfil] = useState<UserProfilType>({
+    imageUrl: "",
+    catchPhrase: "",
   });
+  const [userRef, setUserRef] = useState<DocumentReference<DocumentData>>();
   const db = getFirestore(app);
-  const { stages, setStages } = useContext(StagesContext);
-  const fetchStages = async () => {
-    const datas: DocumentData = [];
-    try {
-      const querySnapshot = await getDocs(collection(db, "stages"));
-      const response = querySnapshot;
-      if (response) {
-        response.forEach((doc) => {
-          datas.push(doc.data());
-          setStages(datas);
+
+  useEffect(() => {
+    {
+      userConnectedInfo !== undefined &&
+        setNewUserProfil((prev) => {
+          const newProfil = {
+            ...prev,
+            imageUrl: userConnectedInfo.imageUrl,
+            catchPhrase: userConnectedInfo.catchPhrase,
+          };
+          return newProfil;
         });
-      }
-    } catch (err) {
-      console.log(err);
+    }
+    if (userConnectedInfo) {
+      const userRef = doc(db, "users", `${userConnectedInfo.authId}`);
+      setUserRef(userRef);
+    }
+  }, [userConnectedInfo]);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const name = (event.target as HTMLInputElement).name;
+    setNewUserProfil((prev) => {
+      const newProfil = {
+        ...prev,
+        [name]: event.target.value,
+      };
+      return newProfil;
+    });
+  };
+
+  const handleUpdateProfil = () => {
+    updateDoc(userRef, {
+      ...newUserProfil,
+    })
+      .then(() => {
+        saveUserConnectedInfo();
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la mise à jour du profil :", error);
+        toastProfil("error", "Le profil n'a pas été mis à jour");
+      });
+  };
+
+  const saveUserConnectedInfo = async () => {
+    const userDocumentDbRef = await getDoc(
+      doc(db, "users", userConnectedInfo.authId)
+    );
+    if (userDocumentDbRef.exists()) {
+      toastProfil("success", "Profil mis à jour");
+      setUserConnectedInfo(userDocumentDbRef.data());
+    } else {
+      console.error("error");
     }
   };
 
-  useEffect(() => {
-    fetchStages();
-  }, []);
-
-  function findIndexesOfValue(arr: number[], value: number) {
-    const indexes = arr
-      .map((element, index) => (element === value ? index + 1 : -1))
-      .filter((index) => index !== -1);
-    return indexes;
-  }
-
-  useEffect(() => {
-    userConnectedInfo &&
-      setUserProfil({
-        ...userProfil,
-        maxPoints: Math.max(...Object.values(userConnectedInfo?.points)),
-        minPoints: Math.min(...Object.values(userConnectedInfo?.points)),
-        average: Math.round(
-          Object.values(userConnectedInfo?.points).reduce(
-            (accumulator, currentValue) => accumulator + currentValue
-          ) / Object.values(userConnectedInfo?.points).length
-        ),
-        maxPointsStageIndex: findIndexesOfValue(
-          Object.values(userConnectedInfo?.points),
-          userProfil.maxPoints
-        ),
-        minPointsStageIndex: findIndexesOfValue(
-          Object.values(userConnectedInfo?.points),
-          userProfil.minPoints
-        ),
-      });
-  }, [userConnectedInfo]);
+  const toastProfil = (type: ToastSeverityType, message: string) => {
+    toast.current.show({
+      severity: type,
+      summary: type === "success" ? "Succès" : "Erreur",
+      detail: message,
+      life: 3000,
+    });
+  };
 
   return (
     <div className="profil">
+      <Toast ref={toast} />
       {userConnectedInfo && (
         <>
           <h1 className="profil__username">{`Bonjour ${userConnectedInfo.username}`}</h1>
-          <div className="profil__statistiques">
-            <h2 className="profil__statistiques__points">
-              Maximum sur une étape: <strong>{userProfil.maxPoints}</strong>{" "}
-              points
-            </h2>
-            <h2 className="profil__statistiques__points">
-              Minimum sur une étape: <strong>{userProfil.minPoints}</strong>{" "}
-              points
-            </h2>
-            <h2 className="profil__statistiques__points">
-              Moyenne par étape: <strong>{userProfil.average}</strong> points
-            </h2>
-          </div>
+          <span className="p-float-label">
+            <InputText
+              value={newUserProfil.catchPhrase}
+              onChange={(e) => handleChange(e)}
+              name="catchPhrase"
+              id="profil-catchPhrase"
+            />
+            <label htmlFor="profil-catchPhrase">Phrase d'accroche</label>
+          </span>
+          <span className="p-float-label">
+            <InputText
+              value={newUserProfil.imageUrl}
+              onChange={(e) => handleChange(e)}
+              name="imageUrl"
+              id="profil-imageUrl"
+            />
+            <label htmlFor="profil-imageUrl">Adresse image profil</label>
+          </span>
+          <button
+            onClick={() => handleUpdateProfil()}
+            className="profil__btnUpdate"
+          >
+            Mettre à jour les informations
+          </button>
         </>
       )}
     </div>

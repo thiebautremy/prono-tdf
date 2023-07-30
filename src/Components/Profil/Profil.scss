@@ -5,16 +5,10 @@
   &__username {
     font-weight: bold;
     font-size: 1.3rem;
-    margin-bottom: 1rem;
+    margin-bottom: 3rem;
   }
-  &__statistiques {
-    &__points {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-      strong {
-        font-weight: bold;
-        font-size: 1.15rem;
-      }
-    }
-  }
+}
+
+.p-float-label {
+  margin-bottom: 2rem;
 }

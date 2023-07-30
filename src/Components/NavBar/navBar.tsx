@@ -90,7 +90,7 @@ const NavBar = () => {
 type ProfilPictureType = {
   imageUrl: string;
 };
-const ProfilPicture: React.FC<ProfilPictureType> = ({ imageUrl }) => {
+export const ProfilPicture: React.FC<ProfilPictureType> = ({ imageUrl }) => {
   return <img src={imageUrl} className="profilPicture" />;
 };
 

@@ -9,9 +9,11 @@ import { doc, getDoc, getFirestore } from "firebase/firestore";
 const HomeConnected: React.FC<PropsWithChildren> = ({ children }) => {
   const { currentUser, setUserConnectedInfo } = useContext(UserContext);
   const db = getFirestore(app);
+
   useEffect(() => {
     saveUserConnectedInfo();
   }, []);
+
   const saveUserConnectedInfo = async () => {
     if (currentUser !== null) {
       const userDocumentDbRef = await getDoc(
@@ -20,6 +22,7 @@ const HomeConnected: React.FC<PropsWithChildren> = ({ children }) => {
       setUserConnectedInfo(userDocumentDbRef.data());
     }
   };
+
   return (
     <>
       {<NavBar />} {children}

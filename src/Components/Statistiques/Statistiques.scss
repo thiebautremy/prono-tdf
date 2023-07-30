@@ -12,4 +12,11 @@
     justify-content: center;
     margin: 1rem;
   }
+
+  .userCardStatsContainer {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
 }

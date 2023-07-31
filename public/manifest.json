@@ -1,16 +1,32 @@
 {
   "short_name": "Prono TDF",
   "name": "Prono Tour de France",
-  "icons": [
+  "description": "Pronostiquer sur les mieux classés sur les étapes du Tour de France",
+    "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "512x512 192x192 48x48",
+      "sizes": "48x48",
       "type": "image/x-icon"
     },
     {
       "src": "logo48.png",
       "type": "image/png",
       "sizes": "48x48"
+    },
+    {
+      "src": "logo72.png",
+      "type": "image/png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "logo96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "logo144.png",
+      "type": "image/png",
+      "sizes": "144x144"
     },
     {
       "src": "logo192.png",
@@ -24,7 +40,7 @@
     }
   ],
   "start_url": ".",
-  "display": "standalone",
+  "display": "fullscreen",
   "theme_color": "#1e3d59",
   "background_color": "#1e3d59"
 }

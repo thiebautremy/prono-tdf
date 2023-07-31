@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { ProfilPicture } from "../NavBar/navBar";
+import { useEffect, useState } from "react";
+import { IoIosArrowDropdown, IoIosArrowDropup } from "react-icons/io";
 import "./UserCardStats.scss";
 
 export type UserCardType = {
@@ -32,6 +34,9 @@ const UserCardStats: React.FC<UserCardStatsType> = ({
   selectedYear,
   historic,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
   const getPoint = (namePoint: string) => {
     const namePointArray = [
       { name: "maxPoint", value: maxPoint },
@@ -46,17 +51,26 @@ const UserCardStats: React.FC<UserCardStatsType> = ({
     return namePointArray.find((item) => item.name === namePoint).value;
   };
 
+  useEffect(() => {
+    if (window.innerWidth < 500) {
+      setIsMobile(true);
+      setIsOpen(false);
+    } else {
+      setIsOpen(true);
+    }
+  }, []);
+
   return (
     <div
       className="userCardStats"
       style={{
-        border: `1px solid rgb(${color})`,
+        border: `1px solid rgba(${color}, 0.6)`,
       }}
     >
       <div
         className="userCardStats__header"
         style={{
-          backgroundColor: `rgb(${color})`,
+          backgroundColor: `rgba(${color}, 0.6)`,
         }}
       >
         <ProfilPicture imageUrl={imageUrl} />
@@ -67,27 +81,46 @@ const UserCardStats: React.FC<UserCardStatsType> = ({
             {catchPhrase && catchPhrase !== "" && catchPhrase}
           </p>
         </div>
+        {isMobile &&
+          (isOpen ? (
+            <IoIosArrowDropup
+              onClick={() => setIsOpen((prev) => !prev)}
+              className="userCardStats__header__arrowIcon"
+            />
+          ) : (
+            <IoIosArrowDropdown
+              onClick={() => setIsOpen((prev) => !prev)}
+              className="userCardStats__header__arrowIcon"
+            />
+          ))}
       </div>
-      <div className="userCardStats__content">
-        <p className="userCardStats__content__point">
-          <strong>Max point: </strong>
-          {getPoint("maxPoint")}
-        </p>
-        <p className="userCardStats__content__point">
-          <strong>Min point:</strong> {getPoint("minPoint")}
-        </p>
-        <p className="userCardStats__content__point">
-          <strong>Moyenne point:</strong> {getPoint("averagePoint")}
-        </p>
-        <p className="userCardStats__content__point">
-          <strong>Nombre d'étapes gagnées:</strong>{" "}
-          {getPoint("victoriesStages")}
-        </p>
+      {isOpen && (
+        <div
+          className="userCardStats__content"
+          style={{
+            backgroundColor: `rgba(${color}, 0.3)`,
+          }}
+        >
+          <p className="userCardStats__content__point">
+            <strong>Max point: </strong>
+            {getPoint("maxPoint")}
+          </p>
+          <p className="userCardStats__content__point">
+            <strong>Min point:</strong> {getPoint("minPoint")}
+          </p>
+          <p className="userCardStats__content__point">
+            <strong>Moyenne point:</strong> {getPoint("averagePoint")}
+          </p>
+          <p className="userCardStats__content__point">
+            <strong>Nombre d'étapes gagnées:</strong>{" "}
+            {getPoint("victoriesStages")}
+          </p>
 
-        <p className="userCardStats__content__point">
-          <strong>Total :</strong> {getPoint("totalPoints")}
-        </p>
-      </div>
+          <p className="userCardStats__content__point">
+            <strong>Total :</strong> {getPoint("totalPoints")}
+          </p>
+        </div>
+      )}
     </div>
   );
 };

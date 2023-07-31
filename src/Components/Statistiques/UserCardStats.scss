@@ -15,6 +15,7 @@
     display: flex;
     align-items: center;
     padding: 0.5rem 1rem;
+    position: relative;
     &__username {
       font-size: 1.2rem;
     }
@@ -23,6 +24,12 @@
       margin: 0.2rem 0 0 0.2rem;
       font-size: 1rem;
       font-style: italic;
+    }
+
+    &__arrowIcon {
+      position: absolute;
+      font-size: 1.5rem;
+      right: 1rem;
     }
   }
 

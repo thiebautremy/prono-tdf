@@ -13,6 +13,7 @@
         border: 1px solid var.$black;
         padding: 0.5rem 1rem;
         text-align: center;
+        vertical-align: middle;
         min-width: 3.1rem;
         &:hover {
           cursor: pointer;
@@ -23,6 +24,7 @@
         text-align: center;
         font-weight: bold;
         letter-spacing: 0.1rem;
+        vertical-align: middle;
 
         &__last {
           min-width: 4rem;
@@ -47,10 +49,18 @@
           font-size: 0.9rem;
         }
       }
+
+      &__picture {
+        min-width: unset;
+
+        img {
+          margin-right: 0 !important;
+        }
+      }
     }
 
     &__total {
-      min-width: 7.5rem;
+      min-width: 8.5rem;
       strong {
         font-weight: bold;
         font-size: 1.1rem;
@@ -60,11 +70,7 @@
     }
 
     &__gap {
-      min-width: 4.5rem;
-    }
-
-    &__difference {
-      font-size: 0.8rem;
+      min-width: 5rem;
     }
   }
 }

@@ -7,6 +7,7 @@
 import React, { useState } from "react";
 import { getTotalPoints, convertPointsInArray } from "../../Services/functions";
 import "./Resultat.scss";
+import { ProfilPicture } from "../NavBar/navBar";
 
 type ResultatType = {
   username: string;
@@ -15,6 +16,7 @@ type ResultatType = {
   position: number;
   color: string;
   previousTotalPoint: number;
+  imageUrl: string;
 };
 
 const Resultat: React.FC<ResultatType> = ({
@@ -24,6 +26,7 @@ const Resultat: React.FC<ResultatType> = ({
   position,
   color,
   previousTotalPoint,
+  imageUrl,
 }) => {
   const [modal, setModal] = useState({
     isVisible: false,
@@ -56,6 +59,13 @@ const Resultat: React.FC<ResultatType> = ({
               }`}
             >
               {position} <sup>{position === 1 ? "er" : "ième"}</sup>
+            </td>
+            <td
+              rowSpan={2}
+              className="resultat__table__tbody__td resultat__table__tbody__picture"
+              style={{ backgroundColor: `rgba(${color}, 0.6)` }}
+            >
+              <ProfilPicture imageUrl={imageUrl} />
             </td>
             <td
               className="resultat__table__tbody__username"

@@ -18,7 +18,7 @@ import {
 import { UserConnectedInfo } from "../../Context/userContext";
 import Resultat from "./Resultat";
 import "./Resultats.scss";
-import map from "../../assets/pictures/f8d5d.jpg";
+import map from "../../assets/pictures/trace.jpeg";
 import { awardedPointsInfos } from "../../assets/points/pointsInfo";
 import { convertPointsInArray, getTotalPoints } from "../../Services/functions";
 import Loader from "../Loader/Loader";

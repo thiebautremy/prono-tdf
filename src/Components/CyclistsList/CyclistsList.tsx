@@ -18,9 +18,6 @@ import Loader from "../Loader/Loader";
 import { DataTable, DataTableFilterMeta } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { FilterMatchMode } from "primereact/api";
-import { InputText } from "primereact/inputtext";
-import { Dropdown } from "primereact/dropdown";
-import { MultiSelect } from "primereact/multiselect";
 
 const CyclistsList = () => {
   const [isLoader, setIsLoader] = useState(true);

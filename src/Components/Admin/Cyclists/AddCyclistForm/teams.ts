@@ -1,7 +1,7 @@
 const teamsArray: { value: string; name: string }[] = [
   { value: "TEAM-VISMA", name: "Team Visma" },
   { value: "UAE", name: "UAE Team Emirates" },
-  { value: "JAYCO", name: "Jayco AlUla" },
+  { value: "JAYCO", name: "Jayco Alula" },
   { value: "INEOS", name: "Ineos Grenadiers " },
   { value: "LIDL", name: "LIDL - Trek" },
   { value: "DEC-AG2R", name: "Decathlon AG2R" },

@@ -58,6 +58,7 @@ export const getTotalPoints = (array: number[]) => {
 export const convertPointsInArray = (points: { [key: number]: number }) => {
   let keys: string[] = [];
   let values: number[] = [];
+  console.log("convertPoints");
   if (points !== undefined) {
     keys = Object.keys(points);
     values = Object.values(points);

@@ -77,6 +77,24 @@ const Statistiques = () => {
     Legend
   );
 
+  const options = {
+    responsive: true,
+    scales: {
+      y: {
+        max: 115,
+      },
+    },
+    plugins: {
+      legend: {
+        position: "top" as const,
+      },
+      title: {
+        display: true,
+        text: "Points en fonction des étapes",
+      },
+    },
+  };
+
   const convertDatas = (
     data:
       | DocumentData[]
@@ -96,24 +114,6 @@ const Statistiques = () => {
         data: never[] | [];
       }[] = [];
 
-      const options = {
-        responsive: true,
-        scales: {
-          y: {
-            max: 115,
-          },
-        },
-        plugins: {
-          legend: {
-            position: "top" as const,
-          },
-          title: {
-            display: true,
-            text: "Points en fonction des étapes",
-          },
-        },
-      };
-
       data.map((user) => {
         const newDataset: {
           borderColor: string;
@@ -131,15 +131,20 @@ const Statistiques = () => {
         newDataset.data =
           year === "Actuelle"
             ? Object.values(user.points)
-            : Object.values(user.historic[year].points);
+            : (console.log(Object.values(user.historic[year].points)),
+              Object.values(user.historic[year].points));
 
         newDataset.borderColor = `rgb(${user.color})`;
         newDataset.backgroundColor = `rgba(${user.color}, 0.5)`;
         newDatasets.push(newDataset);
       });
-
+      console.log(Object.keys(data[0].points));
+      console.log(data);
       const dataChartObject = {
-        labels: Object.keys(data[0].points),
+        labels: [
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+          21,
+        ],
         datasets: newDatasets,
       };
       setDataChart({ options, dataChartObject });
@@ -156,6 +161,20 @@ const Statistiques = () => {
   }) => {
     setSelectedYear(event.value);
     convertDatas(users, event.value.code);
+  };
+
+  const data = {
+    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    datasets: [
+      {
+        label: "Dataset 1",
+        data: [10, 30, 50, 20, 25, 44, -10],
+      },
+      {
+        label: "Dataset 2",
+        data: [100, 33, 22, 19, 11, 49, 30],
+      },
+    ],
   };
 
   return (

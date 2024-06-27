@@ -41,9 +41,9 @@ const Calculate = () => {
     lengthStage: number;
     type: string;
   } | null>(null);
-  const [users, setUsers] = useState<
-    { pronos: unknown; authId: string }[] | null
-  >(null);
+  const [users, setUsers] = useState<{ pronos: any; authId: string }[] | null>(
+    null
+  );
   const [error, setError] = useState("");
   const [results, setResults] = useState({});
   const { stages, setStages } = useContext(StagesContext);
@@ -162,6 +162,7 @@ const Calculate = () => {
     totalPoint: number[]
   ) => {
     const refUser = doc(db, "users", `${userId}`);
+    console.log("getUsersRef");
     setPointsInDb(refUser, userId, stageId, totalPoint);
   };
 
@@ -171,32 +172,40 @@ const Calculate = () => {
     stageId: number,
     totalPoint: number[]
   ) => {
+    console.log("setPointsInDb");
     const userDocumentDbRef = await getDoc(doc(db, "users", userId));
+    console.log(userDocumentDbRef.data().points);
     const pointsObj =
       userDocumentDbRef.data()?.points === undefined
         ? {}
         : { ...userDocumentDbRef.data()?.points };
     pointsObj[stageId] =
       totalPoint.length === 0 ? 0 : totalPoint.reduce(getSum);
-    const convertedArray = convertPointsInArray(
-      userDocumentDbRef.data().points
-    );
-    const maxNumber =
-      convertedArray.values.length > 0 ? Math.max(...convertedArray.values) : 0;
-    const minNumber =
-      convertedArray.values.length > 0 ? Math.min(...convertedArray.values) : 0;
+    console.log(pointsObj);
+
+    // const convertedArray = convertPointsInArray(
+    //   userDocumentDbRef.data().points
+    // );
+    console.log(Object.values(pointsObj));
+
+    const maxNumber = Math.max(...Object.values(pointsObj).map(Number));
+    const minNumber = Math.min(...Object.values(pointsObj).map(Number));
+
     const data = {
       points: pointsObj,
-      totalPoints: getTotalPoints(convertedArray.values),
+      totalPoints: getTotalPoints(Object.values(pointsObj)),
       maxPoint: maxNumber,
       minPoint: minNumber,
-      averagePoint: Math.round(getTotalPoints(convertedArray.values) / stageId),
+      averagePoint: Math.round(
+        getTotalPoints(Object.values(pointsObj)) / stageId
+      ),
     };
     return updateDoc(refUser, {
       ...data,
     })
       .then(async () => {
         const userDocumentDbRef = await getDoc(doc(db, "users", userId));
+
         setUserConnectedInfo(userDocumentDbRef.data());
         toastCalculate("success", "Les points ont été correctement calculés");
       })

@@ -17,11 +17,7 @@ import {
   DocumentData,
   DocumentReference,
 } from "firebase/firestore";
-import {
-  convertPointsInArray,
-  getDateFormated,
-  getTotalPoints,
-} from "../../../Services/functions";
+import { getDateFormated, getTotalPoints } from "../../../Services/functions";
 import app from "../../../config/firebaseConfig";
 import { Dropdown } from "primereact/dropdown";
 import Stage from "../Stages/Stage/Stage";
@@ -41,9 +37,9 @@ const Calculate = () => {
     lengthStage: number;
     type: string;
   } | null>(null);
-  const [users, setUsers] = useState<{ pronos: any; authId: string }[] | null>(
-    null
-  );
+  const [users, setUsers] = useState<
+    { pronos: unknown; authId: string }[] | null
+  >(null);
   const [error, setError] = useState("");
   const [results, setResults] = useState({});
   const { stages, setStages } = useContext(StagesContext);
@@ -162,7 +158,6 @@ const Calculate = () => {
     totalPoint: number[]
   ) => {
     const refUser = doc(db, "users", `${userId}`);
-    console.log("getUsersRef");
     setPointsInDb(refUser, userId, stageId, totalPoint);
   };
 
@@ -172,21 +167,13 @@ const Calculate = () => {
     stageId: number,
     totalPoint: number[]
   ) => {
-    console.log("setPointsInDb");
     const userDocumentDbRef = await getDoc(doc(db, "users", userId));
-    console.log(userDocumentDbRef.data().points);
     const pointsObj =
       userDocumentDbRef.data()?.points === undefined
         ? {}
         : { ...userDocumentDbRef.data()?.points };
     pointsObj[stageId] =
       totalPoint.length === 0 ? 0 : totalPoint.reduce(getSum);
-    console.log(pointsObj);
-
-    // const convertedArray = convertPointsInArray(
-    //   userDocumentDbRef.data().points
-    // );
-    console.log(Object.values(pointsObj));
 
     const maxNumber = Math.max(...Object.values(pointsObj).map(Number));
     const minNumber = Math.min(...Object.values(pointsObj).map(Number));

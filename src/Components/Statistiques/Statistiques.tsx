@@ -153,7 +153,7 @@ const Statistiques = () => {
 
   const years = [
     { name: "Actuelle", code: "Actuelle" },
-    { name: "2023", code: "2023" },
+    { name: "2024", code: "2024" },
   ];
 
   const handleSelectedYear = (event: {
@@ -205,7 +205,9 @@ const Statistiques = () => {
         </div>
       )}
       {!!dataChart.dataChartObject && (
-        <Line options={dataChart.options} data={dataChart.dataChartObject} />
+        <div className="graph">
+          <Line options={dataChart.options} data={dataChart.dataChartObject} />
+        </div>
       )}
     </div>
   );

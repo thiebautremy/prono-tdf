@@ -16,7 +16,7 @@ import {
   DocumentData,
 } from "firebase/firestore";
 import app from "../../../config/firebaseConfig";
-import "./Archive.scss";
+import "./Archive.scss"; 
 import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
 import { Toast, ToastSeverityType } from "primereact/toast";
 import { SelectItemOptionsType } from "primereact/selectitem";
@@ -37,7 +37,7 @@ const Archive = () => {
   const [performances, setPerformances] = useState({
     victoriesStages: null,
   });
-  const [users, setUsers] = useState<DocumentData>([]);
+  const [users, setUsers] = useState<DocumentData[]>([]);
 
   const years = [
     { label: "2024", value: 2024 },
@@ -47,18 +47,18 @@ const Archive = () => {
   ];
 
   const fetchUsers = async () => {
-    const datas: DocumentData = [];
+    const datas: DocumentData[] = [];
     try {
       const querySnapshot = await getDocs(collection(db, "users"));
       const response = querySnapshot;
       if (response) {
         response.forEach((doc) => {
           datas.push(doc.data());
-          setUsers(datas);
         });
+        setUsers(datas);
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
   useEffect(() => {
@@ -69,60 +69,58 @@ const Archive = () => {
     setSelectedYear(event.value);
   };
 
-  const handleArchive = () => {
+ const handleArchive = async () => {
     if (users.length > 0) {
-      users.map(async (user: { authId: string }) => {
-        const userDocumentDbRef = doc(db, "users", `${user.authId}`);
-        const userDocumentDbData = (await getDoc(userDocumentDbRef)).data();
-        const convertedArray = convertPointsInArray(userDocumentDbData.points);
-        const maxNumber =
-          convertedArray.values.length > 0
-            ? Math.max(...convertedArray.values)
-            : 0;
-        const minNumber =
-          convertedArray.values.length > 0
-            ? Math.min(...convertedArray.values)
-            : 0;
-        const archive = {
-          historic: {
-            ...userDocumentDbData?.historic,
-            [selectedYear]: {
-              ["points"]: userDocumentDbData.points,
-              ["totalPoints"]: getTotalPoints(convertedArray.values),
-              ["maxPoint"]: maxNumber,
-              ["minPoint"]: minNumber,
-              ["averagePoint"]: Math.round(
-                getTotalPoints(convertedArray.values) / 21
-              ),
-            },
-          },
-        };
+      for (const user of users) {
+        try {
+          const authId = String(user.authId ?? "");
+          const userDocumentDbRef = doc(db, "users", authId);
+          const userDocumentDbSnap = await getDoc(userDocumentDbRef);
+          const userDocumentDbData = userDocumentDbSnap.data() || {};
+          const convertedArray = convertPointsInArray(userDocumentDbData.points);
+          const maxNumber =
+            convertedArray.values.length > 0
+              ? Math.max(...convertedArray.values)
+              : 0;
+          const minNumber =
+            convertedArray.values.length > 0
+              ? Math.min(...convertedArray.values)
+              : 0;
+          const totalPoints = getTotalPoints(convertedArray.values);
+          const averagePoint = Math.round(totalPoints / 21);
 
-        updateDoc(userDocumentDbRef, archive)
-          .then(() => {
-            toastArchive("success", "Les points ont correctement été archivés");
-          })
-          .catch((error) => {
-            console.error("Erreur lors de la mise à jour du document :", error);
-            toastArchive("error", "Les points n'ont pas pu être archivés");
-          });
-      });
+          const yearKey = String(selectedYear);
+
+          const updates: Record<string, unknown> = {
+            ...userDocumentDbData.historic,
+            [`historic.${yearKey}.points`]: userDocumentDbData.points || [],
+            [`historic.${yearKey}.totalPoints`]: totalPoints,
+            [`historic.${yearKey}.maxPoint`]: maxNumber,
+            [`historic.${yearKey}.minPoint`]: minNumber,
+            [`historic.${yearKey}.averagePoint`]: averagePoint,
+          };
+          await updateDoc(userDocumentDbRef, updates);
+          toastArchive("success", "Les points ont correctement été archivés");
+        } catch (error) {
+          console.error("Erreur lors de la mise à jour du document :", error);
+          toastArchive("error", "Les points n'ont pas pu être archivés");
+        }
+      }
     }
   };
 
   const handleArchivePerf = async () => {
     const userDocumentDbRef = doc(db, "users", `${userSelected.authId}`);
     const userDocumentDbData = (await getDoc(userDocumentDbRef)).data();
-
     const archive = {
       historic: {
+        ...userDocumentDbData?.historic,
         [selectedYear]: {
           ...userDocumentDbData?.historic[selectedYear],
           ...performances,
         },
       },
     };
-
     updateDoc(userDocumentDbRef, archive)
       .then(() => {
         toastArchive(
@@ -159,7 +157,12 @@ const Archive = () => {
       });
     }
     setUserSelected(
-      users.find((user: { username: string }) => user.username === value)
+      (() => {
+        const foundUser = users.find((user: { username: string }) => user.username === value);
+        return foundUser
+          ? { username: foundUser.username ?? "", authId: foundUser.authId ?? "" }
+          : { username: "", authId: "" };
+      })()
     );
   };
 

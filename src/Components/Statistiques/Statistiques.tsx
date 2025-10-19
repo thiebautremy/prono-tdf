@@ -131,15 +131,12 @@ const Statistiques = () => {
         newDataset.data =
           year === "Actuelle"
             ? Object.values(user.points)
-            : (console.log(Object.values(user.historic[year].points)),
-              Object.values(user.historic[year].points));
+            : Object.values(user.historic[year].points);
 
         newDataset.borderColor = `rgb(${user.color})`;
         newDataset.backgroundColor = `rgba(${user.color}, 0.5)`;
         newDatasets.push(newDataset);
       });
-      console.log(Object.keys(data[0].points));
-      console.log(data);
       const dataChartObject = {
         labels: [
           1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
@@ -152,7 +149,8 @@ const Statistiques = () => {
   };
 
   const years = [
-    { name: "Actuelle", code: "Actuelle" },
+    { name: "2026", code: "2026" },
+    { name: "2025", code: "2025" },
     { name: "2024", code: "2024" },
   ];
 

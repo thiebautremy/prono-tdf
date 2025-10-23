@@ -18,7 +18,7 @@ import {
 import { UserConnectedInfo } from "../../Context/userContext";
 import Resultat from "./Resultat";
 import "./Resultats.scss";
-import map from "../../assets/pictures/trace.jpeg";
+import map from "../../assets/pictures/trace.webp";
 import { awardedPointsInfos } from "../../assets/points/pointsInfo";
 import { convertPointsInArray, getTotalPoints } from "../../Services/functions";
 import Loader from "../Loader/Loader";
@@ -32,8 +32,10 @@ const Resultats = () => {
     try {
       const querySnapshot = await getDocs(collection(db, "users"));
       const response = querySnapshot;
+      console.log(response)
       if (response) {
         response.forEach((doc) => {
+          console.log(doc.data())
           datas.push(doc.data());
           calculateTotalAndSetState(datas);
         });

@@ -106,6 +106,7 @@ const Statistiques = () => {
         }[],
     year = "Actuelle"
   ) => {
+    console.log(data,year)
     if (data.length > 0) {
       const newDatasets: {
         borderColor: string;
@@ -131,7 +132,7 @@ const Statistiques = () => {
         newDataset.data =
           year === "Actuelle"
             ? Object.values(user.points)
-            : Object.values(user.historic[year].points);
+            : user.historic[year]?.points != null ? Object.values(user.historic[year].points) : [];
 
         newDataset.borderColor = `rgb(${user.color})`;
         newDataset.backgroundColor = `rgba(${user.color}, 0.5)`;
@@ -149,7 +150,7 @@ const Statistiques = () => {
   };
 
   const years = [
-    { name: "2026", code: "2026" },
+    { name: "Actuelle", code: "Actuelle" },
     { name: "2025", code: "2025" },
     { name: "2024", code: "2024" },
   ];

@@ -36,7 +36,9 @@ const Stages = () => {
   return (
     <div className="stages">
       {stages.length > 0 &&
-        stages.map((stage) => <Stage stage={stage} key={stage.stageId} />)}
+        [...stages]
+          .sort((a, b) => a.stageId - b.stageId)
+          .map((stage) => <Stage stage={stage} key={stage.stageId} />)}
     </div>
   );
 };

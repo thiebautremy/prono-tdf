@@ -53,8 +53,10 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.38.1",
+    "csv-parse": "^7.0.0",
     "eslint": "^8.24.0",
     "eslint-plugin-react": "^7.31.8",
+    "firebase-admin": "^14.1.0",
     "typescript": "^4.8.4"
   }
 }

@@ -74,7 +74,7 @@ const Statistiques = () => {
     LineElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
   );
 
   const options = {
@@ -104,9 +104,8 @@ const Statistiques = () => {
           username: string;
           historic: { [key: string]: { points: Record<string, unknown> } };
         }[],
-    year = "Actuelle"
+    year = "Actuelle",
   ) => {
-    console.log(data,year)
     if (data.length > 0) {
       const newDatasets: {
         borderColor: string;
@@ -132,7 +131,9 @@ const Statistiques = () => {
         newDataset.data =
           year === "Actuelle"
             ? Object.values(user.points)
-            : user.historic[year]?.points != null ? Object.values(user.historic[year].points) : [];
+            : user.historic[year]?.points != null
+              ? Object.values(user.historic[year].points)
+              : [];
 
         newDataset.borderColor = `rgb(${user.color})`;
         newDataset.backgroundColor = `rgba(${user.color}, 0.5)`;
@@ -192,7 +193,7 @@ const Statistiques = () => {
         <div className="userCardStatsContainer">
           {users
             .sort((userA: UserCardType, userB: UserCardType) =>
-              userA.username.localeCompare(userB.username)
+              userA.username.localeCompare(userB.username),
             )
             .map((user: UserCardType) => (
               <UserCardStats

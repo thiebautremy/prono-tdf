@@ -32,10 +32,8 @@ const Resultats = () => {
     try {
       const querySnapshot = await getDocs(collection(db, "users"));
       const response = querySnapshot;
-      console.log(response)
       if (response) {
         response.forEach((doc) => {
-          console.log(doc.data())
           datas.push(doc.data());
           calculateTotalAndSetState(datas);
         });
@@ -53,13 +51,19 @@ const Resultats = () => {
       | React.SetStateAction<DocumentData>
       | Map<unknown, unknown>[] = [];
     if (datas.length > 0) {
-      datas.map((user: { total?: number; points: {} }) => {
-        const { values } = convertPointsInArray(user?.points);
-        user["total"] = values.reduce(
-          (accumulator: any, currentValue: any) => accumulator + currentValue
-        );
-        usersUpdated.push(user);
-      });
+      datas
+        .filter(
+          (user: { total?: number; points: {} }) =>
+            Object.keys(user.points).length > 0,
+        )
+        .map((user: { total?: number; points: {} }) => {
+          const { values } = convertPointsInArray(user?.points);
+          user["total"] = values.reduce(
+            (accumulator: any, currentValue: any) => accumulator + currentValue,
+            0, // valeur initiale pour éviter l'erreur sur tableau vide
+          );
+          usersUpdated.push(user);
+        });
     }
     setUsers(usersUpdated);
   };
@@ -73,7 +77,7 @@ const Resultats = () => {
         {users.length > 0 ? (
           users
             .sort(
-              (a: { total: number }, b: { total: number }) => b.total - a.total
+              (a: { total: number }, b: { total: number }) => b.total - a.total,
             )
             .map((user: UserConnectedInfo, index: number) => (
               <Resultat
@@ -83,7 +87,7 @@ const Resultats = () => {
                 previousTotalPoint={
                   index > 0
                     ? getTotalPoints(
-                        convertPointsInArray(users[index - 1]?.points).values
+                        convertPointsInArray(users[index - 1]?.points).values,
                       )
                     : undefined
                 }

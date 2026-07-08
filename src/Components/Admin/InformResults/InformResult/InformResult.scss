@@ -6,21 +6,19 @@
   min-width: 60%;
   &__DragableAndselection {
     display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
+    flex-direction: row;
+    gap: 20px;
+    height: 100vh; /* occupe tout l'écran */
+    overflow: hidden;
 
     &__selections {
-      display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
-      max-height: 45rem;
+      flex: 2;
+      overflow-y: auto;
     }
 
     &__dragable {
-      width: 30%;
-      height: 45rem;
-      overflow-y: scroll;
-      padding: 1rem;
+      flex: 1;
+      overflow-y: auto;
       &--items {
         border: 0.1rem solid var.$grey;
         padding: 0.5rem 1rem;

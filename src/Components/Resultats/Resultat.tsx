@@ -54,8 +54,8 @@ const Resultat: React.FC<ResultatType> = ({
                 position === 1
                   ? "gold"
                   : position === 2
-                  ? "silver"
-                  : position === 3 && "bronze"
+                    ? "silver"
+                    : position === 3 && "bronze"
               }`}
             >
               {position} <sup>{position === 1 ? "er" : "ième"}</sup>
@@ -63,19 +63,19 @@ const Resultat: React.FC<ResultatType> = ({
             <td
               rowSpan={2}
               className="resultat__table__tbody__td resultat__table__tbody__picture"
-              style={{ backgroundColor: `rgba(${color}, 0.6)` }}
+              style={{ backgroundColor: `rgba(${color}, 0.9)` }}
             >
               <ProfilPicture imageUrl={imageUrl} />
             </td>
             <td
               className="resultat__table__tbody__username"
-              style={{ backgroundColor: `rgba(${color}, 0.6)` }}
+              style={{ backgroundColor: `rgba(${color}, 0.9)` }}
             >
               {username}
             </td>
             <td
               className="resultat__table__tbody__td "
-              style={{ backgroundColor: `rgba(${color}, 0.6)` }}
+              style={{ backgroundColor: `rgba(${color}, 0.9)` }}
             >
               Écart
             </td>
@@ -84,7 +84,7 @@ const Resultat: React.FC<ResultatType> = ({
                 <td
                   key={index}
                   className="resultat__table__tbody__td resultat__table__tbody__key"
-                  style={{ backgroundColor: `rgba(${color}, 0.6)` }}
+                  style={{ backgroundColor: `rgba(${color}, 0.9)` }}
                 >
                   {key}
                 </td>
@@ -92,7 +92,7 @@ const Resultat: React.FC<ResultatType> = ({
             <td
               className="resultat__table__tbody__username__last"
               rowSpan={2}
-              style={{ backgroundColor: `rgba(${color}, 0.6)` }}
+              style={{ backgroundColor: `rgba(${color}, 0.9)` }}
             >
               {username}
             </td>
@@ -102,7 +102,7 @@ const Resultat: React.FC<ResultatType> = ({
               <>
                 <td
                   className="resultat__table__tbody__td resultat__table__total"
-                  style={{ backgroundColor: `rgba(${color}, 0.6)` }}
+                  style={{ backgroundColor: `rgba(${color})` }}
                 >
                   Total:
                   <strong>{getTotalPoints(values)}</strong>
@@ -140,7 +140,9 @@ const Modal = (modal: any) => {
   return (
     <div className="modal">
       {modal.modal.value.map((item: any) => (
-        <span key={item.name}>{item.name}</span>
+        <span className="modal__cyclist" key={item.name}>
+          {item.name}
+        </span>
       ))}
       <span
         className="cross"

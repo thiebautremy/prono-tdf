@@ -5,8 +5,11 @@
   align-items: center;
   padding: 0.5rem;
   &__table {
+    background-color: #1c1c1c; /* fond général */
+    border-collapse: collapse;
+    color: #f5f5f5;
+    font-family: "Roboto", sans-serif;
     font-size: 0.95rem;
-    position: relative;
 
     &__tbody {
       &__td {
@@ -14,7 +17,7 @@
         padding: 0.5rem 1rem;
         text-align: center;
         vertical-align: middle;
-        min-width: 3.1rem;
+        min-width: 3.6rem;
         &:hover {
           cursor: pointer;
         }
@@ -61,6 +64,7 @@
 
     &__total {
       min-width: 8.5rem;
+      color: black;
       strong {
         font-weight: bold;
         font-size: 1.1rem;
@@ -70,23 +74,75 @@
     }
 
     &__gap {
-      min-width: 5rem;
+      min-width: 6rem;
     }
   }
 }
+
+tbody tr:nth-child(odd) {
+  background-color: #2a2a2a;
+  font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+  font-weight: bold;
+}
+
+tbody tr:first-child td {
+  color: black; /* or pour le 1er */
+  font-weight: 700;
+}
+
+td:first-child {
+  font-weight: 600;
+}
+
 .modal {
+  // position: absolute;
+  // display: flex;
+  // flex-direction: column;
+  // background-color: var.$grey;
+  width: fit-content;
+  // padding: 0.5rem 2.5rem 0.5rem 1rem;
+  // border: 1px solid var.$yellow;
+  // z-index: 100;
+  // top: 5px;
+  // right: 20%;
+
+  // color: var.$black;
   position: absolute;
   display: flex;
   flex-direction: column;
-  background-color: var.$grey;
-  width: fit-content;
-  padding: 0.5rem 2.5rem 0.5rem 1rem;
+
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(30px);
   border: 1px solid var.$yellow;
-  z-index: 100;
+  border-radius: 10px;
+  font-weight: bold;
+  padding: 1rem 2rem;
+  color: #fff;
+
   top: 5px;
   right: 20%;
+  z-index: 100;
 
-  color: var.$black;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+  animation: fadeIn 0.25s ease-out;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  &__cyclist {
+    padding: 0.1rem 0;
+  }
 
   .cross {
     position: absolute;

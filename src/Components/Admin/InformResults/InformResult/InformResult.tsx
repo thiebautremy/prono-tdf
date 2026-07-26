@@ -1,25 +1,28 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useState, useEffect } from "react";
 import app from "../../../../config/firebaseConfig";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
-import "../../../Pronos/Prono/prono.scss";
 import ErrorMessage from "../../../Form/ErrorMessage/errorMessage";
+import { Dropdown } from "primereact/dropdown";
 import Dialogue from "../../../Dialogue/Dialogue";
 import "./InformResult.scss";
-import Cyclist from "../../../../Context/cyclistsContext";
 
 type Cyclist = {
   number: string | number;
   lastname: string;
   firstname: string;
+  nationality: string;
+  team: string;
 };
+
 type InformResultType = {
   cyclists: Cyclist[];
   stageId: number;
-  currentResults: {
-    [key: string]: Cyclist;
-  };
+  currentResults: { [key: string]: Cyclist };
 };
+
+const POSITIONS = Array.from({ length: 20 }, (_, i) => i + 1);
 
 const InformResult: React.FC<InformResultType> = ({
   cyclists,
@@ -27,123 +30,118 @@ const InformResult: React.FC<InformResultType> = ({
   currentResults,
 }) => {
   const db = getFirestore(app);
+
+  // { "1": Cyclist | null, "2": Cyclist | null, ... }
   const [selectedCyclists, setSelectedCyclists] = useState<{
-    [key: string]: Cyclist;
-  } | null>({});
+    [position: string]: Cyclist | null;
+  }>({});
   const [isError, setIsError] = useState(false);
   const [visibleModal, setVisibleModal] = useState(false);
-  const [cyclistsList, setCyclistsList] = useState(cyclists);
 
+  const sortedCyclists = [...cyclists].sort(
+    (a, b) => Number(a.number) - Number(b.number),
+  );
+
+  // Initialise depuis currentResults quand l'étape change
   useEffect(() => {
-    setSelectedCyclists(currentResults);
+    if (currentResults && Object.keys(currentResults).length > 0) {
+      setSelectedCyclists(
+        Object.fromEntries(
+          Object.entries(currentResults).map(([pos, cyclist]) => [
+            pos,
+            cyclist,
+          ]),
+        ),
+      );
+    } else {
+      setSelectedCyclists({});
+    }
   }, [stageId]);
-  const handleSetResults = async () => {
-    Object.keys(selectedCyclists).length < 20
-      ? setIsError((prec) => !prec)
-      : await updateAndFetchData();
+
+  // Retourne la liste filtrée : exclut les cyclistes déjà sélectionnés ailleurs
+  const getAvailableCyclists = (currentPosition: number): Cyclist[] => {
+    const selectedElsewhere = new Set(
+      Object.entries(selectedCyclists)
+        .filter(([pos]) => Number(pos) !== currentPosition)
+        .map(([, cyclist]) => cyclist?.number)
+        .filter(Boolean),
+    );
+    return sortedCyclists.filter((c) => !selectedElsewhere.has(c.number));
   };
 
-  const updateAndFetchData = async () => {
-    await setDoc(doc(db, "results", stageId.toString()), selectedCyclists);
+  const handleSelect = (position: number, cyclist: Cyclist | null) => {
+    setSelectedCyclists((prev) => ({
+      ...prev,
+      [String(position)]: cyclist,
+    }));
+    setIsError(false);
+  };
+
+  const handleSetResults = async () => {
+    const filledPositions = Object.values(selectedCyclists).filter(Boolean);
+    if (filledPositions.length < 20) {
+      setIsError(true);
+      return;
+    }
+
+    // Construit { "1": Cyclist, "2": Cyclist, ... } pour Firebase
+    const resultsMap = Object.fromEntries(
+      Object.entries(selectedCyclists)
+        .filter(([, cyclist]) => cyclist !== null)
+        .map(([pos, cyclist]) => [pos, cyclist]),
+    );
+
+    await setDoc(doc(db, "results", stageId.toString()), resultsMap);
     setVisibleModal(true);
     setIsError(false);
   };
-  const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-  };
 
-  const handleDragStart = (
-    e: React.DragEvent<HTMLDivElement>,
-    cyclist: { number: string | number }
-  ) => {
-    e.dataTransfer.setData("id", cyclist.number.toString());
-  };
-  const handleDragStartDelete = (
-    e: React.DragEvent<HTMLSpanElement>,
-    placeNumber: string
-  ) => {
-    e.dataTransfer.setData("placeNumber", placeNumber);
-  };
-
-  const handleOnDrop = (e: React.DragEvent<HTMLDivElement>, key: number) => {
-    const id = e.dataTransfer.getData("id");
-    const cyclistDrag = cyclists.find((cyclist) => cyclist.number == id);
-    const selectedCyclistsObj = { ...selectedCyclists };
-    selectedCyclistsObj[key] = cyclistDrag;
-    setCyclistsList(cyclistsList.filter((cyclist) => cyclist.number !== id));
-    setSelectedCyclists({ ...selectedCyclistsObj });
-  };
-
-  const handleOnDropDelete = (e: React.DragEvent<HTMLDivElement>) => {
-    const placeNumber = e.dataTransfer.getData("placeNumber");
-    setCyclistsList([...cyclistsList, selectedCyclists[placeNumber]]);
-    delete selectedCyclists[placeNumber];
-  };
-
-  const selectionsArray = () => {
-    const row = [];
-    for (let i = 1; i <= 20; i++) {
-      row.push(
-        <div
-          className="informResult__DragableAndselection__selection"
-          onDragOver={(e) => handleDragEnd(e)}
-          onDrop={(e) => handleOnDrop(e, i)}
-          key={i}
-        >
-          <span className="informResult__DragableAndselection__selection--strong">
-            {`Place n° ${i} :`}{" "}
-          </span>
-          {selectedCyclists[i] !== undefined && (
-            <span
-              className="informResult__DragableAndselection__selection__cyclist"
-              onDragStart={(e) => handleDragStartDelete(e, i.toString())}
-              draggable
-            >
-              {`${selectedCyclists[i].number} - ${selectedCyclists[i].lastname}
-              ${selectedCyclists[i].firstname}`}
-            </span>
-          )}
-        </div>
-      );
-    }
-    return row;
-  };
+  const cyclistTemplate = (option: Cyclist) => (
+    <div className="cyclist-option">
+      <span className="cyclist-option__number">{option.number} </span>
+      <span className="cyclist-option__name">
+        - {option.firstname} {option.lastname}
+      </span>
+    </div>
+  );
 
   return (
     <div className="informResult">
       <Dialogue
         isVisible={visibleModal}
         setIsVisible={setVisibleModal}
-        message={"Résultats mis à jour."}
+        message="Résultats mis à jour."
       />
-      <div className="informResult__DragableAndselection">
-        <div
-          className="informResult__DragableAndselection__dragable"
-          onDrop={(e) => handleOnDropDelete(e)}
-          onDragOver={(e) => handleDragEnd(e)}
-        >
-          {cyclistsList
-            .sort((a, b) => Number(a.number) - Number(b.number))
-            .map((cyclist) => (
-              <div
-                key={cyclist.number}
-                draggable
-                onDragStart={(e) => handleDragStart(e, cyclist)}
-                className="informResult__DragableAndselection__dragable--items"
-              >
-                {cyclist.number} - {cyclist.lastname} {cyclist.firstname}
-              </div>
-            ))}
-        </div>
-        <div className="informResult__DragableAndselection__selections">
-          {selectionsArray()}
-        </div>
+
+      <div className="informResult__positions">
+        {POSITIONS.map((position) => (
+          <div key={position} className="informResult__position">
+            <span className="informResult__position__label">
+              {position}
+              <sup>{position === 1 ? "er" : "ième"}</sup>
+            </span>
+            <Dropdown
+              value={selectedCyclists[String(position)] ?? null}
+              onChange={(e) => handleSelect(position, e.value)}
+              options={getAvailableCyclists(position)}
+              optionLabel="lastname"
+              placeholder="Sélectionner"
+              filter
+              filterBy="number,lastname,firstname"
+              itemTemplate={cyclistTemplate}
+              className="informResult__position__dropdown"
+              showClear
+            />
+          </div>
+        ))}
       </div>
+
       {isError && (
         <div className="informResult__errorMessage">
-          <ErrorMessage message={"Tu dois sélectionner 20 cyclistes"} />
+          <ErrorMessage message="Tu dois sélectionner 20 cyclistes" />
         </div>
       )}
+
       <button
         onClick={handleSetResults}
         className="informResult__validatePronoBtn"
@@ -153,4 +151,5 @@ const InformResult: React.FC<InformResultType> = ({
     </div>
   );
 };
+
 export default InformResult;

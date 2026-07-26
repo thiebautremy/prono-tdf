@@ -152,6 +152,7 @@ const Statistiques = () => {
 
   const years = [
     { name: "Actuelle", code: "Actuelle" },
+    { name: "2026", code: "2026" },
     { name: "2025", code: "2025" },
     { name: "2024", code: "2024" },
   ];

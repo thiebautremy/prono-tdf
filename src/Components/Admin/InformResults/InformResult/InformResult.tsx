@@ -105,6 +105,18 @@ const InformResult: React.FC<InformResultType> = ({
     </div>
   );
 
+  const selectedCyclistTemplate = (option: Cyclist | null) => {
+    if (!option) return <span>Sélectionner</span>;
+    return (
+      <div className="cyclist-option">
+        <span className="cyclist-option__number">{option.number} </span>
+        <span className="cyclist-option__name">
+          - {option.firstname} {option.lastname}
+        </span>
+      </div>
+    );
+  };
+
   return (
     <div className="informResult">
       <Dialogue
@@ -127,6 +139,7 @@ const InformResult: React.FC<InformResultType> = ({
               optionLabel="lastname"
               placeholder="Sélectionner"
               filter
+              valueTemplate={selectedCyclistTemplate}
               filterBy="number,lastname,firstname"
               itemTemplate={cyclistTemplate}
               className="informResult__position__dropdown"

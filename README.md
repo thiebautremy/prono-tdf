@@ -68,3 +68,12 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+### Import Stages :
+Update the csv file named stages.csv then launch this :
+`node scripts/import-stages.js`
+
+### Import Cyclists list :
+Update the csv file named cyclists.csv then launch this :
+`node scripts/import-cyclists.js`

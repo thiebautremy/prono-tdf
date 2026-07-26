@@ -30,3 +30,20 @@
   margin: 0;
   padding: 0.75rem !important;
 }
+#root
+  > div
+  > div.pronos
+  > div.pronos__main
+  > div.prono
+  > div.prono__inputAndSelection
+  > div.p-multiselect.p-component.p-inputwrapper.p-multiselect-chip.p-inputwrapper-filled.multiselect-custom,
+body
+  > div.p-multiselect-panel.p-component.p-multiselect-limited.p-connected-overlay-enter-done
+  > div.p-multiselect-items-wrapper {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 6px;
+  width: 100%; /* S’adapte au parent */
+  max-width: 400px; /* Optionnel : limite la largeur */
+  box-sizing: border-box;
+}

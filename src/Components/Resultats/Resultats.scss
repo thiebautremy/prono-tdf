@@ -58,4 +58,31 @@
       }
     }
   }
+
+  &__empty {
+    width: 100%;
+    padding: 1.5rem 2rem;
+    margin: 2rem auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+    font-size: 0.95rem;
+    font-style: italic;
+    letter-spacing: 0.02em;
+
+    border: 1px dashed #cbd5e1;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+    color: #64748b;
+
+    &::before {
+      content: "ⓘ";
+      font-size: 1.1rem;
+      color: #6366f1;
+      margin-right: 0.5rem;
+    }
+  }
 }

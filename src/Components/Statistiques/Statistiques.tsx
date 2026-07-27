@@ -130,8 +130,8 @@ const Statistiques = () => {
         newDataset.label = user.username;
         newDataset.data =
           year === "Actuelle"
-            ? Object.values(user.points)
-            : user.historic[year]?.points != null
+            ? Object.values(user.points ?? {})
+            : user.historic?.[year]?.points != null // ← ?. sur historic aussi
               ? Object.values(user.historic[year].points)
               : [];
 
@@ -161,7 +161,10 @@ const Statistiques = () => {
     value: { code: string; name: string };
   }) => {
     setSelectedYear(event.value);
-    convertDatas(users, event.value.code);
+    if (users && users.length > 0) {
+      // ← garde sur users undefined
+      convertDatas(users, event.value.code);
+    }
   };
 
   const data = {
